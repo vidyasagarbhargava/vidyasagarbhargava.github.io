@@ -1,7 +1,7 @@
 
 # Course 1 :-  Data Analytics Course Overview 
 
-1. [Descriptive Statistics](docs/descriptive_statistics.md)  
+1. [Descriptive Statistics](descriptive_statistics.md)  
 2. Inferential Statistics  
 3. Anova and Regression  
 4. Introduction to Machine Learning  
