@@ -28,4 +28,32 @@
 3. Contigency tables(Two Categorical Variables)  
 
 
+#### Summary  
+1. Measure of Central Tendency
+2. Dispersion
+3. Skew and Kurtosis
+
+
+#### Measure of Central Tendency  
+1. Mean
+2. Median 
+3. Mode
+
+#### Mean 
+
+```python
+import numpy as np
+arr = [20, 2, 7, 1, 34]
+print(np.mean(arr))
+```
+output:-  
+```
+12.8
+```
+
+
+
+
+
+
 
