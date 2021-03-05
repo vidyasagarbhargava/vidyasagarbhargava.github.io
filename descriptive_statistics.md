@@ -11,7 +11,7 @@
 2. Summary 
 3. Tabular
 
-#### Graphics Presentation**
+#### Graphics Presentation
 
 **Single Categorical Variable :-**
 1. Bar Graphs
