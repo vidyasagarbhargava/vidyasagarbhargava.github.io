@@ -1,0 +1,22 @@
+---
+title: "Vidyasagar Bhargava"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/vsbd
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/vidyasagarbhargava
+    - icon: github
+      text: Github
+      href: https://github.com/vidyasagarbhargava
+    - icon: kaggle
+      text: Kaggle
+      href: https://kaggle.com/vidyasagarbhargava
+
+---
+
+I am a Lead Data Scientist at TVS Motor. Skilled in Python, R, SQL, Statistics and Machine Learning.

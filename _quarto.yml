@@ -1,0 +1,27 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: ""
+  navbar:
+    background: "#4B3B47"
+    foreground: "#E0D8DE"
+    left:
+      - href: index.qmd
+        text: Home
+      - href: blog.qmd
+        text: Blog
+      - href: talks.qmd
+        text: Talks
+      - href: cv.qmd
+        text: CV
+
+format:
+  html:
+    theme: journal
+    backgroundcolor: "#E0D8DE"
+    css: styles.css
+    toc: true
+
+

@@ -1,0 +1,31 @@
+[
+  {
+    "listing": "/index.html",
+    "items": []
+  },
+  {
+    "listing": "/myblog.html",
+    "items": [
+      "/posts/eda.html",
+      "/posts/fbeta_measure.html"
+    ]
+  },
+  {
+    "listing": "/about.html",
+    "items": [
+      "/posts/eda.html",
+      "/posts/fbeta_measure.html"
+    ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/eda.html",
+      "/posts/fbeta_measure.html"
+    ]
+  },
+  {
+    "listing": "/talks.html",
+    "items": []
+  }
+]

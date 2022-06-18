@@ -1,0 +1,14 @@
+[
+  {
+    "listing": "/talks.html",
+    "items": []
+  },
+  {
+    "listing": "/blog.html",
+    "items": [
+      "/posts/eda.html",
+      "/posts/fbeta_measure.html",
+      "/posts/nearest_neighbour.html"
+    ]
+  }
+]
