@@ -13,10 +13,9 @@ about:
     - icon: github
       text: Github
       href: https://github.com/vidyasagarbhargava
-    - icon: kaggle
-      text: Kaggle
-      href: https://kaggle.com/vidyasagarbhargava
-
+    - icon: bi-mortarboard-fill
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=hp6ttWQAAAAJ&hl=en
 ---
+I am a Lead Data Scientist at TVS Motor. Skilled in Python, R, SQL, Statistics and Machine Learning. Previously I worked in Internet/E-Commerce and Retail domain. 
 
-I am a Lead Data Scientist at TVS Motor. Skilled in Python, R, SQL, Statistics and Machine Learning.

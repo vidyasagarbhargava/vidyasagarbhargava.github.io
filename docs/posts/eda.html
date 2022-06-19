@@ -165,7 +165,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#structure-investigation" id="toc-structure-investigation" class="nav-link active" data-scroll-target="#structure-investigation">Structure Investigation</a></li>
+  <li><a href="#why-eda-is-important" id="toc-why-eda-is-important" class="nav-link active" data-scroll-target="#why-eda-is-important">Why EDA is important ?</a></li>
+  <li><a href="#how-to-eda" id="toc-how-to-eda" class="nav-link" data-scroll-target="#how-to-eda">How to EDA</a></li>
+  <li><a href="#example-case" id="toc-example-case" class="nav-link" data-scroll-target="#example-case">Example Case</a></li>
+  <li><a href="#structure-investigation" id="toc-structure-investigation" class="nav-link" data-scroll-target="#structure-investigation">Structure Investigation</a></li>
   <li><a href="#structure-of-non-numerical-features" id="toc-structure-of-non-numerical-features" class="nav-link" data-scroll-target="#structure-of-non-numerical-features">Structure of Non Numerical Features</a></li>
   <li><a href="#structure-of-numerical-features" id="toc-structure-of-numerical-features" class="nav-link" data-scroll-target="#structure-of-numerical-features">Structure of Numerical Features</a></li>
   <li><a href="#quality-investigation" id="toc-quality-investigation" class="nav-link" data-scroll-target="#quality-investigation">Quality Investigation</a></li>
@@ -214,13 +217,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <p><img src="https://i.imgur.com/VxwKjYQ.gif" class="img-fluid"></p>
-<p><strong>Why EDA is important ?</strong></p>
+<section id="why-eda-is-important" class="level3">
+<h3 class="anchored" data-anchor-id="why-eda-is-important">Why EDA is important ?</h3>
 <p>Usually we start any data science project with understanding the business problem and then we generate hypothesis. During hypothesis generation we look for factors which influence our dependent variable. EDA helps in confirming and validating those hypothesis.</p>
 <p>It helps to find out unexpected pattern in data which must be taken into account, thereby suggesting some changes in planned analysis.</p>
 <p>It helps in delivering data driven insights to business stakeholders by confirming they are asking the right questions and not biasing the investigation with their assumptions.</p>
-<p><strong>Structure Investigation</strong> : Exploring shape and as well as data types<br>
-<strong>Quality Investigation</strong> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries<br>
-<strong>Content Investigation</strong> : More indepth study of features and how they relate to each other</p>
+</section>
+<section id="how-to-eda" class="level3">
+<h3 class="anchored" data-anchor-id="how-to-eda">How to EDA</h3>
+<p>I divide exploratory data analysis in 3 parts of investigation.</p>
+<ol type="1">
+<li><em>Structure Investigation</em> : Exploring shape and as well as data types.<br>
+</li>
+<li><em>Quality Investigation</em> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.<br>
+</li>
+<li><em>Content Investigation</em> : More indepth study of features and how they relate to each other.</li>
+</ol>
+</section>
+<section id="example-case" class="level3">
+<h3 class="anchored" data-anchor-id="example-case">Example Case</h3>
+<p>Let’s download some data and perform eda to bring insights as well know quality of the data.</p>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset from openml</span></span>
@@ -531,6 +547,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
+</section>
 <section id="structure-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="structure-investigation">Structure Investigation</h3>
 <div class="cell" data-execution_count="2">
