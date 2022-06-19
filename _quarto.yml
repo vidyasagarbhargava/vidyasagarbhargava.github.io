@@ -3,7 +3,9 @@ project:
   output-dir: docs
 
 website:
-  twitter-card: true
+  twitter-card:
+   creator: "@dragsonstyle"
+   site: "@rstudio"
   favicon: logo.png
   title: ""
   navbar:
