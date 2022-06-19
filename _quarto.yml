@@ -3,6 +3,8 @@ project:
   output-dir: docs
 
 website:
+  twitter-card: true
+  favicon: logo.png
   title: ""
   navbar:
     background: "#4B3B47"
