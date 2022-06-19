@@ -1,12 +1,7 @@
 ---
 title: ""
-listing:
-  contents: talks
-  sort: "date desc"
-  type: default
-  categories: false
-  sort-ui: false
-  filter-ui: false
-page-layout: full
-title-block-banner: false
 ---
+
+# Introduction to Deep Learning
+
+![](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)

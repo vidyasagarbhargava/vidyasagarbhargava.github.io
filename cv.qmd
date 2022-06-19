@@ -1,3 +1,53 @@
 ---
 title: ""
 ---
+
+# Work Experience & Major Projects
+
+**TVS Motor** :- Lead Data Scientist (2021 - Present) 
+
+* Predictive Maintenace
+* Range Prediction for Electric Vehicle
+
+**Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
+
+* Churn Prediction
+* NPS Improvement
+* Scaling Machine Learning model using Spark
+* Text Summarization using sentence embedding
+
+
+**Cognizant Techonology Solution** :-  Data Scientist (2016 - 2017)  
+
+* Retail store segmentation
+* Video Analytics
+
+**Snapdeal** :- Analyst Advanced Analytics (2014 - 2016)  
+
+* Price optimization Engine   
+* Price Elasticity Models  
+
+
+**Ladyblush E-Commerce Pvt. Ltd** (Start up) :-  Engineer (2014 - 2014)
+
+* E-commerce AI Chatbot
+* Data Analytics and Dashboarding
+
+**Shopclues** :-  Analyst (2013 - 2014)
+
+* Data Analytics and Dashboarding
+
+
+# Education 
+
+* B.Tech in Computer Science and Engineering
+
+
+# Courses
+* Machine Learning Course by Andrew NG
+* Deep learning Course by Andrew NG
+* Big Data Foundation by IBM
+* Introduction to Python by Kaggle
+
+
+

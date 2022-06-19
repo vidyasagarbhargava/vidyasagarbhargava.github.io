@@ -12,8 +12,6 @@ website:
         text: Home
       - href: blog.qmd
         text: Blog
-      - href: talks.qmd
-        text: Talks
       - href: cv.qmd
         text: CV
 

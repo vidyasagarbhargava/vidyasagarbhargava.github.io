@@ -17,5 +17,5 @@ about:
       text: Google Scholar
       href: https://scholar.google.com/citations?user=hp6ttWQAAAAJ&hl=en
 ---
-I am a Lead Data Scientist at TVS Motor. Skilled in Python, R, SQL, Statistics and Machine Learning. Previously I worked in Internet/E-Commerce and Retail domain. 
+Lead Data Scientist at TVS Motor
 
