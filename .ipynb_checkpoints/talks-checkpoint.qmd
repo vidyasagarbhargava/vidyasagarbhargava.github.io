@@ -1,7 +1,0 @@
----
-title: ""
----
-
-# Introduction to Deep Learning
-
-![](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)
