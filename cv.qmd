@@ -1,15 +1,18 @@
 ---
-title: ""
+title: "CV"
 ---
 
-# Work Experience & Major Projects
+&nbsp;<br>
+
+### Work Experience & Major Projects  
+    
 
 **TVS Motor** :- Lead Data Scientist (2021 - Present) 
 
 * Predictive Maintenace
 * Range Prediction for Electric Vehicle
 
-**Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
+*Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
 
 * Churn Prediction
 * NPS Improvement
@@ -38,12 +41,11 @@ title: ""
 * Data Analytics and Dashboarding
 
 
-# Education 
+### Education 
 
 * B.Tech in Computer Science and Engineering
 
-
-# Courses
+### Courses
 * Machine Learning Course by Andrew NG
 * Deep learning Course by Andrew NG
 * Big Data Foundation by IBM
