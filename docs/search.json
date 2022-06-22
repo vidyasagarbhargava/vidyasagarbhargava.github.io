@@ -32,14 +32,14 @@
     "href": "cv.html",
     "title": "CV",
     "section": "",
-    "text": "Work Experience & Major Projects\nTVS Motor :- Lead Data Scientist (2021 - Present)\n\nPredictive Maintenace\nRange Prediction for Electric Vehicle\n\n*Wipro Technologies** :- Specialist Data Science (2017 - 2021)\n\nChurn Prediction\nNPS Improvement\nScaling Machine Learning model using Spark\nText Summarization using sentence embedding\n\nCognizant Techonology Solution :- Data Scientist (2016 - 2017)\n\nRetail store segmentation\nVideo Analytics\n\nSnapdeal :- Analyst Advanced Analytics (2014 - 2016)\n\nPrice optimization Engine\n\nPrice Elasticity Models\n\nLadyblush E-Commerce Pvt. Ltd (Start up) :- Engineer (2014 - 2014)\n\nE-commerce AI Chatbot\nData Analytics and Dashboarding\n\nShopclues :- Analyst (2013 - 2014)\n\nData Analytics and Dashboarding\n\n\n\nEducation\n\nB.Tech in Computer Science and Engineering\n\n\n\nCourses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle"
+    "text": "Work Experience & Major Projects\nTVS Motor :- Lead Data Scientist (2021 - Present)\n\nPredictive Maintenace\nRange Prediction for Electric Vehicle\n\nWipro Technologies :- Specialist Data Science (2017 - 2021)\n\nChurn Prediction\nNPS Improvement\nScaling Machine Learning model using Spark\nText Summarization using sentence embedding\n\nCognizant Techonology Solution :- Data Scientist (2016 - 2017)\n\nRetail store segmentation\nVideo Analytics\n\nSnapdeal :- Analyst Advanced Analytics (2014 - 2016)\n\nPrice optimization Engine\n\nPrice Elasticity Models\n\nLadyblush E-Commerce Pvt. Ltd (Start up) :- Engineer (2014 - 2014)\n\nE-commerce AI Chatbot\nData Analytics and Dashboarding\n\nShopclues :- Analyst (2013 - 2014)\n\nData Analytics and Dashboarding\n\n\n\nEducation\n\nB.Tech in Computer Science and Engineering\n\n\n\nCourses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle"
   },
   {
     "objectID": "blog.html",
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Exploratory Data Analysis in short known as EDA is way of summarizing, interpreting and visualizing the information hidden in rows and column format. Simply EDA is the key to getting insights from data.\n\n\n\n\n\n\nJun 11, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "A loss function is a measure how good a prediction model does in terms of being able to predict the expected outcome.\n\n\n\n\n\n\nJun 15, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nExploratory Data Analysis in short known as EDA is way of summarizing, interpreting and visualizing the information hidden in rows and column format. Simply EDA is the key to getting insights from data.\n\n\n\n\n\n\nJun 11, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/eda.html#exploratory-data-analysis",
@@ -180,5 +180,12 @@
     "title": "CV",
     "section": "Courses",
     "text": "Courses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle"
+  },
+  {
+    "objectID": "posts/regression_loss.html",
+    "href": "posts/regression_loss.html",
+    "title": "Must know Regression Loss Functions",
+    "section": "",
+    "text": "Mean Square Error or Quadratic loss or L2 Loss\nMean Absolute Error or L1 Loss\nHuber Loss or Smooth Mean Absolute Error\nLog-Cosh Loss\nQuantile Loss"
   }
 ]

@@ -6,6 +6,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/regression_loss.html",
       "/posts/eda.html",
       "/posts/fbeta_measure.html",
       "/posts/nearest_neighbour.html"

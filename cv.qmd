@@ -12,7 +12,7 @@ title: "CV"
 * Predictive Maintenace
 * Range Prediction for Electric Vehicle
 
-*Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
+**Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
 
 * Churn Prediction
 * NPS Improvement

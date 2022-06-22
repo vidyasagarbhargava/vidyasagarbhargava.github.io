@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  favicon: logo.png
+  favicon: logo.svg
   navbar:
     background: "#4B3B47"
     foreground: "#E0D8DE"
@@ -14,7 +14,7 @@ website:
         text: Blog
       - href: cv.qmd
         text: CV
-
+    
 format:
   html:
     theme: journal

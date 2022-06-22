@@ -6,8 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Vidyasagar Bhargava">
+<meta name="dcterms.date" content="2022-06-15">
+<meta name="description" content="A loss function is a measure how good a prediction model does in terms of being able to predict the expected outcome.">
 
-<title>CV</title>
+<title>Must know Regression Loss Functions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -18,23 +21,23 @@ ul.task-list{list-style: none;}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./logo.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../logo.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -56,7 +59,7 @@ ul.task-list{list-style: none;}
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -71,13 +74,13 @@ ul.task-list{list-style: none;}
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="../index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html">Blog</a>
+    <a class="nav-link" href="../blog.html">Blog</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./cv.html" aria-current="page">CV</a>
+    <a class="nav-link" href="../cv.html">CV</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -94,9 +97,7 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#work-experience-major-projects" id="toc-work-experience-major-projects" class="nav-link active" data-scroll-target="#work-experience-major-projects">Work Experience &amp; Major Projects</a></li>
-  <li><a href="#education" id="toc-education" class="nav-link" data-scroll-target="#education">Education</a></li>
-  <li><a href="#courses" id="toc-courses" class="nav-link" data-scroll-target="#courses">Courses</a></li>
+  <li><a href="#regression-loss" id="toc-regression-loss" class="nav-link active" data-scroll-target="#regression-loss">Regression Loss</a></li>
   </ul>
 </nav>
     </div>
@@ -105,70 +106,51 @@ ul.task-list{list-style: none;}
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">CV</h1>
-</div>
+<h1 class="title">Must know Regression Loss Functions</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">loss function</div>
+    <div class="quarto-category">regression</div>
+    <div class="quarto-category">objective function</div>
+  </div>
+  </div>
 
+<div>
+  <div class="description">
+    A loss function is a measure how good a prediction model does in terms of being able to predict the expected outcome.
+  </div>
+</div>
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Vidyasagar Bhargava </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 15, 2022</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<p>&nbsp;<br></p>
-<section id="work-experience-major-projects" class="level3">
-<h3 class="anchored" data-anchor-id="work-experience-major-projects">Work Experience &amp; Major Projects</h3>
-<p><strong>TVS Motor</strong> :- Lead Data Scientist (2021 - Present)</p>
-<ul>
-<li>Predictive Maintenace</li>
-<li>Range Prediction for Electric Vehicle</li>
-</ul>
-<p><strong>Wipro Technologies</strong> :- Specialist Data Science (2017 - 2021)</p>
-<ul>
-<li>Churn Prediction</li>
-<li>NPS Improvement</li>
-<li>Scaling Machine Learning model using Spark</li>
-<li>Text Summarization using sentence embedding</li>
-</ul>
-<p><strong>Cognizant Techonology Solution</strong> :- Data Scientist (2016 - 2017)</p>
-<ul>
-<li>Retail store segmentation</li>
-<li>Video Analytics</li>
-</ul>
-<p><strong>Snapdeal</strong> :- Analyst Advanced Analytics (2014 - 2016)</p>
-<ul>
-<li>Price optimization Engine<br>
-</li>
-<li>Price Elasticity Models</li>
-</ul>
-<p><strong>Ladyblush E-Commerce Pvt. Ltd</strong> (Start up) :- Engineer (2014 - 2014)</p>
-<ul>
-<li>E-commerce AI Chatbot</li>
-<li>Data Analytics and Dashboarding</li>
-</ul>
-<p><strong>Shopclues</strong> :- Analyst (2013 - 2014)</p>
-<ul>
-<li>Data Analytics and Dashboarding</li>
-</ul>
-</section>
-<section id="education" class="level3">
-<h3 class="anchored" data-anchor-id="education">Education</h3>
-<ul>
-<li>B.Tech in Computer Science and Engineering</li>
-</ul>
-</section>
-<section id="courses" class="level3">
-<h3 class="anchored" data-anchor-id="courses">Courses</h3>
-<ul>
-<li>Machine Learning Course by Andrew NG</li>
-<li>Deep learning Course by Andrew NG</li>
-<li>Big Data Foundation by IBM</li>
-<li>Introduction to Python by Kaggle</li>
-</ul>
+<section id="regression-loss" class="level1">
+<h1>Regression Loss</h1>
+<ol type="1">
+<li>Mean Square Error or Quadratic loss or L2 Loss</li>
+<li>Mean Absolute Error or L1 Loss</li>
+<li>Huber Loss or Smooth Mean Absolute Error</li>
+<li>Log-Cosh Loss</li>
+<li>Quantile Loss</li>
+</ol>
 
 
 </section>
