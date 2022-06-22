@@ -51,5 +51,7 @@ title: "CV"
 * Big Data Foundation by IBM
 * Introduction to Python by Kaggle
 
+### Talks & Webinars
 
+* Introduction to Deep learning at Wipro Technologies on June 2017. [[PPT]](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)
 
