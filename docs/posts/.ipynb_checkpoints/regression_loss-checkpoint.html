@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vidyasagar Bhargava">
-<meta name="dcterms.date" content="2022-06-10">
-<meta name="description" content="The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta">
+<meta name="dcterms.date" content="2022-06-15">
+<meta name="description" content="A loss function is a measure how good a prediction model does in terms of being able to predict the expected outcome.">
 
-<title>Fbeta-Measure</title>
+<title>Must know Regression Loss Functions</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -82,9 +82,6 @@ ul.task-list{list-style: none;}
   <li class="nav-item">
     <a class="nav-link" href="../cv.html">CV</a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../london.html">London</a>
-  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -96,25 +93,30 @@ ul.task-list{list-style: none;}
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#regression-loss" id="toc-regression-loss" class="nav-link active" data-scroll-target="#regression-loss">Regression Loss</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Fbeta-Measure</h1>
+<h1 class="title">Must know Regression Loss Functions</h1>
   <div class="quarto-categories">
-    <div class="quarto-category">model evaluation</div>
-    <div class="quarto-category">precision</div>
-    <div class="quarto-category">recall</div>
-    <div class="quarto-category">confusion matrix</div>
+    <div class="quarto-category">loss function</div>
+    <div class="quarto-category">regression</div>
+    <div class="quarto-category">objective function</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta
+    A loss function is a measure how good a prediction model does in terms of being able to predict the expected outcome.
   </div>
 </div>
 
@@ -131,7 +133,7 @@ ul.task-list{list-style: none;}
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 10, 2022</p>
+      <p class="date">June 15, 2022</p>
     </div>
   </div>
     
@@ -140,21 +142,18 @@ ul.task-list{list-style: none;}
 
 </header>
 
-<p><img src="https://miro.medium.com/max/824/1*xMl_wkMt42Hy8i84zs2WGg.png" class="img-fluid"></p>
-<p>Precision is a metric that calculates the percentage of correct predictions for the positive class. Recall calculates the percentage of correct predictions for the positive class out of all positive predictions that could be made.</p>
-<p>The F-measure is calculated as the harmonic mean of precision and recall, giving each the same weighting.It allows a model to be evaluated taking both the precision and recall into account using a single score, which is helpful when describing the performance of the model and in comparing models.</p>
-<p>The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.</p>
-<p><strong>Summary</strong></p>
-<ul>
-<li>Precision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.<br>
-</li>
-<li>F-measure provides a single score that summarizes the precision and recall.<br>
-</li>
-<li>Fbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score.</li>
-</ul>
-<p>Thanks !</p>
+<section id="regression-loss" class="level1">
+<h1>Regression Loss</h1>
+<ol type="1">
+<li>Mean Square Error or Quadratic loss or L2 Loss</li>
+<li>Mean Absolute Error or L1 Loss</li>
+<li>Huber Loss or Smooth Mean Absolute Error</li>
+<li>Log-Cosh Loss</li>
+<li>Quantile Loss</li>
+</ol>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
