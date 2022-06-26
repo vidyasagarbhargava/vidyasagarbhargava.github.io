@@ -58,6 +58,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -99,7 +100,7 @@ ul.task-list{list-style: none;}
         
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -142,9 +143,19 @@ ul.task-list{list-style: none;}
 
 <p><img src="https://miro.medium.com/max/824/1*xMl_wkMt42Hy8i84zs2WGg.png" class="img-fluid"></p>
 <p>Precision is a metric that calculates the percentage of correct predictions for the positive class. Recall calculates the percentage of correct predictions for the positive class out of all positive predictions that could be made.</p>
-<p>The F-measure is calculated as the harmonic mean of precision and recall, giving each the same weighting.It allows a model to be evaluated taking both the precision and recall into account using a single score, which is helpful when describing the performance of the model and in comparing models.</p>
-<p>The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.</p>
-<p><strong>Summary</strong></p>
+<p>The F-measure or F score, also called as F1 score is calculated as the harmonic mean of precision and recall, giving each the same weighting.It allows a model to be evaluated taking both the precision and recall into account using a single score, which is helpful when describing the performance of the model and in comparing models.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><span class="math display">\[
+F_{1}=2.\frac{{precision} \times {recall}}{{precision} + {recall}}
+\]</span></p>
+</div></div><p>The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><span class="math display">\[
+F_{{\beta}} = \frac{(1 + {\beta}^2). (precision.recall)}{({\beta}^2.precision+recall)}
+\]</span></p>
+</div></div><p><strong>Summary</strong></p>
 <ul>
 <li>Precision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.<br>
 </li>
@@ -152,7 +163,6 @@ ul.task-list{list-style: none;}
 </li>
 <li>Fbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score.</li>
 </ul>
-<p>Thanks !</p>
 
 
 
