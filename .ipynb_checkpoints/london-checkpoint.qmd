@@ -4,7 +4,8 @@ title: "Activities in London"
 My short stay at London before pandemic hit the world and I had to come back to India.
 
 ## UCL x DeepMind Lecture Series 
-I attended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London.
+
+Attended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London.
 
 ![](photos/ucl.jpeg)
 
@@ -12,13 +13,13 @@ I attended amazing lecture series on deep learning by Deep Mind in early 2020 at
 
 ## Machine Learning at Imperial College London
 
-I attended few ml and nlp classes conducted by AI Core at Imperial College.
+Attended few ml and nlp classes conducted by AI Core at Imperial College.
 
 ![](photos/imperial.jpeg)
 
 ## R-Conference by Max Kuhn
 
-On 20th Nov 2019 I got the chance to attend live conference by Max Kuhn the developer famous R packages like Caret & tidymodels.
+Got the chance to attend live conference by Max Kuhn the developer famous R packages like Caret & tidymodels.
 
 ![](photos/rconference.jpeg)
 
@@ -29,19 +30,17 @@ On 20th Nov 2019 I got the chance to attend live conference by Max Kuhn the deve
 
 ## London Eye
 
-I like this place
-
 ![](photos/londoneyeday.jpeg)
 
 ## London Bridge
 
-Mandatory London Bridge Picture
+A Mandatory London Bridge Picture
 
 ![](photos/londonbridge.jpeg)
 
 
 ## Cricket at Canary Wharf
 
-Watching cricket here during office lunch break was fun.
+Watching cricket here during office breaks was fun.
 
 ![](photos/cricket.jpeg)

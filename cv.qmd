@@ -5,7 +5,7 @@ title: "CV"
 &nbsp;<br>
 
 ### Work Experience & Major Projects  
-    
+  
 
 **TVS Motor** :- Lead Data Scientist (2021 - Present) 
 
@@ -14,16 +14,17 @@ title: "CV"
 
 **Wipro Technologies** :-   Specialist Data Science (2017 - 2021)
 
-* Churn Prediction
-* NPS Improvement
-* Scaling Machine Learning model using Spark
-* Text Summarization using sentence embedding
-
+* Churn Prediction for Telecom Company
+* NPS Improvement for US based client
+* Benchmarking of trained sentence embedding models
+* Scaling Machine Learning models using Spark
+* Dashboard for Time Series forecasting using Dash & Plotly
 
 **Cognizant Techonology Solution** :-  Data Scientist (2016 - 2017)  
 
 * Retail store segmentation
-* Video Analytics
+* Anomaly Detection for machine parts failure
+
 
 **Snapdeal** :- Analyst Advanced Analytics (2014 - 2016)  
 
