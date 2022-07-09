@@ -6,9 +6,10 @@
   {
     "listing": "/blog.html",
     "items": [
-      "/posts/eda.html",
       "/posts/fbeta_measure.html",
-      "/posts/nearest_neighbour.html"
+      "/posts/nearest_neighbour.html",
+      "/posts/mlprojects.html",
+      "/posts/eda.html"
     ]
   }
 ]

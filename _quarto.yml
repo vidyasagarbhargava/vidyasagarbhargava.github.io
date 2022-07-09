@@ -6,7 +6,7 @@ website:
   favicon: logo.svg
   navbar:
     background: "#4B3B47"
-    foreground: "#E0D8DE"
+    foreground: "#E0D8DE" 
     left:
       - href: index.qmd
         text: Home
