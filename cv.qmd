@@ -58,7 +58,3 @@ title: "CV"
 * Introduction to Deep learning at Wipro Technologies on June 2017. [[PPT]](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)
 
 
-### Competitive Data Science
-
-* Rank 3rd in Fractal Timeseries Forecasting Hackathon on Analytics Vidhya
-* Currently Kaggle Expert at discussions  
