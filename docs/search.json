@@ -39,7 +39,7 @@
     "href": "blog.html",
     "title": "Blog",
     "section": "",
-    "text": "The Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nExploratory Data Analysis in short known as EDA is way of summarizing, interpreting and visualizing the information hidden in rows and column format. Simply EDA is the key to getting insights from data.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/eda.html#exploratory-data-analysis",
