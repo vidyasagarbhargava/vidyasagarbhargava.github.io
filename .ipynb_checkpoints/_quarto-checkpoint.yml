@@ -5,8 +5,6 @@ project:
 website:
   favicon: logo.svg
   navbar:
-    background: "#4B3B47"
-    foreground: "#E0D8DE" 
     right:
       - href: index.qmd
         text: Home
@@ -19,8 +17,8 @@ website:
     
 format:
   html:
-    theme: journal
-    backgroundcolor: "#E0D8DE"
+    theme: [journal, theme.scss]
+    backgroundcolor: "#e6ddde"
     css: styles.css
     toc: true
 
