@@ -1,4 +1,4 @@
-﻿@import"https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap";.navbar-expand-lg .navbar-collapse .nav-item{position:relative}.navbar-expand-lg .navbar-collapse .nav-item:after{content:"";position:absolute;background-color:#654a4e;height:1.5px;width:0%;bottom:-2px;margin:auto;transition:all .5s}.navbar-expand-lg .navbar-collapse .nav-item:hover::after{width:100%}/*!
+﻿@import"https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap";.navbar-expand-lg .navbar-collapse .nav-item{position:relative}.navbar-expand-lg .navbar-collapse .nav-item:after{content:"";position:absolute;background-color:#654a4e;height:1.5px;width:0%;bottom:-0.5px;left:0;right:0;margin:0 auto;transition:all .5s}.navbar-expand-lg .navbar-collapse .nav-item:hover::after{width:100%}/*!
  * Bootstrap v5.1.3 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
  * Copyright 2011-2021 Twitter, Inc.

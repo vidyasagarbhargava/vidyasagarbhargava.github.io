@@ -57,4 +57,3 @@ title: "CV"
 
 * Introduction to Deep learning at Wipro Technologies on June 2017. [[PPT]](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)
 
-

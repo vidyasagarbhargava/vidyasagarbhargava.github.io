@@ -23,6 +23,8 @@ $navbar-hl: #753742;
 
 //footer.footer .nav-footer, #quarto-header nav
 
+
+
 .navbar-expand-lg .navbar-collapse .nav-item{
     position: relative;
     
@@ -37,8 +39,10 @@ $navbar-hl: #753742;
     background-color: #654a4e;
     height: 1.5px;
     width: 0%;
-    bottom: -2px;
-    margin: auto;
+    bottom: -0.5px;
+    left: 0 ;
+    right: 0;
+    margin: 0 auto;
     transition: all 0.5s;
     
 }
@@ -46,3 +50,5 @@ $navbar-hl: #753742;
 .navbar-expand-lg .navbar-collapse .nav-item:hover::after{
     width: 100%;
 }
+
+
