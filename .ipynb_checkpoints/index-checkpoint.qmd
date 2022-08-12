@@ -1,6 +1,6 @@
 ---
 title: "Vidyasagar Bhargava"
-image: profile-pic_4.png
+image: profile.jpg
 about:
   template: jolla
   links:
