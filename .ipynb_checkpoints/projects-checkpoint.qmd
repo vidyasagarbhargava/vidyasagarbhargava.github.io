@@ -1,0 +1,13 @@
+---
+title: "Projects & Clients"
+listing:
+  contents: projects
+  fields: [date, title, author, image, description]
+  sort: "date desc"
+  type: grid
+  categories: false
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: false
+---

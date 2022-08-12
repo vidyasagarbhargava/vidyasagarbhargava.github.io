@@ -7,7 +7,7 @@ title: "CV"
 
 ### Work Experience & Major Projects  
   
-
+-------------------------------------------------------
 **TVS Motor** :- Lead Data Scientist (2021 - Present) 
 
 * Predictive Maintenace

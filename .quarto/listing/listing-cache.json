@@ -14,6 +14,10 @@
     ],
     "talks.qmd": [
       "talks"
+    ],
+    "projects.qmd": [
+      "posts",
+      "projects"
     ]
   }
 }

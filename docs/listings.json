@@ -6,10 +6,25 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/Untitled.html",
       "/posts/fbeta_measure.html",
       "/posts/nearest_neighbour.html",
       "/posts/mlprojects.html",
       "/posts/eda.html"
+    ]
+  },
+  {
+    "listing": "/projects.html",
+    "items": [
+      "/projects/predictive_maintenance.html",
+      "/projects/customer_churn.html",
+      "/projects/range_prediction.html",
+      "/projects/NPS_Improvement.html",
+      "/projects/benchmarking_intel.html",
+      "/projects/sas-python_migration.html",
+      "/projects/price_optimization.html",
+      "/projects/tms.html",
+      "/projects/customer_segmentation.html"
     ]
   }
 ]

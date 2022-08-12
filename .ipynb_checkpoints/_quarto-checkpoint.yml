@@ -18,6 +18,8 @@ website:
 format:
   html:
     theme: [journal, theme.scss]
+    mainfont: Atkinson Hyperlegible  
+    fontsize: 95%
     backgroundcolor: "#e6ddde"
     css: styles.css
     toc: true
