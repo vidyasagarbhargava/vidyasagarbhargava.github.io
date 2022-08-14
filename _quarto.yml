@@ -8,7 +8,7 @@ website:
     right:
       - href: index.qmd
         text: Home
-      - href: blog.qmd
+      - href: /myblog/index.qmd
         text: Blog
       - href: cv.qmd
         text: CV
@@ -18,7 +18,7 @@ website:
 format:
   html:
     mainfont: system-ui
-    fontsize: 85%
+    fontsize: 90%
     theme: [journal, theme.scss]
     backgroundcolor: "#e6ddde"
     css: styles.css

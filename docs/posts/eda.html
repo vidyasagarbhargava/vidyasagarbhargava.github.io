@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2019-06-11">
 <meta name="description" content="A way of summarizing, interpreting and visualizing the information hidden in rows and column format.">
 
-<title>Exploratory Data Analysis</title>
+<title>The Google’s Guide to Exploratory Data Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -158,43 +158,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Exploratory Data Analysis</h1>
-                  <div>
-        <div class="description">
-          A way of summarizing, interpreting and visualizing the information hidden in rows and column format.
-        </div>
-      </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">eda</div>
-                <div class="quarto-category">python</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Vidyasagar Bhargava </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">June 11, 2019</p>
-      </div>
-    </div>
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -209,17 +173,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#structure-of-non-numerical-features" id="toc-structure-of-non-numerical-features" class="nav-link" data-scroll-target="#structure-of-non-numerical-features">Structure of Non Numerical Features</a></li>
   <li><a href="#structure-of-numerical-features" id="toc-structure-of-numerical-features" class="nav-link" data-scroll-target="#structure-of-numerical-features">Structure of Numerical Features</a></li>
   <li><a href="#quality-investigation" id="toc-quality-investigation" class="nav-link" data-scroll-target="#quality-investigation">Quality Investigation</a></li>
-  <li><a href="#missing-values" id="toc-missing-values" class="nav-link" data-scroll-target="#missing-values">Missing Values</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">The Google’s Guide to Exploratory Data Analysis</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">eda</div>
+    <div class="quarto-category">python</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    A way of summarizing, interpreting and visualizing the information hidden in rows and column format.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Vidyasagar Bhargava </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 11, 2019</p>
+    </div>
+  </div>
+    
+  </div>
+  
 
-<p><img src="https://i.imgur.com/VxwKjYQ.gif" class="img-fluid"></p>
+</header>
+
 <section id="why-eda-is-important" class="level3">
 <h3 class="anchored" data-anchor-id="why-eda-is-important">Why EDA is important ?</h3>
 <p>Usually we start any data science project with understanding the business problem and then we generate hypothesis. During hypothesis generation we look for factors which influence our dependent variable. EDA helps in confirming and validating those hypothesis.</p>
@@ -230,11 +226,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="how-to-eda">How to EDA</h3>
 <p>I divide exploratory data analysis in 3 parts of investigation.</p>
 <ol type="1">
-<li><em>Structure Investigation</em> : Exploring shape and as well as data types.<br>
-</li>
-<li><em>Quality Investigation</em> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.<br>
-</li>
-<li><em>Content Investigation</em> : More indepth study of features and how they relate to each other.</li>
+<li><p><strong>Structure Investigation</strong> : Exploring shape and as well as data types.<br>
+1.1 <em>Structure of non numerical features</em><br>
+1.2 <em>Structure of numerical features</em><br>
+1.3 <em>Conclusion of structure investigation</em><br>
+</p></li>
+<li><p><strong>Quality Investigation</strong> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.<br>
+2.1 <em>Duplicates</em><br>
+2.2 <em>Missing Values</em><br>
+2.2.1 Per sample<br>
+2.2.2 Per feature<br>
+2.3 <em>Unwanted Entries and Recording Errors</em><br>
+2.3.1 Numerical features<br>
+2.3.2 Non Numerical features<br>
+2.4 <em>Conclusion of Quality Investigation</em></p></li>
+<li><p><strong>Content Investigation</strong> : More indepth study of features and how they relate to each other. 3.1 <em>Feature distribution</em><br>
+3.2 <em>Feature patterns</em><br>
+3.2.1 Continuos feature<br>
+3.2.2 Discreet and ordinal feature<br>
+3.3 <em>Feature relantionship</em></p></li>
 </ol>
 </section>
 <section id="example-case" class="level3">
@@ -250,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature matrix X and show 5 random samples</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> dataset[<span class="st">"frame"</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df_X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df_X.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 
 <div>
@@ -403,153 +413,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <td>1.0</td>
       <td>3.0</td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>363238</th>
-      <td>2015984141415</td>
-      <td>13.0</td>
-      <td>9.0</td>
-      <td>0.0</td>
-      <td>18.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>1.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>2.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>1.0</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>363239</th>
-      <td>2015984141415</td>
-      <td>13.0</td>
-      <td>9.0</td>
-      <td>0.0</td>
-      <td>18.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>5.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>1.0</td>
-      <td>2.0</td>
-    </tr>
-    <tr>
-      <th>363240</th>
-      <td>2015984141415</td>
-      <td>13.0</td>
-      <td>9.0</td>
-      <td>0.0</td>
-      <td>18.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>4.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>2.0</td>
-      <td>5.0</td>
-    </tr>
-    <tr>
-      <th>363241</th>
-      <td>2015984141415</td>
-      <td>13.0</td>
-      <td>9.0</td>
-      <td>0.0</td>
-      <td>18.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>6.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>3.0</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>363242</th>
-      <td>2015984141415</td>
-      <td>13.0</td>
-      <td>9.0</td>
-      <td>0.0</td>
-      <td>18.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>5.0</td>
-      <td>...</td>
-      <td>4.0</td>
-      <td>3.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>1.0</td>
-      <td>4.0</td>
-    </tr>
   </tbody>
 </table>
-<p>363243 rows × 67 columns</p>
+<p>5 rows × 67 columns</p>
 </div>
 </div>
 </div>
@@ -726,12 +592,12 @@ dtype: int64</code></pre>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot information with y-axis in log-scale</span></span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>unique_values.plot.bar(logy<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">"Unique values per feature"</span>,  color<span class="op">=</span><span class="st">'#753742'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display column-body">
+<div class="cell-output cell-output-display column-page">
 <p><img src="eda_files/figure-html/cell-9-output-1.png" width="1171" height="648"></p>
 </div>
 </div>
 </section>
-<section id="quality-investigation" class="level3">
+<section id="quality-investigation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="quality-investigation">Quality Investigation</h3>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of duplicates while ignoring the index feature</span></span>
@@ -752,24 +618,13 @@ dtype: int64</code></pre>
 <pre><code>(363221, 67)</code></pre>
 </div>
 </div>
-</section>
-<section id="missing-values" class="level3">
-<h3 class="anchored" data-anchor-id="missing-values">Missing Values</h3>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># For each numerical feature compute number of unique entries</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(rc<span class="op">=</span>{<span class="st">'axes.facecolor'</span>:<span class="st">'#e6ddde'</span>, <span class="st">'figure.facecolor'</span>:<span class="st">'#e6ddde'</span>})</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">8</span>))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>plt.imshow(df_X.isna(), aspect<span class="op">=</span><span class="st">"auto"</span>, interpolation<span class="op">=</span><span class="st">"nearest"</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Column Number"</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Sample Number"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="eda_files/figure-html/cell-12-output-1.png" width="696" height="651"></p>
-</div>
-</div>
+<p>You can check this <a href="https://services.google.com/fh/files/misc/exploratory_data_analysis_for_feature_selection_in_machine_learning.pdf">link</a> for guide</p>
 
 
-</section>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>A comment in the margin</p>
+</div></div></section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

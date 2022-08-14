@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-0.9.518">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vidyasagar Bhargava">
+<meta name="dcterms.date" content="2022-06-08">
+<meta name="description" content="Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.">
+
+<title>Nearest Neighbour Classifier</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.svg" rel="icon" type="image/svg+xml">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html">Home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../..//myblog/index.html">Blog</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../cv.html">CV</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../london.html">London</a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Nearest Neighbour Classifier</h1>
+                  <div>
+        <div class="description">
+          Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">machine learning</div>
+                <div class="quarto-category">supervised learning</div>
+                <div class="quarto-category">algorithm</div>
+                <div class="quarto-category">classifier</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vidyasagar Bhargava </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 8, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#k-nn-algorithm" id="toc-k-nn-algorithm" class="nav-link" data-scroll-target="#k-nn-algorithm">k-NN algorithm</a>
+  <ul class="collapse">
+  <li><a href="#strength" id="toc-strength" class="nav-link" data-scroll-target="#strength">Strength</a></li>
+  <li><a href="#weakness" id="toc-weakness" class="nav-link" data-scroll-target="#weakness">Weakness</a></li>
+  </ul></li>
+  <li><a href="#choosing-an-appropriate-k" id="toc-choosing-an-appropriate-k" class="nav-link" data-scroll-target="#choosing-an-appropriate-k">Choosing an appropriate k</a></li>
+  <li><a href="#k-nn-from-scratch" id="toc-k-nn-from-scratch" class="nav-link" data-scroll-target="#k-nn-from-scratch">k-NN from scratch</a></li>
+  <li><a href="#k-nn-classifier" id="toc-k-nn-classifier" class="nav-link" data-scroll-target="#k-nn-classifier">k-NN Classifier</a>
+  <ul class="collapse">
+  <li><a href="#defining-the-dataset" id="toc-defining-the-dataset" class="nav-link" data-scroll-target="#defining-the-dataset">Defining the dataset</a></li>
+  <li><a href="#encoding-data-columns" id="toc-encoding-data-columns" class="nav-link" data-scroll-target="#encoding-data-columns">Encoding data columns</a></li>
+  <li><a href="#combining-features" id="toc-combining-features" class="nav-link" data-scroll-target="#combining-features">Combining Features</a></li>
+  <li><a href="#generating-models" id="toc-generating-models" class="nav-link" data-scroll-target="#generating-models">Generating Models</a></li>
+  <li><a href="#predict-output" id="toc-predict-output" class="nav-link" data-scroll-target="#predict-output">Predict Output</a></li>
+  </ul></li>
+  <li><a href="#k-nn-regressor" id="toc-k-nn-regressor" class="nav-link" data-scroll-target="#k-nn-regressor">k-NN Regressor</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><img src="https://i.imgur.com/bpU9JuI.gif" class="img-fluid"></p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.</p>
+<p>Nearest Neighbors works well for classification task where the relationships among the features and target classes are numerous and extremely difficult to understand but the items of similar class tend to be homogeneous.</p>
+<p>Nearest Neighbor classifier struggles most when there is no clear distinction exists among the groups.</p>
+</section>
+<section id="k-nn-algorithm" class="level1">
+<h1>k-NN algorithm</h1>
+<p>k-Nearest Neighbor algorithm is an example of nearest neighbor classifier.</p>
+<section id="strength" class="level2">
+<h2 class="anchored" data-anchor-id="strength">Strength</h2>
+<ul>
+<li>Simple and effective</li>
+<li>Makes no assumption about data</li>
+<li>Fast Training Process</li>
+</ul>
+</section>
+<section id="weakness" class="level2">
+<h2 class="anchored" data-anchor-id="weakness">Weakness</h2>
+<ul>
+<li>Doesn’t produce model, limiting the ability to understand how features are related to class</li>
+<li>Requires selection of k</li>
+<li>Slow classification phase</li>
+<li>Categorical features and missing data require pre processing</li>
+</ul>
+<p>The k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.</p>
+<p>For finding the distance k-NN algorithm uses <strong>Euclidean distance</strong>.</p>
+</section>
+</section>
+<section id="choosing-an-appropriate-k" class="level1">
+<h1>Choosing an appropriate k</h1>
+<p>Choosing the value of k determines how well the model will generalize to future data. Choosing a large k reduces the impact or variance caused by noisy data but can bias the learner so that it runs the risk of ignoring small, but important pattern.</p>
+<p>In Practice choosing k depends on the difficulty of the concept to be learned and the number of records in training data.</p>
+<ul>
+<li>Start with k value equal to the square root of the number of training examples.</li>
+<li>Using cross validation to determine the best k value.</li>
+<li>Weighted voting is one of interesting way to solve this problem. By giving higher weight to close neighbors.b 444</li>
+</ul>
+</section>
+<section id="k-nn-from-scratch" class="level1">
+<h1>k-NN from scratch</h1>
+<ul>
+<li>Compute distances between x and all examples in the training set</li>
+<li>Sort by distance and return indexes of the first k neighbors</li>
+<li>Extract the labels of the k nearest neighbor training samples</li>
+<li>Return the most common class label</li>
+</ul>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> euclidean_distance(x1, x2):</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.sqrt(np.<span class="bu">sum</span>((x1 <span class="op">-</span> x2)<span class="op">**</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We used euclidean distance for calculating the nearest neighbors.</p>
+<p>Now we will define our KNN Class</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> KNN:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, k<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.k <span class="op">=</span> k</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fit(<span class="va">self</span>, X, y):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.X_train <span class="op">=</span> X</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y_train <span class="op">=</span> y</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> predict(<span class="va">self</span>, X):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> [<span class="va">self</span>._predict(x) <span class="cf">for</span> x <span class="kw">in</span> X]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.array(y_pred)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _predict(<span class="va">self</span>, x):</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Compute distances between x and all examples in the training set</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        distances <span class="op">=</span> [euclidean_distance(x, x_train) <span class="cf">for</span> x_train <span class="kw">in</span> <span class="va">self</span>.X_train]</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Sort by distance and return indexes of the first k neighbors</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        k_idx <span class="op">=</span> np.argsort(distances)[:<span class="va">self</span>.k]</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the labels of the k nearest neighbor training samples</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        k_neighbor_labels <span class="op">=</span> [<span class="va">self</span>.y_train[i] <span class="cf">for</span> i <span class="kw">in</span> k_idx]  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># return the most common class label</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        most_common <span class="op">=</span> Counter(k_neighbor_labels).most_common(<span class="dv">1</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> most_common[<span class="dv">0</span>][<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We are going to use iris dataset to test our KNN model that we created !!!</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> datasets</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>iris <span class="op">=</span> datasets.load_iris()</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>X, y <span class="op">=</span> iris.data, iris.target</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">1234</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>clf <span class="op">=</span> KNN()</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>clf.fit(X_train, y_train)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> accuracy(y_true, y_pred):</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    accuracy <span class="op">=</span> np.<span class="bu">sum</span>(y_true <span class="op">==</span> y_pred) <span class="op">/</span> <span class="bu">len</span>(y_true)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> accuracy</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> clf.predict(X_test)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"custom KNN classification accuracy"</span>, accuracy(y_test, predictions))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>custom KNN classification accuracy 1.0</code></pre>
+</div>
+</div>
+</section>
+<section id="k-nn-classifier" class="level1">
+<h1>k-NN Classifier</h1>
+<section id="defining-the-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="defining-the-dataset">Defining the dataset</h2>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First Feature</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>weather<span class="op">=</span>[<span class="st">'Sunny'</span>,<span class="st">'Sunny'</span>,<span class="st">'Overcast'</span>,<span class="st">'Rainy'</span>,<span class="st">'Rainy'</span>,<span class="st">'Rainy'</span>,<span class="st">'Overcast'</span>,<span class="st">'Sunny'</span>,<span class="st">'Sunny'</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">'Rainy'</span>,<span class="st">'Sunny'</span>,<span class="st">'Overcast'</span>,<span class="st">'Overcast'</span>,<span class="st">'Rainy'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Second Feature</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>temp<span class="op">=</span>[<span class="st">'Hot'</span>,<span class="st">'Hot'</span>,<span class="st">'Hot'</span>,<span class="st">'Mild'</span>,<span class="st">'Cool'</span>,<span class="st">'Cool'</span>,<span class="st">'Cool'</span>,<span class="st">'Mild'</span>,<span class="st">'Cool'</span>,<span class="st">'Mild'</span>,<span class="st">'Mild'</span>,<span class="st">'Mild'</span>,<span class="st">'Hot'</span>,<span class="st">'Mild'</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Label or target varible</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>play<span class="op">=</span>[<span class="st">'No'</span>,<span class="st">'No'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'No'</span>,<span class="st">'Yes'</span>,<span class="st">'No'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'Yes'</span>,<span class="st">'No'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We have two features weather and temperature and one label play.</p>
+</section>
+<section id="encoding-data-columns" class="level2">
+<h2 class="anchored" data-anchor-id="encoding-data-columns">Encoding data columns</h2>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> preprocessing</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#creating labelEncoder</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>le <span class="op">=</span> preprocessing.LabelEncoder()</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting string labels into numbers.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>weather_encoded<span class="op">=</span>le.fit_transform(weather)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Similarly, you can encode temperature and label into numeric columns.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># converting string labels into numbers</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>temp_encoded<span class="op">=</span>le.fit_transform(temp)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>label<span class="op">=</span>le.fit_transform(play)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="combining-features" class="level2">
+<h2 class="anchored" data-anchor-id="combining-features">Combining Features</h2>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#combinig weather and temp into single listof tuples</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>features<span class="op">=</span><span class="bu">list</span>(<span class="bu">zip</span>(weather_encoded,temp_encoded))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="generating-models" class="level2">
+<h2 class="anchored" data-anchor-id="generating-models">Generating Models</h2>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Train the model using the training sets</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>model.fit(features,label)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>KNeighborsClassifier(n_neighbors=3)</code></pre>
+</div>
+</div>
+</section>
+<section id="predict-output" class="level2">
+<h2 class="anchored" data-anchor-id="predict-output">Predict Output</h2>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>predicted<span class="op">=</span> model.predict([[<span class="dv">0</span>,<span class="dv">2</span>]]) <span class="co"># 0:Overcast, 2:Mild</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(predicted)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="k-nn-regressor" class="level1">
+<h1>k-NN Regressor</h1>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_boston</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsRegressor</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>X,y <span class="op">=</span> load_boston(return_X_y<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>mod <span class="op">=</span> KNeighborsRegressor()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>mod.fit(X,y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/Users/vidyasagar.bhargava/miniconda3/envs/databricks/lib/python3.10/site-packages/sklearn/utils/deprecation.py:87: FutureWarning:
+
+Function load_boston is deprecated; `load_boston` is deprecated in 1.0 and will be removed in 1.2.
+
+    The Boston housing prices dataset has an ethical problem. You can refer to
+    the documentation of this function for further details.
+
+    The scikit-learn maintainers therefore strongly discourage the use of this
+    dataset unless the purpose of the code is to study and educate about
+    ethical issues in data science and machine learning.
+
+    In this special case, you can fetch the dataset from the original
+    source::
+
+        import pandas as pd
+        import numpy as np
+
+
+        data_url = "http://lib.stat.cmu.edu/datasets/boston"
+        raw_df = pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
+        data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+        target = raw_df.values[1::2, 2]
+
+    Alternative datasets include the California housing dataset (i.e.
+    :func:`~sklearn.datasets.fetch_california_housing`) and the Ames housing
+    dataset. You can load the datasets as follows::
+
+        from sklearn.datasets import fetch_california_housing
+        housing = fetch_california_housing()
+
+    for the California housing dataset and::
+
+        from sklearn.datasets import fetch_openml
+        housing = fetch_openml(name="house_prices", as_frame=True)
+
+    for the Ames housing dataset.
+    
+</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>KNeighborsRegressor()</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>mod.predict(X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>array([21.78, 22.9 , 25.36, 26.06, 27.1 , 27.1 , 20.88, 19.1 , 18.4 ,
+       19.48, 19.28, 22.  , 24.34, 20.52, 24.66, 21.3 , 30.48, 20.4 ,
+       15.7 , 23.54, 16.82, 17.64, 18.3 , 17.08, 16.66, 15.1 , 16.78,
+       14.94, 19.94, 18.34, 14.1 , 16.82, 15.12, 14.1 , 15.12, 26.92,
+       22.14, 27.4 , 28.44, 31.88, 31.88, 25.36, 25.36, 24.22, 20.68,
+       20.44, 20.44, 18.1 , 18.1 , 24.  , 21.54, 24.  , 27.16, 27.16,
+       25.7 , 39.82, 27.08, 38.28, 24.8 , 25.64, 21.78, 33.6 , 21.78,
+       24.06, 31.74, 25.3 , 26.98, 22.18, 20.42, 20.42, 27.76, 29.5 ,
+       27.76, 27.76, 22.92, 21.64, 25.82, 21.64, 21.38, 22.02, 24.8 ,
+       21.88, 25.22, 25.64, 25.98, 25.98, 23.28, 25.98, 24.02, 25.58,
+       25.58, 25.06, 26.34, 26.04, 30.1 , 24.84, 23.62, 24.32, 28.52,
+       24.96, 22.1 , 22.2 , 15.34, 19.74, 19.74, 19.66, 19.56, 21.34,
+       19.66, 19.56, 22.08, 20.1 , 19.6 , 17.54, 20.1 , 17.7 , 20.2 ,
+       20.1 , 20.66, 19.8 , 22.76, 20.6 , 19.66, 18.52, 19.66, 20.6 ,
+       18.52, 16.62, 18.04, 16.88, 18.4 , 18.4 , 18.78, 18.56, 20.24,
+       17.44, 17.8 , 18.4 , 15.88, 17.06, 15.24, 14.76, 15.62, 15.62,
+       15.62, 18.26, 18.26, 15.62, 17.82, 17.44, 37.22, 20.66, 19.28,
+       20.24, 20.24, 15.34, 15.34, 37.78, 25.52, 32.08, 20.66, 42.56,
+       44.54, 44.54, 30.34, 20.24, 37.22, 19.52, 19.98, 20.24, 19.98,
+       18.74, 21.9 , 24.4 , 23.74, 25.82, 22.34, 24.2 , 23.84, 38.56,
+       33.24, 38.56, 33.24, 31.6 , 33.24, 38.56, 37.84, 32.72, 33.14,
+       32.72, 33.14, 32.72, 33.72, 31.8 , 31.8 , 34.9 , 26.78, 25.24,
+       26.78, 29.38, 29.5 , 25.2 , 25.3 , 41.28, 41.28, 23.76, 23.78,
+       20.74, 22.9 , 21.1 , 21.1 , 21.1 , 23.9 , 28.84, 22.6 , 27.28,
+       22.96, 21.9 , 21.1 , 23.38, 25.42, 17.32, 31.8 , 24.46, 37.82,
+       36.46, 36.14, 35.96, 29.5 , 29.44, 34.  , 41.28, 38.28, 38.16,
+       28.12, 29.3 , 34.12, 34.12, 21.44, 21.92, 21.44, 21.4 , 22.1 ,
+       21.74, 20.  , 19.68, 22.16, 20.  , 21.38, 31.22, 31.22, 26.28,
+       29.56, 31.22, 27.08, 24.86, 38.28, 42.44, 38.9 , 36.48, 38.82,
+       41.88, 41.88, 37.9 , 41.88, 34.6 , 38.82, 36.16, 32.42, 31.74,
+       32.58, 28.82, 31.74, 26.88, 31.96, 31.96, 31.96, 31.96, 31.96,
+       30.58, 31.74, 32.58, 36.62, 42.8 , 24.84, 21.88, 38.64, 21.88,
+       24.44, 22.62, 34.9 , 34.9 , 31.88, 24.54, 23.28, 24.44, 23.22,
+       22.94, 25.28, 29.12, 25.42, 25.78, 28.02, 30.58, 31.22, 27.02,
+       31.96, 27.02, 23.72, 21.6 , 29.  , 21.32, 21.02, 20.94, 21.44,
+       21.6 , 18.54, 19.52, 20.5 , 21.3 , 23.32, 23.76, 23.32, 22.9 ,
+       22.06, 23.76, 26.14, 22.06, 19.7 , 21.22, 19.92, 21.86, 22.98,
+       23.6 , 21.16, 20.78, 25.74, 24.3 , 20.72, 22.64, 24.32, 24.44,
+       19.8 , 29.36, 26.58, 19.  , 18.84, 26.48, 33.32, 25.78, 25.78,
+       28.  , 30.46, 42.8 , 20.96, 24.8 , 15.88, 19.06, 20.94, 21.42,
+       33.8 , 25.6 , 30.94, 25.6 , 27.22, 27.22, 16.98, 14.58, 39.16,
+       39.16, 26.46, 36.6 , 27.22, 11.36, 10.54, 10.82, 12.36, 12.5 ,
+        9.6 , 10.22,  6.86, 10.26, 11.62, 11.62, 14.16, 11.  ,  8.94,
+        9.74, 13.18, 12.5 , 13.52, 21.66, 11.88, 15.58, 11.74, 13.54,
+       13.98, 12.46,  8.5 , 14.82,  9.54, 11.14, 15.88, 10.5 , 14.28,
+        6.86, 13.18, 18.56, 14.52, 17.62, 10.34, 12.74, 11.88, 17.18,
+       10.92, 11.88, 11.2 , 14.58, 11.96, 10.44, 16.98, 16.98, 14.16,
+       13.58, 12.94, 11.74, 12.56, 10.26, 13.52, 11.58, 14.  , 12.6 ,
+       13.52, 13.3 , 12.9 , 12.16, 12.1 , 10.56, 12.12, 11.96, 10.6 ,
+       14.56, 13.84, 13.34, 13.44, 12.44, 16.98, 13.34, 14.48, 16.06,
+       13.58, 15.54, 17.04, 16.62, 12.54, 12.2 , 13.58, 12.94, 14.84,
+       20.24, 14.34, 19.82, 20.24, 20.38, 22.28, 17.56, 12.74, 18.56,
+       23.7 , 21.26, 20.24, 18.6 , 22.72, 23.28, 15.54, 16.06, 14.18,
+       14.96, 15.88, 16.36, 22.28, 22.72, 23.44, 20.86, 22.8 , 21.34,
+       21.42, 21.34, 17.04, 11.54, 12.28, 14.86, 18.3 , 22.08, 21.82,
+       22.02, 18.7 , 18.7 , 20.64, 18.7 , 19.96, 21.18, 23.12, 20.88,
+       21.9 , 21.42])</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

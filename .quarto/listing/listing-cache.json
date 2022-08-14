@@ -18,6 +18,9 @@
     "projects.qmd": [
       "posts",
       "projects"
+    ],
+    "myblog/index.qmd": [
+      "posts"
     ]
   }
 }
