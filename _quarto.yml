@@ -8,7 +8,7 @@ website:
     right:
       - href: index.qmd
         text: Home
-      - href: /myblog/index.qmd
+      - href: myblog/blog.qmd
         text: Blog
       - href: cv.qmd
         text: CV

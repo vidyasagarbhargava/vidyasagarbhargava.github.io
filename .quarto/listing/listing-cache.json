@@ -21,6 +21,9 @@
     ],
     "myblog/index.qmd": [
       "posts"
+    ],
+    "myblog/blog.qmd": [
+      "posts"
     ]
   }
 }
