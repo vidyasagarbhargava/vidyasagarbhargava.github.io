@@ -8,7 +8,7 @@
 
 <meta name="author" content="Vidyasagar Bhargava">
 <meta name="dcterms.date" content="2019-06-11">
-<meta name="description" content="A way of summarizing, interpreting and visualizing the information hidden in rows and column format.">
+<meta name="description" content="EDA is a way of summarizing, interpreting and visualizing the information hidden in rows and column format.">
 
 <title>The Google’s Guide to Exploratory Data Analysis</title>
 <style>
@@ -143,7 +143,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="nav-link" href="../../../index.html">Home</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../..//myblog/index.html">Blog</a>
+    <a class="nav-link" href="../../../myblog/blog.html">Blog</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../../cv.html">CV</a>
@@ -164,7 +164,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">The Google’s Guide to Exploratory Data Analysis</h1>
                   <div>
         <div class="description">
-          A way of summarizing, interpreting and visualizing the information hidden in rows and column format.
+          EDA is a way of summarizing, interpreting and visualizing the information hidden in rows and column format.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -203,7 +203,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#why-eda-is-important" id="toc-why-eda-is-important" class="nav-link active" data-scroll-target="#why-eda-is-important">Why EDA is important ?</a></li>
-  <li><a href="#how-to-eda" id="toc-how-to-eda" class="nav-link" data-scroll-target="#how-to-eda">How to EDA</a></li>
+  <li><a href="#how-to-eda" id="toc-how-to-eda" class="nav-link" data-scroll-target="#how-to-eda">How to EDA ?</a></li>
   <li><a href="#example-case" id="toc-example-case" class="nav-link" data-scroll-target="#example-case">Example Case</a></li>
   <li><a href="#structure-investigation" id="toc-structure-investigation" class="nav-link" data-scroll-target="#structure-investigation">Structure Investigation</a></li>
   <li><a href="#structure-of-non-numerical-features" id="toc-structure-of-non-numerical-features" class="nav-link" data-scroll-target="#structure-of-non-numerical-features">Structure of Non Numerical Features</a></li>
@@ -225,45 +225,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It helps in delivering data driven insights to business stakeholders by confirming they are asking the right questions and not biasing the investigation with their assumptions.</p>
 </section>
 <section id="how-to-eda" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-eda">How to EDA</h3>
-<p>I divide exploratory data analysis in 3 parts of investigation.</p>
+<h3 class="anchored" data-anchor-id="how-to-eda">How to EDA ?</h3>
+<p>As a data scientist we need to do comprehensive exploration of the dataset and gain deep understanding of data. I divide exploratory data analysis in 3 parts of investigation.</p>
 <ol type="1">
-<li><p><strong>Structure Investigation</strong> : Exploring shape and as well as data types.<br>
-1.1 <em>Structure of non numerical features</em><br>
-1.2 <em>Structure of numerical features</em><br>
-1.3 <em>Conclusion of structure investigation</em><br>
-</p></li>
-<li><p><strong>Quality Investigation</strong> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.<br>
-2.1 <em>Duplicates</em><br>
-2.2 <em>Missing Values</em><br>
+<li><p><strong>Structure of data</strong> : Exploring shape and as well as data types.<br>
+1.1 Structure of non numerical features<br>
+1.2 Structure of numerical features<br>
+1.3 Conclusion of structure investigation</p></li>
+<li><p><strong>Quality of data</strong> : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.<br>
+2.1 Duplicates<br>
+2.2 Missing Values<br>
 2.2.1 Per sample<br>
 2.2.2 Per feature<br>
-2.3 <em>Unwanted Entries and Recording Errors</em><br>
+2.3 Unwanted Entries and Recording Errors<br>
 2.3.1 Numerical features<br>
 2.3.2 Non Numerical features<br>
-2.4 <em>Conclusion of Quality Investigation</em></p></li>
-<li><p><strong>Content Investigation</strong> : More indepth study of features and how they relate to each other. 3.1 <em>Feature distribution</em><br>
-3.2 <em>Feature patterns</em><br>
+2.4 Conclusion of Quality Investigation</p></li>
+<li><p><strong>Content Investigation &amp; Predictive Power</strong> : More indepth study of features and how they relate to each other.<br>
+3.1 Feature distribution<br>
+3.2 Feature patterns<br>
 3.2.1 Continuos feature<br>
 3.2.2 Discreet and ordinal feature<br>
-3.3 <em>Feature relantionship</em></p></li>
+3.3 Feature relantionship</p></li>
 </ol>
 </section>
 <section id="example-case" class="level3">
 <h3 class="anchored" data-anchor-id="example-case">Example Case</h3>
 <p>Let’s download some data and perform eda to bring insights as well know quality of the data.</p>
-<div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset from openml</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> fetch_openml(data_id<span class="op">=</span><span class="dv">42803</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature matrix X and show 5 random samples</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> dataset[<span class="st">"frame"</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df_X.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset from openml</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> fetch_openml(data_id<span class="op">=</span><span class="dv">42803</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature matrix X and show 5 random samples</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> dataset[<span class="st">"frame"</span>]</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_X.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
 
 <div>
 
@@ -424,16 +427,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="structure-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="structure-investigation">Structure Investigation</h3>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(363243, 67)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pd.value_counts(df_X.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pd.value_counts(df_X.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>float64    61
 object      6
 dtype: int64</code></pre>
@@ -442,10 +445,10 @@ dtype: int64</code></pre>
 </section>
 <section id="structure-of-non-numerical-features" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-non-numerical-features">Structure of Non Numerical Features</h3>
-<div class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display non-numerical features</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_X.select_dtypes(exclude<span class="op">=</span><span class="st">"number"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display non-numerical features</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_X.select_dtypes(exclude<span class="op">=</span><span class="st">"number"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 
 <div>
 
@@ -512,13 +515,13 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Changes data type of 'Sex_of_Driver'</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_X[<span class="st">"Sex_of_Driver"</span>] <span class="op">=</span> df_X[<span class="st">"Sex_of_Driver"</span>].astype(<span class="st">"float"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Changes data type of 'Sex_of_Driver'</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_X[<span class="st">"Sex_of_Driver"</span>] <span class="op">=</span> df_X[<span class="st">"Sex_of_Driver"</span>].astype(<span class="st">"float"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_X.describe(exclude<span class="op">=</span><span class="st">"number"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_X.describe(exclude<span class="op">=</span><span class="st">"number"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 
 <div>
 
@@ -574,49 +577,50 @@ dtype: int64</code></pre>
 </section>
 <section id="structure-of-numerical-features" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="structure-of-numerical-features">Structure of Numerical Features</h3>
-<div class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from matplotlib.offsetbox import AnnotationBbox, OffsetImage</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import matplotlib.image as mpimg</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def insert_image(path, zoom, xybox, ax):</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     '''Insert an image within matplotlib'''</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     imagebox = OffsetImage(mpimg.imread(path), zoom=zoom)</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     ab = AnnotationBbox(imagebox, xy=(0.5, 0.7), frameon=False, pad=1, xybox=xybox)</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     ax.add_artist(ab)</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from matplotlib.offsetbox import AnnotationBbox, OffsetImage</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import matplotlib.image as mpimg</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def insert_image(path, zoom, xybox, ax):</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     '''Insert an image within matplotlib'''</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     imagebox = OffsetImage(mpimg.imread(path), zoom=zoom)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     ab = AnnotationBbox(imagebox, xy=(0.5, 0.7), frameon=False, pad=1, xybox=xybox)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     ax.add_artist(ab)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For each numerical feature compute number of unique entries</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(rc<span class="op">=</span>{<span class="st">'axes.facecolor'</span>:<span class="st">'#e6ddde'</span>, <span class="st">'figure.facecolor'</span>:<span class="st">'#e6ddde'</span>})</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>unique_values <span class="op">=</span> df_X.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).nunique().sort_values()</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot information with y-axis in log-scale</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>unique_values.plot.bar(logy<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">"Unique values per feature"</span>,  color<span class="op">=</span><span class="st">'#753742'</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell page-columns page-full" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For each numerical feature compute number of unique entries</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(rc<span class="op">=</span>{<span class="st">'axes.facecolor'</span>:<span class="st">'#e6ddde'</span>, <span class="st">'figure.facecolor'</span>:<span class="st">'#e6ddde'</span>})</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>unique_values <span class="op">=</span> df_X.select_dtypes(include<span class="op">=</span><span class="st">"number"</span>).nunique().sort_values()</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot information with y-axis in log-scale</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>unique_values.plot.bar(logy<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">"Unique values per feature"</span>,  color<span class="op">=</span><span class="st">'#753742'</span>)<span class="op">;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'foo.png'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display column-page">
-<p><img src="index_files/figure-html/cell-9-output-1.png" width="1171" height="648"></p>
+<p><img src="index_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="quality-investigation" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="quality-investigation">Quality Investigation</h3>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of duplicates while ignoring the index feature</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>n_duplicates <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).duplicated().<span class="bu">sum</span>()</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"You seem to have </span><span class="sc">{</span>n_duplicates<span class="sc">}</span><span class="ss"> duplicates in your database."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of duplicates while ignoring the index feature</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n_duplicates <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).duplicated().<span class="bu">sum</span>()</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"You seem to have </span><span class="sc">{</span>n_duplicates<span class="sc">}</span><span class="ss"> duplicates in your database."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>You seem to have 22 duplicates in your database.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Extract column names of all features, except 'Accident_Index'</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>columns_to_consider <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).columns</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop duplicates based on 'columns_to_consider'</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> df_X.drop_duplicates(subset<span class="op">=</span>columns_to_consider)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Extract column names of all features, except 'Accident_Index'</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>columns_to_consider <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).columns</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop duplicates based on 'columns_to_consider'</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> df_X.drop_duplicates(subset<span class="op">=</span>columns_to_consider)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>(363221, 67)</code></pre>
 </div>
 </div>

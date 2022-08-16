@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vidyasagar Bhargava">
-<meta name="dcterms.date" content="2019-07-13">
-<meta name="description" content="Principles and process for democratizing ML projects">
+<meta name="dcterms.date" content="2021-04-08">
+<meta name="description" content="A hypothesis testing is a way to test an assumption about a population parameter.">
 
-<title>Successful delivering of Machine Learning Projects</title>
+<title>Hypothesis Testing</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,6 +58,7 @@ ul.task-list{list-style: none;}
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -95,14 +96,15 @@ ul.task-list{list-style: none;}
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Successful delivering of Machine Learning Projects</h1>
+      <h1 class="title">Hypothesis Testing</h1>
                   <div>
         <div class="description">
-          Principles and process for democratizing ML projects
+          A hypothesis testing is a way to test an assumption about a population parameter.
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">machine learning</div>
+                <div class="quarto-category">hypothesis testing</div>
+                <div class="quarto-category">inferential statistics</div>
               </div>
                   </div>
   </div>
@@ -120,7 +122,7 @@ ul.task-list{list-style: none;}
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 13, 2019</p>
+        <p class="date">April 8, 2021</p>
       </div>
     </div>
       
@@ -135,13 +137,8 @@ ul.task-list{list-style: none;}
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#easy-access-to-required-data-and-a-comprehensive-data-strategy" id="toc-easy-access-to-required-data-and-a-comprehensive-data-strategy" class="nav-link active" data-scroll-target="#easy-access-to-required-data-and-a-comprehensive-data-strategy">1. Easy access to required data and a comprehensive data strategy</a></li>
-  <li><a href="#selecting-machine-learning-use-cases-and-setting-success-metrics" id="toc-selecting-machine-learning-use-cases-and-setting-success-metrics" class="nav-link" data-scroll-target="#selecting-machine-learning-use-cases-and-setting-success-metrics">2. Selecting machine learning use cases and setting success metrics</a></li>
-  <li><a href="#technical-experts-and-domain-experts-should-work-together" id="toc-technical-experts-and-domain-experts-should-work-together" class="nav-link" data-scroll-target="#technical-experts-and-domain-experts-should-work-together">3. Technical experts and domain experts should work together</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">4. Exploratory data analysis</a></li>
-  <li><a href="#a-quick-mvp" id="toc-a-quick-mvp" class="nav-link" data-scroll-target="#a-quick-mvp">5. A quick MVP</a></li>
-  <li><a href="#experiment-metrics" id="toc-experiment-metrics" class="nav-link" data-scroll-target="#experiment-metrics">6. Experiment Metrics</a></li>
-  <li><a href="#regular-check-ins" id="toc-regular-check-ins" class="nav-link" data-scroll-target="#regular-check-ins">7. Regular Check-ins</a></li>
+  <li><a href="#p-value-approach" id="toc-p-value-approach" class="nav-link active" data-scroll-target="#p-value-approach">P-Value approach</a></li>
+  <li><a href="#critical-value-approach" id="toc-critical-value-approach" class="nav-link" data-scroll-target="#critical-value-approach">Critical Value Approach</a></li>
   </ul>
 </nav>
     </div>
@@ -151,59 +148,76 @@ ul.task-list{list-style: none;}
 
 
 
-<p><img src="https://images.rawpixel.com/image_1300/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3BkMTliYXRjaDM3LTA5OS1nbG95LWpvYjU4Mi0yLmpwZw.jpg" class="img-fluid"></p>
-<section id="easy-access-to-required-data-and-a-comprehensive-data-strategy" class="level3">
-<h3 class="anchored" data-anchor-id="easy-access-to-required-data-and-a-comprehensive-data-strategy">1. Easy access to required data and a comprehensive data strategy</h3>
-<p>There is saying in computer science world “garbage in, garbage out” which means nonsense input data produces nonsense output. Therefore your machine learning model is only as good as the data it’s trained on.If there is problem with data, machine learning scientists will end up spending their time in doing data cleanup and management.So we need a strong data strategy to make efficient use of ML scientist’s time and talent.</p>
-<p><strong>What makes a strong data strategy ?</strong></p>
-<ul>
-<li>Data should be viewed as organizational asset rather than property of individual department that created or collected that data.</li>
-<li>Data should be available easily, securely and in compliance with legal and regulatory requirements.</li>
-<li>Data is put to work through analytics and machine learning to make better decisions, create efficiencies and drive new innovations.</li>
-</ul>
-<p><strong>Data related questions to be asked before the start of ML project</strong></p>
-<ul>
-<li>What data is available to me today?</li>
-<li>What data is not quite available, but with some effort could become available?</li>
-<li>What data I don’t have today, but I might have in next few months or year? And what steps can be taken to begin gathering that data?</li>
-<li>Is there any potential bias in data or data sources?</li>
-</ul>
+<p>During hypothesis testing we confirm whether results we got is by chance ? If yes then experiment won’t be repeatable and so has little use.</p>
+<p>There are two ways of doing hypothesis testing.</p>
+<ol type="1">
+<li>Using P-Value</li>
+<li>Using Critical Values</li>
+</ol>
+<p>Let’s start with business case problem.</p>
+<p><em>Q :- Suppose that a PM claims that users on average spend about Rs. 50 per month on Amazon. However, you doubt this claim, and you believe that the average should be higher. So you sample 100 users and learn that the sample mean is Rs. 85. Would you reject the PM’s claim? Assume population standard deviation is 20</em>.</p>
+<section id="p-value-approach" class="level2">
+<h2 class="anchored" data-anchor-id="p-value-approach">P-Value approach</h2>
+<ol type="1">
+<li>Hypothesis</li>
+<li>Significance level</li>
+<li>Test Statistics<br>
+</li>
+<li>Probability of observing test statistics</li>
+<li>Statistical Decision</li>
+</ol>
+<p><strong>1. Hypothesis</strong><br>
+Ho : the average spend per user is Rs. 50<br>
+Ha : the average spend per user is greater than Rs. 50</p>
+<p><strong>2. Significance level</strong></p>
+<p><span class="math inline">\(\alpha = 0.05\)</span></p>
+<p><strong>3. Test Statistics</strong></p>
+<p><span class="math display">\[
+Z-statistics  = \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+\]</span></p>
+<p><span class="math display">\[
+= \frac{85-50}{20/\sqrt{100}} =\frac{35}{2} = 17.5
+\]</span></p>
+<p><strong>4. Probability of observing test statistics</strong><br>
+Looking into <a href="https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf">standard normal distribution table</a>.</p>
+<p><span class="math inline">\(P-value &lt; 0.0001 &lt; \alpha = 0.05\)</span></p>
+<p><strong>5. Statistical Decision</strong></p>
+<p><em>At alpha = 0.05 there is statistical significance to reject PM’s claim and conclude that the average spend per user is greater than Rs. 50.</em></p>
+<p>Business Case problem</p>
+<p><em>Q :- A Principal claims that the student in his school are above average intelligence. A random sample of 30 IQ scores have a mean of 112.5. Is there sufficient evidence to support the principal’s claim? The mean population IQ is 100 with standard deviation is 15.</em></p>
 </section>
-<section id="selecting-machine-learning-use-cases-and-setting-success-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="selecting-machine-learning-use-cases-and-setting-success-metrics">2. Selecting machine learning use cases and setting success metrics</h3>
-<p>We should aim to use machine learning where it is actually needed and not where it might be interesting. <em>Some times simple analytics or rules get you 10-40% of business impact</em>.Things to keep in mind include data readiness, business impact and machine learning applicability.</p>
-<ul>
-<li>A high impact use case without data or machine learing applicability ❌</li>
-<li>A use case with lots of data and high machine learning applicability but low business impact ❌</li>
-</ul>
-<p>Before working on a project the team needs estimate its potential impact as well (Opportunity Sizing). So once we define business problem which can be solved with machine learning and done with opportunity sizing the next step is to outlining clear metrics to measure success.</p>
-<p>The data science projects needs to have clear goal which is typically a target value for a clearly defined metric. In real world data science projects there are not just one but multiple metrics that model will evaluated against. Some of these evaluation metric won’t even be related to how your prediction performs against the ground truth. Other such metrics are like :</p>
-<ul>
-<li>Overall memory usage</li>
-<li>latency of the prediction process</li>
-<li>complexity of predictive model</li>
-</ul>
-<p><em>Real world problems are indeed dominated by business and tech infrastructure concerns.</em></p>
-</section>
-<section id="technical-experts-and-domain-experts-should-work-together" class="level3">
-<h3 class="anchored" data-anchor-id="technical-experts-and-domain-experts-should-work-together">3. Technical experts and domain experts should work together</h3>
-<p>We need to make sure that domain experts and technical experts or stakeholders work side by side. If relevant stakeholders are the part of entire process, everyone is most likely to accept, adopt and implement the solution. If a data scientist is working in silos then its very much unlikely that their models get implemented.</p>
-</section>
-<section id="exploratory-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-data-analysis">4. Exploratory data analysis</h3>
-<p>Before building the model,we need to interrogate the data to see if there is any predictive power in the feature set. Read more about EDA <a href="https://vidyasagarbhargava.github.io/posts/eda.html">here</a>.</p>
-</section>
-<section id="a-quick-mvp" class="level3">
-<h3 class="anchored" data-anchor-id="a-quick-mvp">5. A quick MVP</h3>
-<p>Its good practice to build a minimum viable product which is build quickly and cheaply to validate the hypothesis before we commit extensive time and resource.</p>
-</section>
-<section id="experiment-metrics" class="level3">
-<h3 class="anchored" data-anchor-id="experiment-metrics">6. Experiment Metrics</h3>
-<p>We should look for more than one metric to look when an experiment concludes.</p>
-</section>
-<section id="regular-check-ins" class="level3">
-<h3 class="anchored" data-anchor-id="regular-check-ins">7. Regular Check-ins</h3>
-<p>Rather than meeting at the start and end of a model build, it is better to check-in frequently (e.g.&nbsp;once or twice a week) to discuss latest findings and align on if any course corrections are necessary.</p>
+<section id="critical-value-approach" class="level2">
+<h2 class="anchored" data-anchor-id="critical-value-approach">Critical Value Approach</h2>
+<ol type="1">
+<li>Hypothesis</li>
+<li>Significance level</li>
+<li>Test Statistics<br>
+</li>
+<li>Critical Value</li>
+<li>Statistical Decision</li>
+</ol>
+<div class="cell" data-execution_count="76">
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-2-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p><strong>1. Hypothesis</strong><br>
+Ho : the average IQ score is 100<br>
+Ha : the average IQ score is greater than Rs. 100</p>
+<p><strong>2. Significance level</strong></p>
+<p><span class="math inline">\(\alpha = 0.05\)</span></p>
+<p><strong>3. Test Statistics</strong></p>
+<p><span class="math display">\[
+Z-statistics  = \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+\]</span></p>
+<p><span class="math display">\[
+= \frac{112.5-100}{15/\sqrt{30}} = 4.56
+\]</span></p>
+<p><strong>4. Z Critical Value</strong><br>
+Looking into <a href="https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf">standard normal distribution table</a>.</p>
+<p><span class="math inline">\(Z Critical-value = 1.645\)</span></p>
+<p><strong>5. Statistical Decision</strong></p>
+<p><em>At alpha = 0.05 test statistics is greater than Z Critical value hence we can reject null hypothesis.</em></p>
 
 
 </section>
