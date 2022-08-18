@@ -564,7 +564,7 @@
     "href": "myblog/blog.html",
     "title": "Blog",
     "section": "",
-    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nIn last few decades we have seen rise of multiple languagues.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nEDA is a way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nEDA is a way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "myblog/posts/hypothesis-testing/index.html",
@@ -599,6 +599,20 @@
     "href": "myblog/posts/top-languages/index.html",
     "title": "Most Popular programming languages 2004-2021",
     "section": "",
-    "text": "chart\n\n\n\n\n\n\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\""
+    "text": "chart\n\n\n\n\n\n\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\"\n\n\n\nimport {renderGif} from '@mootari/gif@766'\n\nrenderGif(invalidation, chart)"
+  },
+  {
+    "objectID": "myblog/posts/decision-tree/Untitled.html",
+    "href": "myblog/posts/decision-tree/Untitled.html",
+    "title": "Decision Tree",
+    "section": "",
+    "text": "Decision Tree algorithm is one of the most intuitive ml technique."
+  },
+  {
+    "objectID": "myblog/posts/Nearest-Neighbour-Classifier/index.html",
+    "href": "myblog/posts/Nearest-Neighbour-Classifier/index.html",
+    "title": "Nearest Neighbour Classifier",
+    "section": "",
+    "text": "#![](https://i.imgur.com/bpU9JuI.gif)"
   }
 ]
