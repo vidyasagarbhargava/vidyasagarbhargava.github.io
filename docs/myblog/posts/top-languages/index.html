@@ -225,13 +225,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> <span class="dv">2</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {chart<span class="op">,</span> viewof replay<span class="op">,</span> d3} <span class="cf">with</span> {k<span class="op">,</span> data<span class="op">,</span> formatNumber<span class="op">,</span> formatDate<span class="op">,</span> tickFormat} <span class="im">from</span> <span class="st">"@d3/bar-chart-race"</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {renderGif} <span class="im">from</span> <span class="st">'@mootari/gif@766'</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">renderGif</span>(invalidation<span class="op">,</span> chart)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {chart<span class="op">,</span> viewof replay<span class="op">,</span> d3} <span class="cf">with</span> {k<span class="op">,</span> data<span class="op">,</span> formatNumber<span class="op">,</span> formatDate<span class="op">,</span> tickFormat} <span class="im">from</span> <span class="st">"@d3/bar-chart-race"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-2" data-nodetype="declaration">
@@ -274,27 +268,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-1-8" data-nodetype="declaration">
-
-</div>
-</div>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<div id="ojs-cell-1-9" data-nodetype="expression">
-
-</div>
-</div>
-</div>
 </div>
 
 
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
-{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\nchart\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\"\n\n\n\nimport {renderGif} from '@mootari/gif@766'\n\nrenderGif(invalidation, chart)\n"}]}
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\nchart\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\"\n\n"}]}
 </script>
 <script type="module">
 window._ojs.paths.runtimeToDoc = "../../myblog/posts/top-languages";
