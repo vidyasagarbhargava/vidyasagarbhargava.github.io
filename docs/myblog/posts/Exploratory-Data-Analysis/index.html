@@ -209,6 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#structure-of-non-numerical-features" id="toc-structure-of-non-numerical-features" class="nav-link" data-scroll-target="#structure-of-non-numerical-features">Structure of Non Numerical Features</a></li>
   <li><a href="#structure-of-numerical-features" id="toc-structure-of-numerical-features" class="nav-link" data-scroll-target="#structure-of-numerical-features">Structure of Numerical Features</a></li>
   <li><a href="#quality-investigation" id="toc-quality-investigation" class="nav-link" data-scroll-target="#quality-investigation">Quality Investigation</a></li>
+  <li><a href="#content-investigation-predictive-power" id="toc-content-investigation-predictive-power" class="nav-link" data-scroll-target="#content-investigation-predictive-power">Content Investigation &amp; Predictive Power</a></li>
   </ul>
 </nav>
     </div>
@@ -252,21 +253,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="example-case" class="level3">
 <h3 class="anchored" data-anchor-id="example-case">Example Case</h3>
 <p>Let’s download some data and perform eda to bring insights as well know quality of the data.</p>
-<div class="cell" data-execution_count="3">
+<div class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> fetch_openml</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the dataset from openml</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> fetch_openml(data_id<span class="op">=</span><span class="dv">42803</span>, as_frame<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract feature matrix X and show 5 random samples</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> dataset[<span class="st">"frame"</span>]</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_X.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="3">
 
 <div>
 
@@ -427,16 +428,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="structure-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="structure-investigation">Structure Investigation</h3>
-<div class="cell" data-execution_count="5">
+<div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>(363243, 67)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="6">
+<div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pd.value_counts(df_X.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>float64    61
 object      6
 dtype: int64</code></pre>
@@ -445,10 +446,10 @@ dtype: int64</code></pre>
 </section>
 <section id="structure-of-non-numerical-features" class="level3">
 <h3 class="anchored" data-anchor-id="structure-of-non-numerical-features">Structure of Non Numerical Features</h3>
-<div class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Display non-numerical features</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_X.select_dtypes(exclude<span class="op">=</span><span class="st">"number"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="6">
 
 <div>
 
@@ -515,13 +516,13 @@ dtype: int64</code></pre>
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Changes data type of 'Sex_of_Driver'</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_X[<span class="st">"Sex_of_Driver"</span>] <span class="op">=</span> df_X[<span class="st">"Sex_of_Driver"</span>].astype(<span class="st">"float"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_X.describe(exclude<span class="op">=</span><span class="st">"number"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="8">
 
 <div>
 
@@ -577,7 +578,7 @@ dtype: int64</code></pre>
 </section>
 <section id="structure-of-numerical-features" class="level3 page-columns page-full">
 <h3 class="anchored" data-anchor-id="structure-of-numerical-features">Structure of Numerical Features</h3>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># from matplotlib.offsetbox import AnnotationBbox, OffsetImage</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import matplotlib.image as mpimg</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># def insert_image(path, zoom, xybox, ax):</span></span>
@@ -587,7 +588,7 @@ dtype: int64</code></pre>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     ax.add_artist(ab)</span></span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell page-columns page-full" data-execution_count="11">
+<div class="cell page-columns page-full" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For each numerical feature compute number of unique entries</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(rc<span class="op">=</span>{<span class="st">'axes.facecolor'</span>:<span class="st">'#e6ddde'</span>, <span class="st">'figure.facecolor'</span>:<span class="st">'#e6ddde'</span>})</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -605,7 +606,13 @@ dtype: int64</code></pre>
 </section>
 <section id="quality-investigation" class="level3">
 <h3 class="anchored" data-anchor-id="quality-investigation">Quality Investigation</h3>
-<div class="cell" data-execution_count="12">
+<ul>
+<li>Duplicates</li>
+<li>Missing values</li>
+</ul>
+<section id="duplicates" class="level4">
+<h4 class="anchored" data-anchor-id="duplicates">Duplicates</h4>
+<div class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check number of duplicates while ignoring the index feature</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n_duplicates <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).duplicated().<span class="bu">sum</span>()</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"You seem to have </span><span class="sc">{</span>n_duplicates<span class="sc">}</span><span class="ss"> duplicates in your database."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -613,20 +620,297 @@ dtype: int64</code></pre>
 <pre><code>You seem to have 22 duplicates in your database.</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="13">
+<div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Extract column names of all features, except 'Accident_Index'</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>columns_to_consider <span class="op">=</span> df_X.drop(labels<span class="op">=</span>[<span class="st">"Accident_Index"</span>], axis<span class="op">=</span><span class="dv">1</span>).columns</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop duplicates based on 'columns_to_consider'</span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>df_X <span class="op">=</span> df_X.drop_duplicates(subset<span class="op">=</span>columns_to_consider)</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_X.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>(363221, 67)</code></pre>
+</div>
+</div>
+</section>
+<section id="missing-values" class="level4">
+<h4 class="anchored" data-anchor-id="missing-values">Missing Values</h4>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># to count missing values</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_X.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>Accident_Index                            0
+Vehicle_Reference_df_res                  0
+Vehicle_Type                             62
+Towing_and_Articulation                 379
+Vehicle_Manoeuvre                       184
+                                      ...  
+Bus_or_Coach_Passenger                   46
+Pedestrian_Road_Maintenance_Worker      166
+Casualty_Type                             0
+Casualty_Home_Area_Type               39792
+Casualty_IMD_Decile                   69574
+Length: 67, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="content-investigation-predictive-power" class="level3">
+<h3 class="anchored" data-anchor-id="content-investigation-predictive-power">Content Investigation &amp; Predictive Power</h3>
+<ul>
+<li>Feature distribution<br>
+</li>
+<li>Feature patterns
+<ul>
+<li>Continuos feature<br>
+</li>
+<li>Discreet and ordinal feature<br>
+</li>
+</ul></li>
+<li>Feature relantionship</li>
+</ul>
+<section id="feature-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="feature-distribution">Feature Distribution</h4>
+<ol type="1">
+<li>5 number Summary of features</li>
+<li>Histograms</li>
+<li>Boxplots</li>
+</ol>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_X.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Vehicle_Reference_df_res</th>
+      <th>Vehicle_Type</th>
+      <th>Towing_and_Articulation</th>
+      <th>Vehicle_Manoeuvre</th>
+      <th>Vehicle_Location-Restricted_Lane</th>
+      <th>Junction_Location</th>
+      <th>Skidding_and_Overturning</th>
+      <th>Hit_Object_in_Carriageway</th>
+      <th>Vehicle_Leaving_Carriageway</th>
+      <th>Hit_Object_off_Carriageway</th>
+      <th>...</th>
+      <th>Age_Band_of_Casualty</th>
+      <th>Casualty_Severity</th>
+      <th>Pedestrian_Location</th>
+      <th>Pedestrian_Movement</th>
+      <th>Car_Passenger</th>
+      <th>Bus_or_Coach_Passenger</th>
+      <th>Pedestrian_Road_Maintenance_Worker</th>
+      <th>Casualty_Type</th>
+      <th>Casualty_Home_Area_Type</th>
+      <th>Casualty_IMD_Decile</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>363221.000000</td>
+      <td>363159.000000</td>
+      <td>362842.000000</td>
+      <td>363037.000000</td>
+      <td>363045.000000</td>
+      <td>363137.000000</td>
+      <td>363045.000000</td>
+      <td>363058.000000</td>
+      <td>363062.000000</td>
+      <td>363220.000000</td>
+      <td>...</td>
+      <td>357653.000000</td>
+      <td>363221.000000</td>
+      <td>363219.000000</td>
+      <td>363219.000000</td>
+      <td>362459.000000</td>
+      <td>363175.000000</td>
+      <td>363055.000000</td>
+      <td>363221.000000</td>
+      <td>323429.000000</td>
+      <td>293647.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>1.696199</td>
+      <td>9.757371</td>
+      <td>0.029768</td>
+      <td>12.607043</td>
+      <td>0.109240</td>
+      <td>2.609183</td>
+      <td>0.188147</td>
+      <td>0.307499</td>
+      <td>0.366709</td>
+      <td>0.546715</td>
+      <td>...</td>
+      <td>6.431323</td>
+      <td>2.875726</td>
+      <td>0.380754</td>
+      <td>0.276483</td>
+      <td>0.281030</td>
+      <td>0.066131</td>
+      <td>0.032835</td>
+      <td>7.840381</td>
+      <td>1.308204</td>
+      <td>5.107292</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1.487136</td>
+      <td>8.315227</td>
+      <td>0.294136</td>
+      <td>6.218717</td>
+      <td>0.903158</td>
+      <td>3.249152</td>
+      <td>0.714262</td>
+      <td>1.595598</td>
+      <td>1.374145</td>
+      <td>2.094885</td>
+      <td>...</td>
+      <td>2.157887</td>
+      <td>0.355196</td>
+      <td>1.522263</td>
+      <td>1.294612</td>
+      <td>0.591238</td>
+      <td>0.493189</td>
+      <td>0.253787</td>
+      <td>7.366512</td>
+      <td>0.657791</td>
+      <td>2.829460</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.000000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>5.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>5.000000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.000000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>17.000000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>6.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>1.000000</td>
+      <td>5.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2.000000</td>
+      <td>9.000000</td>
+      <td>0.000000</td>
+      <td>18.000000</td>
+      <td>0.000000</td>
+      <td>6.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>8.000000</td>
+      <td>3.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>9.000000</td>
+      <td>1.000000</td>
+      <td>7.000000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>37.000000</td>
+      <td>98.000000</td>
+      <td>5.000000</td>
+      <td>18.000000</td>
+      <td>9.000000</td>
+      <td>8.000000</td>
+      <td>5.000000</td>
+      <td>12.000000</td>
+      <td>8.000000</td>
+      <td>11.000000</td>
+      <td>...</td>
+      <td>11.000000</td>
+      <td>3.000000</td>
+      <td>10.000000</td>
+      <td>9.000000</td>
+      <td>2.000000</td>
+      <td>4.000000</td>
+      <td>2.000000</td>
+      <td>98.000000</td>
+      <td>3.000000</td>
+      <td>10.000000</td>
+    </tr>
+  </tbody>
+</table>
+<p>8 rows × 62 columns</p>
+</div>
 </div>
 </div>
 <p>You can check this <a href="https://services.google.com/fh/files/misc/exploratory_data_analysis_for_feature_selection_in_machine_learning.pdf">link</a> for guide</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
