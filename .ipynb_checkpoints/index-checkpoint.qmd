@@ -9,7 +9,7 @@ about:
       href: https://linkedin.com/in/vidyasagarbhargava
     - icon: quora
       text: Quora
-      href: https://quora.com/vidyasagarbhargava
+      href: https://www.quora.com/profile/Vidyasagar-Bhargava
     - icon: github
       text: Github
       href: https://github.com/vidyasagarbhargava
