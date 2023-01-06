@@ -4,17 +4,20 @@ image: profile4.png
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/vsbd
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/in/vidyasagarbhargava
+    - icon: quora
+      text: Quora
+      href: https://quora.com/vidyasagarbhargava
     - icon: github
       text: Github
       href: https://github.com/vidyasagarbhargava
     - icon: bi-mortarboard-fill
       text: Google Scholar
       href: https://scholar.google.com/citations?user=hp6ttWQAAAAJ&hl=en
+    - icon: bi-layers-fill
+      text: Speaker Deck
+      href: https://speakerdeck.com/vidyasagarbhargava
 ---
 Lead Data Scientist at TVS Motor
