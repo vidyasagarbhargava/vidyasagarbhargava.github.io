@@ -7,15 +7,12 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/in/vidyasagarbhargava
-    - icon: quora
-      text: Quora
-      href: https://www.quora.com/profile/Vidyasagar-Bhargava
     - icon: github
       text: Github
       href: https://github.com/vidyasagarbhargava
-    - icon: bi-mortarboard-fill
-      text: Google Scholar
-      href: https://scholar.google.com/citations?user=hp6ttWQAAAAJ&hl=en
+    - icon: quora
+      text: Quora
+      href: https://www.quora.com/profile/Vidyasagar-Bhargava
     - icon: bi-layers-fill
       text: Speaker Deck
       href: https://speakerdeck.com/vidyasagarbhargava

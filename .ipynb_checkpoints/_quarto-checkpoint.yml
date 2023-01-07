@@ -7,19 +7,19 @@ website:
   navbar:
     right:
       - href: index.qmd
-        text: Home
+        text: HOME
       - href: myblog/blog.qmd
-        text: Blog
+        text: BLOG
       - href: cv.qmd
         text: CV
       - href: london.qmd
-        text: London 
-    
+        text: LONDON 
+
 format:
   html:
     mainfont: system-ui
     fontsize: 90%
-    theme: [journal, theme.scss]
+    theme: [none, theme.scss]
     backgroundcolor: "#e6ddde"
     css: styles.css
     toc: true
