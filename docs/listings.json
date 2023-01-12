@@ -42,7 +42,6 @@
   {
     "listing": "/myblog/blog.html",
     "items": [
-      "/myblog/posts/mastodon/index.html",
       "/myblog/posts/Fbeta-Measure/index.html",
       "/myblog/posts/Nearest-Neighbour-Classifier/index.html",
       "/myblog/posts/top-languages/index.html",
