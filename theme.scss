@@ -31,7 +31,15 @@ $navbar-hl: #753742;
 }
 
 
-
+.navbar-expand-lg .navbar-collapse .nav-item.active:after{
+    content: "";
+    position: absolute;
+    background-color: #654a4e;
+    height: 1.5px;
+    width: 35%;
+    border-bottom: 5px;
+    
+}
 
 .navbar-expand-lg .navbar-collapse .nav-item:after{
     content: "";
@@ -39,18 +47,14 @@ $navbar-hl: #753742;
     background-color: #654a4e;
     height: 1.5px;
     width: 0%;
-    bottom: -0.5px;
-    left: 0 ;
-    right: 0;
-    margin: 0 auto;
-    transition: all 0.5s;
+    border-bottom: 2px;
+    transition: width 0.5s;
     
 }
 
 .navbar-expand-lg .navbar-collapse .nav-item:hover::after{
     width: 100%;
 }
-
 
 // import google fonts
 @import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap';
