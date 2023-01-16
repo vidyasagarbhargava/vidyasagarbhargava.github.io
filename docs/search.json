@@ -733,5 +733,54 @@
     "title": "Fbeta-Measure",
     "section": "",
     "text": "\\[\nF_{1}=2.\\frac{{precision} \\times {recall}}{{precision} + {recall}}\n\\]\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.\n\n\n\\[\nF_{{\\beta}} = \\frac{(1 + {\\beta}^2). (precision.recall)}{({\\beta}^2.precision+recall)}\n\\]\nSummary\n\nPrecision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.\n\nF-measure provides a single score that summarizes the precision and recall.\n\nFbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score."
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#strength",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#strength",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Strength",
+    "text": "Strength\n\nSimple and effective\nMakes no assumption about data\nFast Training Process"
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#weakness",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#weakness",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Weakness",
+    "text": "Weakness\n\nDoesn’t produce model, limiting the ability to understand how features are related to class\nRequires selection of k\nSlow classification phase\nCategorical features and missing data require pre processing\n\nThe k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.\nFor finding the distance k-NN algorithm uses Euclidean distance."
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#defining-the-dataset",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#defining-the-dataset",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Defining the dataset",
+    "text": "Defining the dataset\n\n# First Feature\nweather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',\n'Rainy','Sunny','Overcast','Overcast','Rainy']\n# Second Feature\ntemp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']\n\n# Label or target varible\nplay=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']\n\nWe have two features weather and temperature and one label play."
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#encoding-data-columns",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#encoding-data-columns",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Encoding data columns",
+    "text": "Encoding data columns\n\nfrom sklearn import preprocessing\n\n#creating labelEncoder\nle = preprocessing.LabelEncoder()\n\n# Converting string labels into numbers.\nweather_encoded=le.fit_transform(weather)\n\nSimilarly, you can encode temperature and label into numeric columns.\n\n# converting string labels into numbers\ntemp_encoded=le.fit_transform(temp)\nlabel=le.fit_transform(play)"
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#combining-features",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#combining-features",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Combining Features",
+    "text": "Combining Features\n\n#combinig weather and temp into single listof tuples\nfeatures=list(zip(weather_encoded,temp_encoded))"
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#generating-models",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#generating-models",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Generating Models",
+    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)"
+  },
+  {
+    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#predict-output",
+    "href": "myblog/posts/nearest-neighbour-classifier/index.html#predict-output",
+    "title": "Nearest Neighbour Classifier",
+    "section": "Predict Output",
+    "text": "Predict Output\n\npredicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\nprint(predicted)\n\n[1]"
   }
 ]
