@@ -553,18 +553,11 @@
     "text": "2. Selecting machine learning use cases and setting success metrics\nWe should aim to use machine learning where it is actually needed and not where it might be interesting. Some times simple analytics or rules get you 10-40% of business impact.Things to keep in mind include data readiness, business impact and machine learning applicability.\n\nA high impact use case without data or machine learing applicability ❌\nA use case with lots of data and high machine learning applicability but low business impact ❌\n\nBefore working on a project the team needs estimate its potential impact as well (Opportunity Sizing). So once we define business problem which can be solved with machine learning and done with opportunity sizing the next step is to outlining clear metrics to measure success.\nThe data science projects needs to have clear goal which is typically a target value for a clearly defined metric. In real world data science projects there are not just one but multiple metrics that model will evaluated against. Some of these evaluation metric won’t even be related to how your prediction performs against the ground truth. Other such metrics are like :\n\nOverall memory usage\nlatency of the prediction process\ncomplexity of predictive model\n\nReal world problems are indeed dominated by business and tech infrastructure concerns.\n\n\n3. Technical experts and domain experts should work together\nWe need to make sure that domain experts and technical experts or stakeholders work side by side. If relevant stakeholders are the part of entire process, everyone is most likely to accept, adopt and implement the solution. If a data scientist is working in silos then its very much unlikely that their models get implemented.\n\n\n4. Exploratory data analysis\nBefore building the model,we need to interrogate the data to see if there is any predictive power in the feature set. Read more about EDA here.\n\n\n5. A quick MVP\nIts good practice to build a minimum viable product which is build quickly and cheaply to validate the hypothesis before we commit extensive time and resource.\n\n\n6. Experiment Metrics\nWe should look for more than one metric to look when an experiment concludes.\n\n\n7. Regular Check-ins\nRather than meeting at the start and end of a model build, it is better to check-in frequently (e.g. once or twice a week) to discuss latest findings and align on if any course corrections are necessary."
   },
   {
-    "objectID": "myblog/posts/Exploratory-Data-Analysis/index.html",
-    "href": "myblog/posts/Exploratory-Data-Analysis/index.html",
-    "title": "The Google’s Guide to Exploratory Data Analysis",
-    "section": "",
-    "text": "How to EDA ?\nAs a data scientist we need to do comprehensive exploration of the dataset and gain deep understanding of data. I divide exploratory data analysis in 3 parts of investigation.\n\nStructure of data : Exploring shape and as well as data types.\n1.1 Structure of non numerical features\n1.2 Structure of numerical features\n1.3 Conclusion of structure investigation\nQuality of data : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.\n2.1 Duplicates\n2.2 Missing Values\n2.2.1 Per sample\n2.2.2 Per feature\n2.3 Unwanted Entries and Recording Errors\n2.3.1 Numerical features\n2.3.2 Non Numerical features\n2.4 Conclusion of Quality Investigation\nContent Investigation & Predictive Power : More indepth study of features and how they relate to each other.\n3.1 Feature distribution\n3.2 Feature patterns\n3.2.1 Continuos feature\n3.2.2 Discreet and ordinal feature\n3.3 Feature relantionship\n\n\n\nExample Case\nLet’s download some data and perform eda to bring insights as well know quality of the data.\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.datasets import fetch_openml\n\n\n# Download the dataset from openml\ndataset = fetch_openml(data_id=42803, as_frame=True)\n\n# Extract feature matrix X and show 5 random samples\ndf_X = dataset[\"frame\"]\ndf_X.head(5)\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      19.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      7.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      NaN\n      NaN\n    \n    \n      1\n      201501BS70002\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      5.0\n      3.0\n      9.0\n      9.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      3.0\n    \n    \n      2\n      201501BS70004\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      6.0\n      3.0\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      6.0\n    \n    \n      3\n      201501BS70005\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      2.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      2.0\n    \n    \n      4\n      201501BS70008\n      1.0\n      1.0\n      0.0\n      18.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      8.0\n      2.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      1.0\n      1.0\n      3.0\n    \n  \n\n5 rows × 67 columns\n\n\n\n\n\nStructure Investigation\n\ndf_X.shape\n\n(363243, 67)\n\n\n\nimport pandas as pd\npd.value_counts(df_X.dtypes)\n\nfloat64    61\nobject      6\ndtype: int64\n\n\n\n\nStructure of Non Numerical Features\n\n# Display non-numerical features\ndf_X.select_dtypes(exclude=\"number\").head()\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Sex_of_Driver\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      12/01/2015\n      18:45\n      E09000020\n      E01002825\n    \n    \n      1\n      201501BS70002\n      1.0\n      12/01/2015\n      07:50\n      E09000020\n      E01002820\n    \n    \n      2\n      201501BS70004\n      1.0\n      12/01/2015\n      18:08\n      E09000020\n      E01002833\n    \n    \n      3\n      201501BS70005\n      1.0\n      13/01/2015\n      07:40\n      E09000020\n      E01002874\n    \n    \n      4\n      201501BS70008\n      1.0\n      09/01/2015\n      07:30\n      E09000020\n      E01002814\n    \n  \n\n\n\n\n\n# Changes data type of 'Sex_of_Driver'\ndf_X[\"Sex_of_Driver\"] = df_X[\"Sex_of_Driver\"].astype(\"float\")\n\n\ndf_X.describe(exclude=\"number\")\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      count\n      363243\n      319866\n      319822\n      319866\n      298758\n    \n    \n      unique\n      140056\n      365\n      1439\n      204\n      25979\n    \n    \n      top\n      201543P296025\n      14/02/2015\n      17:30\n      E10000017\n      E01028497\n    \n    \n      freq\n      1332\n      2144\n      2972\n      8457\n      1456\n    \n  \n\n\n\n\n\n\nStructure of Numerical Features\n\n# from matplotlib.offsetbox import AnnotationBbox, OffsetImage\n# import matplotlib.image as mpimg\n# def insert_image(path, zoom, xybox, ax):\n#     '''Insert an image within matplotlib'''\n#     imagebox = OffsetImage(mpimg.imread(path), zoom=zoom)\n#     ab = AnnotationBbox(imagebox, xy=(0.5, 0.7), frameon=False, pad=1, xybox=xybox)\n#     ax.add_artist(ab)\n\n\n\n# For each numerical feature compute number of unique entries\nsns.set(rc={'axes.facecolor':'#e6ddde', 'figure.facecolor':'#e6ddde'})\n\nfig, ax = plt.subplots(figsize=(10, 8))\n\nunique_values = df_X.select_dtypes(include=\"number\").nunique().sort_values()\n\n# Plot information with y-axis in log-scale\nunique_values.plot.bar(logy=True, figsize=(15, 4), title=\"Unique values per feature\",  color='#753742');\nplt.savefig('foo.png')\n\n\n\n\n\n\nQuality Investigation\n\nDuplicates\nMissing values\n\n\nDuplicates\n\n# Check number of duplicates while ignoring the index feature\nn_duplicates = df_X.drop(labels=[\"Accident_Index\"], axis=1).duplicated().sum()\nprint(f\"You seem to have {n_duplicates} duplicates in your database.\")\n\nYou seem to have 22 duplicates in your database.\n\n\n\n#  Extract column names of all features, except 'Accident_Index'\ncolumns_to_consider = df_X.drop(labels=[\"Accident_Index\"], axis=1).columns\n\n# Drop duplicates based on 'columns_to_consider'\ndf_X = df_X.drop_duplicates(subset=columns_to_consider)\ndf_X.shape\n\n(363221, 67)\n\n\n\n\nMissing Values\n\n# to count missing values\ndf_X.isna().sum()\n\nAccident_Index                            0\nVehicle_Reference_df_res                  0\nVehicle_Type                             62\nTowing_and_Articulation                 379\nVehicle_Manoeuvre                       184\n                                      ...  \nBus_or_Coach_Passenger                   46\nPedestrian_Road_Maintenance_Worker      166\nCasualty_Type                             0\nCasualty_Home_Area_Type               39792\nCasualty_IMD_Decile                   69574\nLength: 67, dtype: int64\n\n\n\n\n\nContent Investigation & Predictive Power\n\nFeature distribution\n\nFeature patterns\n\nContinuos feature\n\nDiscreet and ordinal feature\n\n\nFeature relantionship\n\n\nFeature Distribution\n\n5 number Summary of features\nHistograms\nBoxplots\n\n\ndf_X.describe()\n\n\n\n\n\n  \n    \n      \n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      Hit_Object_off_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      count\n      363221.000000\n      363159.000000\n      362842.000000\n      363037.000000\n      363045.000000\n      363137.000000\n      363045.000000\n      363058.000000\n      363062.000000\n      363220.000000\n      ...\n      357653.000000\n      363221.000000\n      363219.000000\n      363219.000000\n      362459.000000\n      363175.000000\n      363055.000000\n      363221.000000\n      323429.000000\n      293647.000000\n    \n    \n      mean\n      1.696199\n      9.757371\n      0.029768\n      12.607043\n      0.109240\n      2.609183\n      0.188147\n      0.307499\n      0.366709\n      0.546715\n      ...\n      6.431323\n      2.875726\n      0.380754\n      0.276483\n      0.281030\n      0.066131\n      0.032835\n      7.840381\n      1.308204\n      5.107292\n    \n    \n      std\n      1.487136\n      8.315227\n      0.294136\n      6.218717\n      0.903158\n      3.249152\n      0.714262\n      1.595598\n      1.374145\n      2.094885\n      ...\n      2.157887\n      0.355196\n      1.522263\n      1.294612\n      0.591238\n      0.493189\n      0.253787\n      7.366512\n      0.657791\n      2.829460\n    \n    \n      min\n      1.000000\n      1.000000\n      0.000000\n      1.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      ...\n      1.000000\n      1.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      1.000000\n      1.000000\n    \n    \n      25%\n      1.000000\n      9.000000\n      0.000000\n      6.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      ...\n      5.000000\n      3.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      5.000000\n      1.000000\n      3.000000\n    \n    \n      50%\n      1.000000\n      9.000000\n      0.000000\n      17.000000\n      0.000000\n      1.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      ...\n      6.000000\n      3.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      9.000000\n      1.000000\n      5.000000\n    \n    \n      75%\n      2.000000\n      9.000000\n      0.000000\n      18.000000\n      0.000000\n      6.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      ...\n      8.000000\n      3.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      0.000000\n      9.000000\n      1.000000\n      7.000000\n    \n    \n      max\n      37.000000\n      98.000000\n      5.000000\n      18.000000\n      9.000000\n      8.000000\n      5.000000\n      12.000000\n      8.000000\n      11.000000\n      ...\n      11.000000\n      3.000000\n      10.000000\n      9.000000\n      2.000000\n      4.000000\n      2.000000\n      98.000000\n      3.000000\n      10.000000\n    \n  \n\n8 rows × 62 columns\n\n\n\nYou can check this link for guide"
-  },
-  {
     "objectID": "myblog/blog.html",
     "href": "myblog/blog.html",
     "title": "Blog",
     "section": "",
-    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nEDA is a way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.\n\n\n\n\n\n\nApr 10, 2017\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "Listing the best books available in the market right now for data science.\n\n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.\n\n\n\n\n\n\nApr 10, 2017\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "myblog/posts/hypothesis-testing/index.html",
@@ -642,5 +635,89 @@
     "title": "Graphs",
     "section": "Summary Table",
     "text": "Summary Table\n\nimport {SummaryTable} from \"@observablehq/summary-table\"\nviewof summary_data = SummaryTable(data, {label: \"Penguins Data\"})"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html",
+    "href": "myblog/posts/datascience_books/index.html",
+    "title": "The Best Data Science Books",
+    "section": "",
+    "text": "Python\n\nStatistics and Mathematics\n\nMachine Learning\n\nCompetitive Data Science\n\nProductionize models"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html#python",
+    "href": "myblog/posts/datascience_books/index.html#python",
+    "title": "The Best Data Science Books",
+    "section": "1. Python",
+    "text": "1. Python\n\nFluent Python\n\nPython Data Science Handbook"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html#statistics",
+    "href": "myblog/posts/datascience_books/index.html#statistics",
+    "title": "The Best Data Science Books",
+    "section": "2. Statistics",
+    "text": "2. Statistics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html#machine-learning",
+    "href": "myblog/posts/datascience_books/index.html#machine-learning",
+    "title": "The Best Data Science Books",
+    "section": "3. Machine Learning",
+    "text": "3. Machine Learning\n\nMachine Learning with PyTorch and Scikit-Learn"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html#competitive-data-science",
+    "href": "myblog/posts/datascience_books/index.html#competitive-data-science",
+    "title": "The Best Data Science Books",
+    "section": "4. Competitive Data Science",
+    "text": "4. Competitive Data Science\n\nThe Kaggle Book"
+  },
+  {
+    "objectID": "myblog/posts/datascience_books/index.html#productionize-models",
+    "href": "myblog/posts/datascience_books/index.html#productionize-models",
+    "title": "The Best Data Science Books",
+    "section": "5. Productionize models",
+    "text": "5. Productionize models\n\nDesigning Machine Learning Systems"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html",
+    "href": "myblog/posts/best-datascience-books/index.html",
+    "title": "The Best Data Science Books",
+    "section": "",
+    "text": "I have seen many aspiring data scientists who wants to start their career in the field of data science but they are confused about the path and resources (because there are so many). Every individual has their own way of learning any topic. Some prefer books, some youtube video tutorial for understanding and some wants to learn from university or online certificate courses platform like coursera, Edx udemy etc..\nSo I decided to write this post to those aspirants who are interested in learning data science through books. I have listed the best books for different categories."
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#python",
+    "href": "myblog/posts/best-datascience-books/index.html#python",
+    "title": "The Best Data Science Books",
+    "section": "1. Python",
+    "text": "1. Python\n\nFluent Python\n\nPython Data Science Handbook"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#statistics",
+    "href": "myblog/posts/best-datascience-books/index.html#statistics",
+    "title": "The Best Data Science Books",
+    "section": "2. Statistics",
+    "text": "2. Statistics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#machine-learning",
+    "href": "myblog/posts/best-datascience-books/index.html#machine-learning",
+    "title": "The Best Data Science Books",
+    "section": "3. Machine Learning",
+    "text": "3. Machine Learning\n\nMachine Learning with PyTorch and Scikit-Learn"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#competitive-data-science",
+    "href": "myblog/posts/best-datascience-books/index.html#competitive-data-science",
+    "title": "The Best Data Science Books",
+    "section": "4. Competitive Data Science",
+    "text": "4. Competitive Data Science\n\nThe Kaggle Book"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#productionize-models",
+    "href": "myblog/posts/best-datascience-books/index.html#productionize-models",
+    "title": "The Best Data Science Books",
+    "section": "5. Productionize models",
+    "text": "5. Productionize models\n\nDesigning Machine Learning Systems"
   }
 ]

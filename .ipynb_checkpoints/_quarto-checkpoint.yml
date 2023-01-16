@@ -18,7 +18,7 @@ website:
 format:
   html:
     mainfont: system-ui
-    fontsize: 95%
+    fontsize: 105%
     theme: [journal, theme.scss]
     backgroundcolor: "#e6ddde"
     css: styles.css
