@@ -43,8 +43,8 @@
     "listing": "/myblog/blog.html",
     "items": [
       "/myblog/posts/best-datascience-books/index.html",
-      "/myblog/posts/fbeta-measure/index.html",
-      "/myblog/posts/nearest-neighbour-classifier/index.html",
+      "/myblog/posts/Fbeta-Measure/index.html",
+      "/myblog/posts/Nearest-Neighbour-Classifier/index.html",
       "/myblog/posts/top-languages/index.html",
       "/myblog/posts/hypothesis-testing/index.html",
       "/myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
