@@ -719,5 +719,19 @@
     "title": "The Best Data Science Books",
     "section": "5. Productionize models",
     "text": "5. Productionize models\n\nDesigning Machine Learning Systems"
+  },
+  {
+    "objectID": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
+    "href": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
+    "title": "The Best Data Science Books",
+    "section": "2. Statistics and Mathematics",
+    "text": "2. Statistics and Mathematics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
+  },
+  {
+    "objectID": "myblog/posts/fbeta-measure/index.html",
+    "href": "myblog/posts/fbeta-measure/index.html",
+    "title": "Fbeta-Measure",
+    "section": "",
+    "text": "\\[\nF_{1}=2.\\frac{{precision} \\times {recall}}{{precision} + {recall}}\n\\]\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.\n\n\n\\[\nF_{{\\beta}} = \\frac{(1 + {\\beta}^2). (precision.recall)}{({\\beta}^2.precision+recall)}\n\\]\nSummary\n\nPrecision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.\n\nF-measure provides a single score that summarizes the precision and recall.\n\nFbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score."
   }
 ]
