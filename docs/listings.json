@@ -1,22 +1,5 @@
 [
   {
-    "listing": "/talks.html",
-    "items": []
-  },
-  {
-    "listing": "/blog.html",
-    "items": [
-      "/posts/fbeta_measure.html",
-      "/myblog/posts/Fbeta-Measure/index.html",
-      "/posts/nearest_neighbour.html",
-      "/myblog/posts/Nearest-Neighbour-Classifier/index.html",
-      "/posts/mlprojects.html",
-      "/myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
-      "/posts/eda.html",
-      "/myblog/posts/Exploratory-Data-Analysis/index.html"
-    ]
-  },
-  {
     "listing": "/projects.html",
     "items": [
       "/projects/predictive_maintenance.html",
@@ -28,15 +11,6 @@
       "/projects/price_optimization.html",
       "/projects/tms.html",
       "/projects/customer_segmentation.html"
-    ]
-  },
-  {
-    "listing": "/myblog/index.html",
-    "items": [
-      "/myblog/posts/Fbeta-Measure/index.html",
-      "/myblog/posts/Nearest-Neighbour-Classifier/index.html",
-      "/myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
-      "/myblog/posts/Exploratory-Data-Analysis/index.html"
     ]
   },
   {

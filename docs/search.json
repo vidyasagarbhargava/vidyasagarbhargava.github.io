@@ -1,332 +1,10 @@
 [
   {
-    "objectID": "posts/eda.html",
-    "href": "posts/eda.html",
-    "title": "The Google’s Guide to Exploratory Data Analysis",
+    "objectID": "projects/predictive_maintenance.html",
+    "href": "projects/predictive_maintenance.html",
+    "title": "Predictive Maintenance for NTORQ",
     "section": "",
-    "text": "How to EDA\nI divide exploratory data analysis in 3 parts of investigation.\n\nStructure Investigation : Exploring shape and as well as data types.\n1.1 Structure of non numerical features\n1.2 Structure of numerical features\n1.3 Conclusion of structure investigation\n\nQuality Investigation : To check general quality of datasets in regard to duplicates,missing values and unwanted entries.\n2.1 Duplicates\n2.2 Missing Values\n2.2.1 Per sample\n2.2.2 Per feature\n2.3 Unwanted Entries and Recording Errors\n2.3.1 Numerical features\n2.3.2 Non Numerical features\n2.4 Conclusion of Quality Investigation\nContent Investigation : More indepth study of features and how they relate to each other. 3.1 Feature distribution\n3.2 Feature patterns\n3.2.1 Continuos feature\n3.2.2 Discreet and ordinal feature\n3.3 Feature relantionship\n\n\n\nExample Case\nLet’s download some data and perform eda to bring insights as well know quality of the data.\n\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.datasets import fetch_openml\n\n# Download the dataset from openml\ndataset = fetch_openml(data_id=42803, as_frame=True)\n\n# Extract feature matrix X and show 5 random samples\ndf_X = dataset[\"frame\"]\ndf_X.head(5)\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      19.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      7.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      NaN\n      NaN\n    \n    \n      1\n      201501BS70002\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      5.0\n      3.0\n      9.0\n      9.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      3.0\n    \n    \n      2\n      201501BS70004\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      6.0\n      3.0\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      6.0\n    \n    \n      3\n      201501BS70005\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      2.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      2.0\n    \n    \n      4\n      201501BS70008\n      1.0\n      1.0\n      0.0\n      18.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      8.0\n      2.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      1.0\n      1.0\n      3.0\n    \n  \n\n5 rows × 67 columns\n\n\n\n\n\nStructure Investigation\n\ndf_X.shape\n\n(363243, 67)\n\n\n\nimport pandas as pd\npd.value_counts(df_X.dtypes)\n\nfloat64    61\nobject      6\ndtype: int64\n\n\n\n\nStructure of Non Numerical Features\n\n# Display non-numerical features\ndf_X.select_dtypes(exclude=\"number\").head()\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Sex_of_Driver\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      12/01/2015\n      18:45\n      E09000020\n      E01002825\n    \n    \n      1\n      201501BS70002\n      1.0\n      12/01/2015\n      07:50\n      E09000020\n      E01002820\n    \n    \n      2\n      201501BS70004\n      1.0\n      12/01/2015\n      18:08\n      E09000020\n      E01002833\n    \n    \n      3\n      201501BS70005\n      1.0\n      13/01/2015\n      07:40\n      E09000020\n      E01002874\n    \n    \n      4\n      201501BS70008\n      1.0\n      09/01/2015\n      07:30\n      E09000020\n      E01002814\n    \n  \n\n\n\n\n\n# Changes data type of 'Sex_of_Driver'\ndf_X[\"Sex_of_Driver\"] = df_X[\"Sex_of_Driver\"].astype(\"float\")\n\n\ndf_X.describe(exclude=\"number\")\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      count\n      363243\n      319866\n      319822\n      319866\n      298758\n    \n    \n      unique\n      140056\n      365\n      1439\n      204\n      25979\n    \n    \n      top\n      201543P296025\n      14/02/2015\n      17:30\n      E10000017\n      E01028497\n    \n    \n      freq\n      1332\n      2144\n      2972\n      8457\n      1456\n    \n  \n\n\n\n\n\n\nStructure of Numerical Features\n\n# from matplotlib.offsetbox import AnnotationBbox, OffsetImage\n# import matplotlib.image as mpimg\n# def insert_image(path, zoom, xybox, ax):\n#     '''Insert an image within matplotlib'''\n#     imagebox = OffsetImage(mpimg.imread(path), zoom=zoom)\n#     ab = AnnotationBbox(imagebox, xy=(0.5, 0.7), frameon=False, pad=1, xybox=xybox)\n#     ax.add_artist(ab)\n\n\n\n# For each numerical feature compute number of unique entries\nsns.set(rc={'axes.facecolor':'#e6ddde', 'figure.facecolor':'#e6ddde'})\n\nfig, ax = plt.subplots(figsize=(10, 8))\n\nunique_values = df_X.select_dtypes(include=\"number\").nunique().sort_values()\n\n# Plot information with y-axis in log-scale\nunique_values.plot.bar(logy=True, figsize=(15, 4), title=\"Unique values per feature\",  color='#753742');\n\n\n\n\n\n\nQuality Investigation\n\n# Check number of duplicates while ignoring the index feature\nn_duplicates = df_X.drop(labels=[\"Accident_Index\"], axis=1).duplicated().sum()\nprint(f\"You seem to have {n_duplicates} duplicates in your database.\")\n\nYou seem to have 22 duplicates in your database.\n\n\n\n#  Extract column names of all features, except 'Accident_Index'\ncolumns_to_consider = df_X.drop(labels=[\"Accident_Index\"], axis=1).columns\n\n# Drop duplicates based on 'columns_to_consider'\ndf_X = df_X.drop_duplicates(subset=columns_to_consider)\ndf_X.shape\n\n(363221, 67)\n\n\nYou can check this link for guide\n\n\n\n\nA comment in the margin"
-  },
-  {
-    "objectID": "posts/fbeta_measure.html",
-    "href": "posts/fbeta_measure.html",
-    "title": "Fbeta-Measure",
-    "section": "",
-    "text": "Precision is a metric that calculates the percentage of correct predictions for the positive class. Recall calculates the percentage of correct predictions for the positive class out of all positive predictions that could be made.\nThe F-measure or F score, also called as F1 score is calculated as the harmonic mean of precision and recall, giving each the same weighting.It allows a model to be evaluated taking both the precision and recall into account using a single score, which is helpful when describing the performance of the model and in comparing models.\n\n\n\\[\nF_{1}=2.\\frac{{precision} \\times {recall}}{{precision} + {recall}}\n\\]\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.\n\n\n\\[\nF_{{\\beta}} = \\frac{(1 + {\\beta}^2). (precision.recall)}{({\\beta}^2.precision+recall)}\n\\]\nSummary\n\nPrecision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.\n\nF-measure provides a single score that summarizes the precision and recall.\n\nFbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score."
-  },
-  {
-    "objectID": "talks.html",
-    "href": "talks.html",
-    "title": "",
-    "section": "",
-    "text": "No matching items"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Vidyasagar Bhargava",
-    "section": "",
-    "text": "Lead Data Scientist at TVS Motor"
-  },
-  {
-    "objectID": "cv.html",
-    "href": "cv.html",
-    "title": "CV",
-    "section": "",
-    "text": "Work Experience & Major Projects\n\nTVS Motor :- Lead Data Scientist (2021 - Present)\n\nPredictive Maintenace\nRange Prediction for Electric Vehicle\n\nWipro Technologies :- Specialist Data Science (2017 - 2021)\n\nChurn Prediction for Telecom Company\nNPS Improvement for US based client\nBenchmarking of trained sentence embedding models\nScaling Machine Learning models using Spark\nDashboard for Time Series forecasting using Dash & Plotly\n\nCognizant Techonology Solution :- Data Scientist (2016 - 2017)\n\nRetail store segmentation\nAnomaly Detection for machine parts failure\n\nSnapdeal :- Analyst Advanced Analytics (2014 - 2016)\n\nPrice optimization Engine\n\nPrice Elasticity Models\n\nLadyblush E-Commerce Pvt. Ltd (Start up) :- Engineer (2014 - 2014)\n\nE-commerce AI Chatbot\nData Analytics and Dashboarding\n\nShopclues :- Analyst (2013 - 2014)\n\nData Analytics and Dashboarding\n\n\n\nEducation\n\nB.Tech in Computer Science and Engineering\n\n\n\nCourses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle\n\n\n\nTalks & Webinars\n\nIntroduction to Deep learning at Wipro Technologies on June 2017. [PPT]"
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Blog",
-    "section": "",
-    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/eda.html#exploratory-data-analysis",
-    "href": "posts/eda.html#exploratory-data-analysis",
-    "title": "",
-    "section": "Exploratory Data Analysis",
-    "text": "Exploratory Data Analysis\nExploratory Data Analysis in short known as EDA is way of summarizing, interpreting and visualizing the information hidden in rows and column format. Simply EDA is the key to getting insights from data.\nWhy EDA is important ?\nUsually we start any data science project with understanding the business problem and then we generate hypothesis. During hypothesis generation we look for factors which influence our dependent variable. EDA helps in confirming and validating those hypothesis.\nIt helps to find out unexpected pattern in data which must be taken into account, thereby suggesting some changes in planned analysis.\nIt helps in delivering data driven insights to business stakeholders by confirming they are asking the right questions and not biasing the investigation with their assumptions.\nStructure Investigation : Exploring shape and as well as data types\nQuality Investigation : To check general quality of datasets in regard to duplicates,missing values and unwanted entries\nContent Investigation : More indepth study of features and how they relate to each other\n\nfrom sklearn.datasets import fetch_openml\n# Download the dataset from openml\ndataset = fetch_openml(data_id=42803, as_frame=True)\n\n# Extract feature matrix X and show 5 random samples\ndf_X = dataset[\"frame\"]\ndf_X\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      19.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      7.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      NaN\n      NaN\n    \n    \n      1\n      201501BS70002\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      5.0\n      3.0\n      9.0\n      9.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      3.0\n    \n    \n      2\n      201501BS70004\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      6.0\n      3.0\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      6.0\n    \n    \n      3\n      201501BS70005\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      2.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      2.0\n    \n    \n      4\n      201501BS70008\n      1.0\n      1.0\n      0.0\n      18.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      8.0\n      2.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      1.0\n      1.0\n      3.0\n    \n    \n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n    \n    \n      363238\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      0.0\n      9.0\n      1.0\n      NaN\n    \n    \n      363239\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      5.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      2.0\n    \n    \n      363240\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      2.0\n      5.0\n    \n    \n      363241\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      6.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      3.0\n      NaN\n    \n    \n      363242\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      4.0\n    \n  \n\n363243 rows × 67 columns\n\n\n\n\nStructure Investigation\n\ndf_X.shape\n\n(363243, 67)\n\n\n\nimport pandas as pd\npd.value_counts(df_X.dtypes)\n\nfloat64    61\nobject      6\ndtype: int64\n\n\n\n\nStructure of Non Numerical Features\n\n# Display non-numerical features\ndf_X.select_dtypes(exclude=\"number\").head()\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Sex_of_Driver\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      12/01/2015\n      18:45\n      E09000020\n      E01002825\n    \n    \n      1\n      201501BS70002\n      1.0\n      12/01/2015\n      07:50\n      E09000020\n      E01002820\n    \n    \n      2\n      201501BS70004\n      1.0\n      12/01/2015\n      18:08\n      E09000020\n      E01002833\n    \n    \n      3\n      201501BS70005\n      1.0\n      13/01/2015\n      07:40\n      E09000020\n      E01002874\n    \n    \n      4\n      201501BS70008\n      1.0\n      09/01/2015\n      07:30\n      E09000020\n      E01002814\n    \n  \n\n\n\n\n\n# Changes data type of 'Sex_of_Driver'\ndf_X[\"Sex_of_Driver\"] = df_X[\"Sex_of_Driver\"].astype(\"float\")\n\n\ndf_X.describe(exclude=\"number\")\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      count\n      363243\n      319866\n      319822\n      319866\n      298758\n    \n    \n      unique\n      140056\n      365\n      1439\n      204\n      25979\n    \n    \n      top\n      201543P296025\n      14/02/2015\n      17:30\n      E10000017\n      E01028497\n    \n    \n      freq\n      1332\n      2144\n      2972\n      8457\n      1456\n    \n  \n\n\n\n\n\n\nStructure of Numerical Features\n\n# For each numerical feature compute number of unique entries\nunique_values = df_X.select_dtypes(include=\"number\").nunique().sort_values()\n\n# Plot information with y-axis in log-scale\nunique_values.plot.bar(logy=True, figsize=(15, 4), title=\"Unique values per feature\");\n\n\n\n\n\n\nQuality Investigation\n\n# Check number of duplicates while ignoring the index feature\nn_duplicates = df_X.drop(labels=[\"Accident_Index\"], axis=1).duplicated().sum()\nprint(f\"You seem to have {n_duplicates} duplicates in your database.\")\n\nYou seem to have 22 duplicates in your database.\n\n\n\n#  Extract column names of all features, except 'Accident_Index'\ncolumns_to_consider = df_X.drop(labels=[\"Accident_Index\"], axis=1).columns\n\n# Drop duplicates based on 'columns_to_consider'\ndf_X = df_X.drop_duplicates(subset=columns_to_consider)\ndf_X.shape\n\n(363221, 67)\n\n\n\n\nMissing Values\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(10, 8))\nplt.imshow(df_X.isna(), aspect=\"auto\", interpolation=\"nearest\", cmap=\"gray\")\nplt.xlabel(\"Column Number\")\nplt.ylabel(\"Sample Number\");\n\n\n\n\n\n\n\n\nWe know from the first fundamental theorem of calculus that for \\(x\\) in \\([a, b]\\):\n\\[\\frac{d}{dx}\\left( \\int_{a}^{x} f(u)\\,du\\right)=f(x).\\]"
-  },
-  {
-    "objectID": "posts/Untitled.html",
-    "href": "posts/Untitled.html",
-    "title": "",
-    "section": "",
-    "text": "---\ntitle: \"Decision Tree\"\ndescription: \"\"\nauthor: \"Vidyasagar Bhargava\"\ndate: \"07/08/2022\"\ncategories:\n  - machine learning\n  - supervised learning\n  - algorithm\n  - classifier\n  - regression\nformat:\n    html:\n        code-fold: false\njupyter: python3\nexecute: \n  enabled: true\ntitle-block-banner: true\n---"
-  },
-  {
-    "objectID": "posts/Untitled.html#strength",
-    "href": "posts/Untitled.html#strength",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Strength",
-    "text": "Strength\n\nSimple and effective\nMakes no assumption about data\nFast Training Process"
-  },
-  {
-    "objectID": "posts/Untitled.html#weakness",
-    "href": "posts/Untitled.html#weakness",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Weakness",
-    "text": "Weakness\n\nDoesn’t produce model, limiting the ability to understand how features are related to class\nRequires selection of k\nSlow classification phase\nCategorical features and missing data require pre processing\n\nThe k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.\nFor finding the distance k-NN algorithm uses Euclidean distance."
-  },
-  {
-    "objectID": "posts/Untitled.html#defining-the-dataset",
-    "href": "posts/Untitled.html#defining-the-dataset",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Defining the dataset",
-    "text": "Defining the dataset\n\n# First Feature\nweather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',\n'Rainy','Sunny','Overcast','Overcast','Rainy']\n# Second Feature\ntemp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']\n\n# Label or target varible\nplay=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']\n\nWe have two features weather and temperature and one label play."
-  },
-  {
-    "objectID": "posts/Untitled.html#encoding-data-columns",
-    "href": "posts/Untitled.html#encoding-data-columns",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Encoding data columns",
-    "text": "Encoding data columns\n\nfrom sklearn import preprocessing\n\n#creating labelEncoder\nle = preprocessing.LabelEncoder()\n\n# Converting string labels into numbers.\nweather_encoded=le.fit_transform(weather)\n\nSimilarly, you can encode temperature and label into numeric columns.\n\n# converting string labels into numbers\ntemp_encoded=le.fit_transform(temp)\nlabel=le.fit_transform(play)"
-  },
-  {
-    "objectID": "posts/Untitled.html#combining-features",
-    "href": "posts/Untitled.html#combining-features",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Combining Features",
-    "text": "Combining Features\n\n#combinig weather and temp into single listof tuples\nfeatures=list(zip(weather_encoded,temp_encoded))"
-  },
-  {
-    "objectID": "posts/Untitled.html#generating-models",
-    "href": "posts/Untitled.html#generating-models",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Generating Models",
-    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)"
-  },
-  {
-    "objectID": "posts/Untitled.html#predict-output",
-    "href": "posts/Untitled.html#predict-output",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Predict Output",
-    "text": "Predict Output\n\npredicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\nprint(predicted)\n\n[1]"
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#strength",
-    "href": "posts/nearest_neighbour.html#strength",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Strength",
-    "text": "Strength\n\nSimple and effective\nMakes no assumption about data\nFast Training Process"
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#weakness",
-    "href": "posts/nearest_neighbour.html#weakness",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Weakness",
-    "text": "Weakness\n\nDoesn’t produce model, limiting the ability to understand how features are related to class\nRequires selection of k\nSlow classification phase\nCategorical features and missing data require pre processing\n\nThe k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.\nFor finding the distance k-NN algorithm uses Euclidean distance."
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#defining-the-dataset",
-    "href": "posts/nearest_neighbour.html#defining-the-dataset",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Defining the dataset",
-    "text": "Defining the dataset\n\n# First Feature\nweather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',\n'Rainy','Sunny','Overcast','Overcast','Rainy']\n# Second Feature\ntemp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']\n\n# Label or target varible\nplay=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']\n\nWe have two features weather and temperature and one label play."
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#encoding-data-columns",
-    "href": "posts/nearest_neighbour.html#encoding-data-columns",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Encoding data columns",
-    "text": "Encoding data columns\n\nfrom sklearn import preprocessing\n\n#creating labelEncoder\nle = preprocessing.LabelEncoder()\n\n# Converting string labels into numbers.\nweather_encoded=le.fit_transform(weather)\n\nSimilarly, you can encode temperature and label into numeric columns.\n\n# converting string labels into numbers\ntemp_encoded=le.fit_transform(temp)\nlabel=le.fit_transform(play)"
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#combining-features",
-    "href": "posts/nearest_neighbour.html#combining-features",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Combining Features",
-    "text": "Combining Features\n\n#combinig weather and temp into single listof tuples\nfeatures=list(zip(weather_encoded,temp_encoded))"
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#generating-models",
-    "href": "posts/nearest_neighbour.html#generating-models",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Generating Models",
-    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)"
-  },
-  {
-    "objectID": "posts/nearest_neighbour.html#predict-output",
-    "href": "posts/nearest_neighbour.html#predict-output",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Predict Output",
-    "text": "Predict Output\n\npredicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\nprint(predicted)\n\n[1]"
-  },
-  {
-    "objectID": "posts/eda.html#how",
-    "href": "posts/eda.html#how",
-    "title": "Exploratory Data Analysis",
-    "section": "How",
-    "text": "How\nStructure Investigation : Exploring shape and as well as data types\nQuality Investigation : To check general quality of datasets in regard to duplicates,missing values and unwanted entries\nContent Investigation : More indepth study of features and how they relate to each other\n\nfrom sklearn.datasets import fetch_openml\n# Download the dataset from openml\ndataset = fetch_openml(data_id=42803, as_frame=True)\n\n# Extract feature matrix X and show 5 random samples\ndf_X = dataset[\"frame\"]\ndf_X\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      19.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      7.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      NaN\n      NaN\n    \n    \n      1\n      201501BS70002\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      5.0\n      3.0\n      9.0\n      9.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      3.0\n    \n    \n      2\n      201501BS70004\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      6.0\n      3.0\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      6.0\n    \n    \n      3\n      201501BS70005\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      2.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      2.0\n    \n    \n      4\n      201501BS70008\n      1.0\n      1.0\n      0.0\n      18.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      8.0\n      2.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      1.0\n      1.0\n      3.0\n    \n    \n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n    \n    \n      363238\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      0.0\n      9.0\n      1.0\n      NaN\n    \n    \n      363239\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      5.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      2.0\n    \n    \n      363240\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      2.0\n      5.0\n    \n    \n      363241\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      6.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      3.0\n      NaN\n    \n    \n      363242\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      4.0\n    \n  \n\n363243 rows × 67 columns\n\n\n\n\nStructure Investigation\n\ndf_X.shape\n\n(363243, 67)\n\n\n\nimport pandas as pd\npd.value_counts(df_X.dtypes)\n\nfloat64    61\nobject      6\ndtype: int64\n\n\n\n\nStructure of Non Numerical Features\n\n# Display non-numerical features\ndf_X.select_dtypes(exclude=\"number\").head()\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Sex_of_Driver\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      12/01/2015\n      18:45\n      E09000020\n      E01002825\n    \n    \n      1\n      201501BS70002\n      1.0\n      12/01/2015\n      07:50\n      E09000020\n      E01002820\n    \n    \n      2\n      201501BS70004\n      1.0\n      12/01/2015\n      18:08\n      E09000020\n      E01002833\n    \n    \n      3\n      201501BS70005\n      1.0\n      13/01/2015\n      07:40\n      E09000020\n      E01002874\n    \n    \n      4\n      201501BS70008\n      1.0\n      09/01/2015\n      07:30\n      E09000020\n      E01002814\n    \n  \n\n\n\n\n\n# Changes data type of 'Sex_of_Driver'\ndf_X[\"Sex_of_Driver\"] = df_X[\"Sex_of_Driver\"].astype(\"float\")\n\n\ndf_X.describe(exclude=\"number\")\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      count\n      363243\n      319866\n      319822\n      319866\n      298758\n    \n    \n      unique\n      140056\n      365\n      1439\n      204\n      25979\n    \n    \n      top\n      201543P296025\n      14/02/2015\n      17:30\n      E10000017\n      E01028497\n    \n    \n      freq\n      1332\n      2144\n      2972\n      8457\n      1456\n    \n  \n\n\n\n\n\n\nStructure of Numerical Features\n\n# For each numerical feature compute number of unique entries\nunique_values = df_X.select_dtypes(include=\"number\").nunique().sort_values()\n\n# Plot information with y-axis in log-scale\nunique_values.plot.bar(logy=True, figsize=(15, 4), title=\"Unique values per feature\");\n\n\n\n\n\n\nQuality Investigation\n\n# Check number of duplicates while ignoring the index feature\nn_duplicates = df_X.drop(labels=[\"Accident_Index\"], axis=1).duplicated().sum()\nprint(f\"You seem to have {n_duplicates} duplicates in your database.\")\n\nYou seem to have 22 duplicates in your database.\n\n\n\n#  Extract column names of all features, except 'Accident_Index'\ncolumns_to_consider = df_X.drop(labels=[\"Accident_Index\"], axis=1).columns\n\n# Drop duplicates based on 'columns_to_consider'\ndf_X = df_X.drop_duplicates(subset=columns_to_consider)\ndf_X.shape\n\n(363221, 67)\n\n\n\n\nMissing Values\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(10, 8))\nplt.imshow(df_X.isna(), aspect=\"auto\", interpolation=\"nearest\", cmap=\"gray\")\nplt.xlabel(\"Column Number\")\nplt.ylabel(\"Sample Number\");"
-  },
-  {
-    "objectID": "posts/eda.html#how-to-eda",
-    "href": "posts/eda.html#how-to-eda",
-    "title": "Exploratory Data Analysis",
-    "section": "How to EDA ?",
-    "text": "How to EDA ?\nStructure Investigation : Exploring shape and as well as data types\nQuality Investigation : To check general quality of datasets in regard to duplicates,missing values and unwanted entries\nContent Investigation : More indepth study of features and how they relate to each other\n\nfrom sklearn.datasets import fetch_openml\n# Download the dataset from openml\ndataset = fetch_openml(data_id=42803, as_frame=True)\n\n# Extract feature matrix X and show 5 random samples\ndf_X = dataset[\"frame\"]\ndf_X\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Vehicle_Reference_df_res\n      Vehicle_Type\n      Towing_and_Articulation\n      Vehicle_Manoeuvre\n      Vehicle_Location-Restricted_Lane\n      Junction_Location\n      Skidding_and_Overturning\n      Hit_Object_in_Carriageway\n      Vehicle_Leaving_Carriageway\n      ...\n      Age_Band_of_Casualty\n      Casualty_Severity\n      Pedestrian_Location\n      Pedestrian_Movement\n      Car_Passenger\n      Bus_or_Coach_Passenger\n      Pedestrian_Road_Maintenance_Worker\n      Casualty_Type\n      Casualty_Home_Area_Type\n      Casualty_IMD_Decile\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      19.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      7.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      NaN\n      NaN\n    \n    \n      1\n      201501BS70002\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      5.0\n      3.0\n      9.0\n      9.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      3.0\n    \n    \n      2\n      201501BS70004\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      6.0\n      3.0\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      6.0\n    \n    \n      3\n      201501BS70005\n      1.0\n      9.0\n      0.0\n      9.0\n      0.0\n      2.0\n      0.0\n      0.0\n      0.0\n      ...\n      2.0\n      3.0\n      5.0\n      1.0\n      0.0\n      0.0\n      2.0\n      0.0\n      1.0\n      2.0\n    \n    \n      4\n      201501BS70008\n      1.0\n      1.0\n      0.0\n      18.0\n      0.0\n      8.0\n      0.0\n      0.0\n      0.0\n      ...\n      8.0\n      2.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      1.0\n      1.0\n      3.0\n    \n    \n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n      ...\n    \n    \n      363238\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      1.0\n      3.0\n      0.0\n      0.0\n      2.0\n      0.0\n      0.0\n      9.0\n      1.0\n      NaN\n    \n    \n      363239\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      5.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      2.0\n    \n    \n      363240\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      2.0\n      5.0\n    \n    \n      363241\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      6.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      3.0\n      NaN\n    \n    \n      363242\n      2015984141415\n      13.0\n      9.0\n      0.0\n      18.0\n      0.0\n      0.0\n      0.0\n      0.0\n      5.0\n      ...\n      4.0\n      3.0\n      0.0\n      0.0\n      0.0\n      0.0\n      0.0\n      9.0\n      1.0\n      4.0\n    \n  \n\n363243 rows × 67 columns\n\n\n\n\nStructure Investigation\n\ndf_X.shape\n\n(363243, 67)\n\n\n\nimport pandas as pd\npd.value_counts(df_X.dtypes)\n\nfloat64    61\nobject      6\ndtype: int64\n\n\n\n\nStructure of Non Numerical Features\n\n# Display non-numerical features\ndf_X.select_dtypes(exclude=\"number\").head()\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Sex_of_Driver\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      0\n      201501BS70001\n      1.0\n      12/01/2015\n      18:45\n      E09000020\n      E01002825\n    \n    \n      1\n      201501BS70002\n      1.0\n      12/01/2015\n      07:50\n      E09000020\n      E01002820\n    \n    \n      2\n      201501BS70004\n      1.0\n      12/01/2015\n      18:08\n      E09000020\n      E01002833\n    \n    \n      3\n      201501BS70005\n      1.0\n      13/01/2015\n      07:40\n      E09000020\n      E01002874\n    \n    \n      4\n      201501BS70008\n      1.0\n      09/01/2015\n      07:30\n      E09000020\n      E01002814\n    \n  \n\n\n\n\n\n# Changes data type of 'Sex_of_Driver'\ndf_X[\"Sex_of_Driver\"] = df_X[\"Sex_of_Driver\"].astype(\"float\")\n\n\ndf_X.describe(exclude=\"number\")\n\n\n\n\n\n  \n    \n      \n      Accident_Index\n      Date\n      Time\n      Local_Authority_(Highway)\n      LSOA_of_Accident_Location\n    \n  \n  \n    \n      count\n      363243\n      319866\n      319822\n      319866\n      298758\n    \n    \n      unique\n      140056\n      365\n      1439\n      204\n      25979\n    \n    \n      top\n      201543P296025\n      14/02/2015\n      17:30\n      E10000017\n      E01028497\n    \n    \n      freq\n      1332\n      2144\n      2972\n      8457\n      1456\n    \n  \n\n\n\n\n\n\nStructure of Numerical Features\n\n# For each numerical feature compute number of unique entries\nunique_values = df_X.select_dtypes(include=\"number\").nunique().sort_values()\n\n# Plot information with y-axis in log-scale\nunique_values.plot.bar(logy=True, figsize=(15, 4), title=\"Unique values per feature\");\n\n\n\n\n\n\nQuality Investigation\n\n# Check number of duplicates while ignoring the index feature\nn_duplicates = df_X.drop(labels=[\"Accident_Index\"], axis=1).duplicated().sum()\nprint(f\"You seem to have {n_duplicates} duplicates in your database.\")\n\nYou seem to have 22 duplicates in your database.\n\n\n\n#  Extract column names of all features, except 'Accident_Index'\ncolumns_to_consider = df_X.drop(labels=[\"Accident_Index\"], axis=1).columns\n\n# Drop duplicates based on 'columns_to_consider'\ndf_X = df_X.drop_duplicates(subset=columns_to_consider)\ndf_X.shape\n\n(363221, 67)\n\n\n\n\nMissing Values\n\nimport matplotlib.pyplot as plt\n\nplt.figure(figsize=(10, 8))\nplt.imshow(df_X.isna(), aspect=\"auto\", interpolation=\"nearest\", cmap=\"gray\")\nplt.xlabel(\"Column Number\")\nplt.ylabel(\"Sample Number\");"
-  },
-  {
-    "objectID": "cv.html#education",
-    "href": "cv.html#education",
-    "title": "CV",
-    "section": "Education",
-    "text": "Education\n\nB.Tech in Computer Science and Engineering"
-  },
-  {
-    "objectID": "cv.html#courses",
-    "href": "cv.html#courses",
-    "title": "CV",
-    "section": "Courses",
-    "text": "Courses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle"
-  },
-  {
-    "objectID": "posts/regression_loss.html",
-    "href": "posts/regression_loss.html",
-    "title": "Must know Regression Loss Functions",
-    "section": "",
-    "text": "Mean Square Error or Quadratic loss or L2 Loss\nMean Absolute Error or L1 Loss\nHuber Loss or Smooth Mean Absolute Error\nLog-Cosh Loss\nQuantile Loss"
-  },
-  {
-    "objectID": "index.html#education",
-    "href": "index.html#education",
-    "title": "Vidyasagar Bhargava",
-    "section": "Education",
-    "text": "Education\n\nB.Tech in Computer Science and Engineering"
-  },
-  {
-    "objectID": "index.html#work-experience",
-    "href": "index.html#work-experience",
-    "title": "Vidyasagar Bhargava",
-    "section": "Work Experience",
-    "text": "Work Experience\n\nTVS Motor - Lead Data Scientist (2021-Present)"
-  },
-  {
-    "objectID": "index.html#work-experience-key-projects",
-    "href": "index.html#work-experience-key-projects",
-    "title": "Vidyasagar Bhargava",
-    "section": "Work Experience & Key Projects",
-    "text": "Work Experience & Key Projects\nTVS Motor :- Lead Data Scientist (2021-Present)\n\nPredictive Maintenance\nRange Prediction for Electric Vehicle\n\nWipro Technologies :- Specialist Data Science (2017 - 2021)\n\nChurn Prediction\nNPS Improvement\nScaling Machine Learning model using Spark\nText Summarization using sentence embedding\n\nCognizant Techonology Solution :- Data Scientist (2016 - 2017)\n\nRetail store segmentation\nVideo Analytics\n\nSnapdeal :- Analyst Advanced Analytics (2014 - 2016)\n\nPrice optimization Engine\n\nPrice Elasticity Models\n\nLadyblush E-Commerce Pvt. Ltd (Start up) :- Engineer (2014 - 2014)\n\nE-commerce AI Chatbot\nData Analytics and Dashboarding\n\nShopclues :- Analyst (2013 - 2014)\n\nData Analytics and Dashboarding\n\n\nEducation\n\nB.Tech in Computer Science and Engineering\n\n\n\nCourses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle\n\n\n\nTalks & Webinars\n\nIntroduction to Deep learning at Wipro Technologies on June 2017. [PPT]\n\n\n\nCompetitive Data Science\n\nRank 3rd in Fractal Timeseries Forecasting Hackathon on Analytics Vidhya\nCurrently Kaggle Expert at discussions"
-  },
-  {
-    "objectID": "photos.html",
-    "href": "photos.html",
-    "title": "Activities in London",
-    "section": "",
-    "text": "I attended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London."
-  },
-  {
-    "objectID": "photos.html#ai-core-at-imperial-college-london",
-    "href": "photos.html#ai-core-at-imperial-college-london",
-    "title": "Me",
-    "section": "AI Core at Imperial College London",
-    "text": "AI Core at Imperial College London"
-  },
-  {
-    "objectID": "photos.html#lecture-series-by-ai-core-on-machine-learning-by-imperial-college-london",
-    "href": "photos.html#lecture-series-by-ai-core-on-machine-learning-by-imperial-college-london",
-    "title": "Me",
-    "section": "Lecture Series by AI Core on Machine Learning by Imperial College London",
-    "text": "Lecture Series by AI Core on Machine Learning by Imperial College London"
-  },
-  {
-    "objectID": "photos.html#ai-core-machine-learning-at-imperial-college-london",
-    "href": "photos.html#ai-core-machine-learning-at-imperial-college-london",
-    "title": "Me",
-    "section": "AI Core Machine Learning at Imperial College London",
-    "text": "AI Core Machine Learning at Imperial College London"
-  },
-  {
-    "objectID": "photos.html#daily-free-newspaper-in-evening-in-outside-tube",
-    "href": "photos.html#daily-free-newspaper-in-evening-in-outside-tube",
-    "title": "Me",
-    "section": "Daily Free Newspaper in evening in outside Tube",
-    "text": "Daily Free Newspaper in evening in outside Tube"
-  },
-  {
-    "objectID": "photos.html#free-evening-newspaper-outside-tube",
-    "href": "photos.html#free-evening-newspaper-outside-tube",
-    "title": "Me",
-    "section": "Free Evening Newspaper outside Tube",
-    "text": "Free Evening Newspaper outside Tube"
-  },
-  {
-    "objectID": "photos.html#machine-learning-at-imperial-college-london",
-    "href": "photos.html#machine-learning-at-imperial-college-london",
-    "title": "Activities in London",
-    "section": "Machine Learning at Imperial College London",
-    "text": "Machine Learning at Imperial College London\nI attended few ml and nlp classes conducted by AI Core at Imperial College."
-  },
-  {
-    "objectID": "photos.html#at-london",
-    "href": "photos.html#at-london",
-    "title": "Me",
-    "section": "At London",
-    "text": "At London"
-  },
-  {
-    "objectID": "photos.html#somewhere-in-london",
-    "href": "photos.html#somewhere-in-london",
-    "title": "Activities in London",
-    "section": "Somewhere in London",
-    "text": "Somewhere in London"
-  },
-  {
-    "objectID": "photos.html#london-eye-in-night",
-    "href": "photos.html#london-eye-in-night",
-    "title": "Me",
-    "section": "London Eye in Night",
-    "text": "London Eye in Night"
-  },
-  {
-    "objectID": "photos.html#london-eye-at-night",
-    "href": "photos.html#london-eye-at-night",
-    "title": "Me",
-    "section": "London Eye at Night",
-    "text": "London Eye at Night"
-  },
-  {
-    "objectID": "photos.html#r-conference-by-max-kuhn",
-    "href": "photos.html#r-conference-by-max-kuhn",
-    "title": "Activities in London",
-    "section": "R-Conference by Max Kuhn",
-    "text": "R-Conference by Max Kuhn\nOn 20th Nov 2019 I got the chance to attend live conference by Max Kuhn the developer famous R packages like Caret & tidymodels."
-  },
-  {
-    "objectID": "photos.html#at-the-gym-group",
-    "href": "photos.html#at-the-gym-group",
-    "title": "Me",
-    "section": "At The gym group",
-    "text": "At The gym group\nI joined a The gym group in london for fitness."
-  },
-  {
-    "objectID": "photos.html#london-eye-at-day-time",
-    "href": "photos.html#london-eye-at-day-time",
-    "title": "Me",
-    "section": "London Eye at Day time",
-    "text": "London Eye at Day time"
-  },
-  {
-    "objectID": "photos.html#london-eye",
-    "href": "photos.html#london-eye",
-    "title": "Activities in London",
-    "section": "London Eye",
-    "text": "London Eye\nI like this place"
-  },
-  {
-    "objectID": "photos.html#london-bridge",
-    "href": "photos.html#london-bridge",
-    "title": "Activities in London",
-    "section": "London Bridge",
-    "text": "London Bridge\nMandatory London Bridge Picture"
-  },
-  {
-    "objectID": "photos.html#cricket-at-canary-wharf",
-    "href": "photos.html#cricket-at-canary-wharf",
-    "title": "Activities in London",
-    "section": "Cricket at Canary Wharf",
-    "text": "Cricket at Canary Wharf\nWatching cricket here during office lunch break was fun."
+    "text": "Tools : python\nMachine learning : Regression\nRole : Lead Data Scientist\nStatus : In progress"
   },
   {
     "objectID": "london.html",
@@ -334,6 +12,13 @@
     "title": "Activities in London",
     "section": "",
     "text": "My short stay at London before pandemic hit the world and I had to come back to India."
+  },
+  {
+    "objectID": "london.html#ucl-x-deepmind-lecture-series",
+    "href": "london.html#ucl-x-deepmind-lecture-series",
+    "title": "Activities in London",
+    "section": "UCL x DeepMind Lecture Series",
+    "text": "UCL x DeepMind Lecture Series\nAttended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London."
   },
   {
     "objectID": "london.html#machine-learning-at-imperial-college-london",
@@ -378,34 +63,6 @@
     "text": "Cricket at Canary Wharf\nWatching cricket here during office breaks was fun."
   },
   {
-    "objectID": "london.html#ucl-x-deepmind-lecture-series",
-    "href": "london.html#ucl-x-deepmind-lecture-series",
-    "title": "Activities in London",
-    "section": "UCL x DeepMind Lecture Series",
-    "text": "UCL x DeepMind Lecture Series\nAttended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London."
-  },
-  {
-    "objectID": "posts/mlprojects.html",
-    "href": "posts/mlprojects.html",
-    "title": "Successful delivering of Machine Learning Projects",
-    "section": "",
-    "text": "1. Easy access to required data and a comprehensive data strategy\nThere is saying in computer science world “garbage in, garbage out” which means nonsense input data produces nonsense output. Therefore your machine learning model is only as good as the data it’s trained on.If there is problem with data, machine learning scientists will end up spending their time in doing data cleanup and management.So we need a strong data strategy to make efficient use of ML scientist’s time and talent.\nWhat makes a strong data strategy ?\n\nData should be viewed as organizational asset rather than property of individual department that created or collected that data.\nData should be available easily, securely and in compliance with legal and regulatory requirements.\nData is put to work through analytics and machine learning to make better decisions, create efficiencies and drive new innovations.\n\nData related questions to be asked before the start of ML project\n\nWhat data is available to me today?\nWhat data is not quite available, but with some effort could become available?\nWhat data I don’t have today, but I might have in next few months or year? And what steps can be taken to begin gathering that data?\nIs there any potential bias in data or data sources?\n\n\n\n2. Selecting machine learning use cases and setting success metrics\nWe should aim to use machine learning where it is actually needed and not where it might be interesting. Some times simple analytics or rules get you 10-40% of business impact.Things to keep in mind include data readiness, business impact and machine learning applicability.\n\nA high impact use case without data or machine learing applicability ❌\nA use case with lots of data and high machine learning applicability but low business impact ❌\n\nBefore working on a project the team needs estimate its potential impact as well (Opportunity Sizing). So once we define business problem which can be solved with machine learning and done with opportunity sizing the next step is to outlining clear metrics to measure success.\nThe data science projects needs to have clear goal which is typically a target value for a clearly defined metric. In real world data science projects there are not just one but multiple metrics that model will evaluated against. Some of these evaluation metric won’t even be related to how your prediction performs against the ground truth. Other such metrics are like :\n\nOverall memory usage\nlatency of the prediction process\ncomplexity of predictive model\n\nReal world problems are indeed dominated by business and tech infrastructure concerns.\n\n\n3. Technical experts and domain experts should work together\nWe need to make sure that domain experts and technical experts or stakeholders work side by side. If relevant stakeholders are the part of entire process, everyone is most likely to accept, adopt and implement the solution. If a data scientist is working in silos then its very much unlikely that their models get implemented.\n\n\n4. Exploratory data analysis\nBefore building the model,we need to interrogate the data to see if there is any predictive power in the feature set. Read more about EDA here.\n\n\n5. A quick MVP\nIts good practice to build a minimum viable product which is build quickly and cheaply to validate the hypothesis before we commit extensive time and resource.\n\n\n6. Experiment Metrics\nWe should look for more than one metric to look when an experiment concludes.\n\n\n7. Regular Check-ins\nRather than meeting at the start and end of a model build, it is better to check-in frequently (e.g. once or twice a week) to discuss latest findings and align on if any course corrections are necessary."
-  },
-  {
-    "objectID": "cv.html#getting-up",
-    "href": "cv.html#getting-up",
-    "title": "Habits",
-    "section": "Getting up",
-    "text": "Getting up\n\nTurn off alarm\nGet out of bed"
-  },
-  {
-    "objectID": "cv.html#going-to-sleep",
-    "href": "cv.html#going-to-sleep",
-    "title": "Habits",
-    "section": "Going to sleep",
-    "text": "Going to sleep\n\nGet in bed\nCount sheep"
-  },
-  {
     "objectID": "projects.html",
     "href": "projects.html",
     "title": "Projects & Clients",
@@ -413,81 +70,18 @@
     "text": "Built models for predictive maintenace of different parts of NTORQ vehicle\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilt predictive model for predicting churning customer in next month\n\n\n\nGTA\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilt a regression model for range prediction for electric bike.\n\n\n\nTVS Motor\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nUsing Random forest model provided recommendation for NPS improvement\n\n\n\nHewlett packard\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPerformed benchmarking of Xeon processor for NLP task using distributed deep learning.\n\n\n\nIntel\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWorked on SAS scripts to be migrated on python using best coding practices\n\n\n\nHSBC\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilt a price optimization for e-commerce company for automate price based on demand and supply curves.\n\n\n\nSnapdeal\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBuilt an predictive model for freight charges for different carriers.\n\n\n\nComcast\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPerformed customer segmentation using K-Mean technique\n\n\n\nPepsico\n\n\nJun 6, 2015\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "projects/predictive_maintenance.html",
-    "href": "projects/predictive_maintenance.html",
-    "title": "Predictive Maintenance for NTORQ",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Vidyasagar Bhargava",
     "section": "",
-    "text": "Tools : python\nMachine learning : Regression\nRole : Lead Data Scientist\nStatus : In progress"
+    "text": "Lead Data Scientist at TVS Motor"
   },
   {
-    "objectID": "posts/is-person-happy-or-sad.html",
-    "href": "posts/is-person-happy-or-sad.html",
-    "title": "Nearest Neighbour Classifier",
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "CV",
     "section": "",
-    "text": "#NB: Kaggle requires phone verification to use the internet or a GPU. If you haven't done that yet, the cell below will fail\n#    This code is only here to check that your internet is enabled. It doesn't do anything else.\n#    Here's a help thread on getting your phone number verified: https://www.kaggle.com/product-feedback/135367\nimport socket,warnings\ntry:\n    socket.setdefaulttimeout(1)\n    socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(('1.1.1.1', 53))\nexcept socket.error as ex: raise Exception(\"STOP: No internet. Click '>|' in top right and set 'Internet' switch to on\")\n\n::: {.cell _kg_hide-input=‘true’ _kg_hide-output=‘true’ execution=‘{“iopub.execute_input”:“2022-07-25T16:09:27.991401Z”,“iopub.status.busy”:“2022-07-25T16:09:27.990634Z”,“iopub.status.idle”:“2022-07-25T16:09:35.755984Z”,“shell.execute_reply”:“2022-07-25T16:09:35.755076Z”,“shell.execute_reply.started”:“2022-07-25T16:09:27.991361Z”}’ execution_count=29}\n# It's a good idea to ensure you're running the latest version of any libraries you need.\n# `!pip install -Uqq <libraries>` upgrades to the latest version of <libraries>\n# NB: You can safely ignore any warnings or errors pip spits out about running as root or incompatibilities\nimport os\niskaggle = os.environ.get('KAGGLE_KERNEL_RUN_TYPE', '')\n\nif iskaggle:\n    !pip install -Uqq fastai\n:::\nIn 2015 the idea of creating a computer system that could recognise birds was considered so outrageously challenging that it was the basis of this XKCD joke:\n\n\n\nimage.png\n\n\nBut today, we can do exactly that, in just a few minutes, using entirely free resources!\nThe basic steps we’ll take are:\n\nUse DuckDuckGo to search for images of “bird photos”\nUse DuckDuckGo to search for images of “forest photos”\nFine-tune a pretrained neural network to recognise these two groups\nTry running this model on a picture of a bird and see if it works."
-  },
-  {
-    "objectID": "posts/is-person-happy-or-sad.html#step-1-download-images-of-birds-and-non-birds",
-    "href": "posts/is-person-happy-or-sad.html#step-1-download-images-of-birds-and-non-birds",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Step 1: Download images of birds and non-birds",
-    "text": "Step 1: Download images of birds and non-birds\n::: {.cell _kg_hide-input=‘true’ execution=‘{“iopub.execute_input”:“2022-07-25T16:09:47.683343Z”,“iopub.status.busy”:“2022-07-25T16:09:47.683121Z”,“iopub.status.idle”:“2022-07-25T16:09:47.694420Z”,“shell.execute_reply”:“2022-07-25T16:09:47.693634Z”,“shell.execute_reply.started”:“2022-07-25T16:09:47.683314Z”}’ execution_count=31}\nfrom fastcore.all import *\nimport time\n\ndef search_images(term, max_images=200):\n    url = 'https://duckduckgo.com/'\n    res = urlread(url,data={'q':term})\n    searchObj = re.search(r'vqd=([\\d-]+)\\&', res)\n    requestUrl = url + 'i.js'\n    params = dict(l='us-en', o='json', q=term, vqd=searchObj.group(1), f=',,,', p='1', v7exp='a')\n    urls,data = set(),{'next':1}\n    while len(urls)<max_images and 'next' in data:\n        data = urljson(requestUrl,data=params)\n        urls.update(L(data['results']).itemgot('image'))\n        requestUrl = url + data['next']\n        time.sleep(0.2)\n    return L(urls)[:max_images]\n:::\nLet’s start by searching for a happy person photo and seeing what kind of result we get. We’ll start by getting URLs from a search:\n\nurls = search_images('happy human face', max_images=2)\nurls[0]\n\n…and then download a URL and take a look at it:\n\nfrom fastdownload import download_url\ndest = 'happy.jpg'\ndownload_url(urls[0], dest, show_progress=False)\n\nfrom fastai.vision.all import *\nim = Image.open(dest)\nim.to_thumb(256,256)\n\nNow let’s do the same with “forest photos”:\n\ndownload_url(search_images('sad human face', max_images=1)[0], 'sad.jpg', show_progress=False)\nImage.open('sad.jpg').to_thumb(256,256)\n\nOur searches seem to be giving reasonable results, so let’s grab 200 examples of each of “happy” and “sad” photos, and save each group of photos to a different folder:\n\nsearches = 'happy human face','sad human face'\npath = Path('happy_or_not')\n\nfor o in searches:\n    dest = (path/o)\n    dest.mkdir(exist_ok=True, parents=True)\n    download_images(dest, urls=search_images(f'{o} photo'))\n    resize_images(path/o, max_size=400, dest=path/o)"
-  },
-  {
-    "objectID": "posts/is-person-happy-or-sad.html#step-2-train-our-model",
-    "href": "posts/is-person-happy-or-sad.html#step-2-train-our-model",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Step 2: Train our model",
-    "text": "Step 2: Train our model\nSome photos might not download correctly which could cause our model training to fail, so we’ll remove them:\n\nfailed = verify_images(get_image_files(path))\nfailed.map(Path.unlink)\nlen(failed)\n\nTo train a model, we’ll need DataLoaders, which is an object that contains a training set (the images used to create a model) and a validation set (the images used to check the accuracy of a model – not used during training). In fastai we can create that easily using a DataBlock, and view sample images from it:\n\ndls = DataBlock(\n    blocks=(ImageBlock, CategoryBlock), \n    get_items=get_image_files, \n    splitter=RandomSplitter(valid_pct=0.2, seed=42),\n    get_y=parent_label,\n    item_tfms=[Resize(192, method='squish')]\n).dataloaders(path)\n\ndls.show_batch(max_n=6)\n\nHere what each of the DataBlock parameters means:\nblocks=(ImageBlock, CategoryBlock),\nThe inputs to our model are images, and the outputs are categories (in this case, “happy” or “sad”).\nget_items=get_image_files, \nTo find all the inputs to our model, run the get_image_files function (which returns a list of all image files in a path).\nsplitter=RandomSplitter(valid_pct=0.2, seed=42),\nSplit the data into training and validation sets randomly, using 20% of the data for the validation set.\nget_y=parent_label,\nThe labels (y values) is the name of the parent of each file (i.e. the name of the folder they’re in, which will be bird or forest).\nitem_tfms=[Resize(192, method='squish')]\nBefore training, resize each image to 192x192 pixels by “squishing” it (as opposed to cropping it).\nNow we’re ready to train our model. The fastest widely used computer vision model is resnet18. You can train this in a few minutes, even on a CPU! (On a GPU, it generally takes under 10 seconds…)\nfastai comes with a helpful fine_tune() method which automatically uses best practices for fine tuning a pre-trained model, so we’ll use that.\n\nlearn = cnn_learner(dls, resnet18, metrics=error_rate)\nlearn.fine_tune(6)\n\nGenerally when I run this I see 100% accuracy on the validation set (although it might vary a bit from run to run).\n“Fine-tuning” a model means that we’re starting with a model someone else has trained using some other dataset (called the pretrained model), and adjusting the weights a little bit so that the model learns to recognise your particular dataset. In this case, the pretrained model was trained to recognise photos in imagenet, and widely-used computer vision dataset with images covering 1000 categories) For details on fine-tuning and why it’s important, check out the free fast.ai course."
-  },
-  {
-    "objectID": "posts/is-person-happy-or-sad.html#step-3-use-our-model-and-build-your-own",
-    "href": "posts/is-person-happy-or-sad.html#step-3-use-our-model-and-build-your-own",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Step 3: Use our model (and build your own!)",
-    "text": "Step 3: Use our model (and build your own!)\nLet’s see what our model thinks about that bird we downloaded at the start:\n\nis_happy,_,probs = learn.predict(PILImage.create('sad.jpg'))\nprint(f\"This is a: {is_happy}.\")\nprint(f\"Probability it's a happy: {probs[0]:.4f}\")\n\nGood job, resnet18. :)\nSo, as you see, in the space of a few years, creating computer vision classification models has gone from “so hard it’s a joke” to “trivially easy and free”!\nIt’s not just in computer vision. Thanks to deep learning, computers can now do many things which seemed impossible just a few years ago, including creating amazing artworks, and explaining jokes. It’s moving so fast that even experts in the field have trouble predicting how it’s going to impact society in the coming years.\nOne thing is clear – it’s important that we all do our best to understand this technology, because otherwise we’ll get left behind!\nNow it’s your turn. Click “Copy & Edit” and try creating your own image classifier using your own image searches!\nIf you enjoyed this, please consider clicking the “upvote” button in the top-right – it’s very encouraging to us notebook authors to know when people appreciate our work."
-  },
-  {
-    "objectID": "posts/interactive.html",
-    "href": "posts/interactive.html",
-    "title": "Interactive Visualization",
-    "section": "",
-    "text": "Code\ncars = sns.load_dataset('mpg')\n\ndef bandwidth_widget(bw=0.20):\n    sns.kdeplot(cars.horsepower, lw=3, fill=True, bw_adjust=bw)\n    plt.xlim(-30, 300)\n    plt.ylim(0, 0.03);\n\n\n\n\nCode\nwidgets.interact(bandwidth_widget, bw=(.1, 3));\n\n\n\n\n\n\n\nCode\nwidgets.IntSlider()\n\n\n\n\n\n\n\nCode\nimport numpy as np\nx = np.random.uniform(0, 5, size=100)\nep = np.random.normal(size=100)\n\ny = 2*x + ep\n\n\n\n\nCode\nplt.scatter(x, y);\n\n\n\n\n\n\n\nCode\nx_values = np.linspace(0, 5, 1000)\n\n\n\n\nCode\ndef slope_viz(m=1):\n    plt.scatter(x, y)\n    plt.plot(x_values, m*x_values, lw=3, color='black')\n    \n    plt.ylim(-1.2, 12.2);\n\n\n\n\nCode\nslope_viz(m=3)\n\n\n\n\n\n\n\nCode\nwidgets.interact(slope_viz, m=(0.2, 5, 0.2))\n\n\n\n\n\n<function __main__.slope_viz(m=1)>\n\n\n\n\nCode\nfrom ipyleaflet import Map, Marker, basemaps, basemap_to_tiles\nm = Map(\n  basemap=basemap_to_tiles(\n    basemaps.NASAGIBS.ModisTerraTrueColorCR, \"2017-04-08\"\n  ),\n  center=(52.204793, 360.121558),\n  zoom=4\n)\nm.add_layer(Marker(location=(52.204793, 360.121558)))\nm\n\n\n\n\n\n\n\n\nCode\nimport plotly.express as px\nimport plotly.io as pio\ndf = px.data.iris()\nfig = px.scatter(df, x=\"sepal_width\", y=\"sepal_length\", \n                 color=\"species\", \n                 marginal_y=\"violin\", marginal_x=\"box\", \n                 trendline=\"ols\", template=\"simple_white\")\nfig.show()"
-  },
-  {
-    "objectID": "posts/interactivity.html",
-    "href": "posts/interactivity.html",
-    "title": "",
-    "section": "",
-    "text": "The example above doesn’t plot all of the data but rather a filtered subset. To create our filter we’ll need some inputs, and we’ll want to be able to use the values of these inputs in our filtering function. To do this, we use the viewof keyword and with some standard Inputs:\n\nviewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)"
-  },
-  {
-    "objectID": "myblog/posts/post-with-code/index.html",
-    "href": "myblog/posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code."
-  },
-  {
-    "objectID": "myblog/posts/welcome/index.html",
-    "href": "myblog/posts/welcome/index.html",
-    "title": "Welcome To My Blog",
-    "section": "",
-    "text": "Since this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
-  },
-  {
-    "objectID": "myblog/index.html",
-    "href": "myblog/index.html",
-    "title": "Blog",
-    "section": "",
-    "text": "A generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA way of summarizing, interpreting and visualizing the information hidden in rows and column format.\n\n\n\n\n\n\nJun 11, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "myblog/about.html",
-    "href": "myblog/about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog"
+    "text": "Work Experience & Major Projects\n\nTVS Motor :- Lead Data Scientist (2021 - Present)\n\nPredictive Maintenace\nRange Prediction for Electric Vehicle\n\nWipro Technologies :- Specialist Data Science (2017 - 2021)\n\nChurn Prediction for Telecom Company\nNPS Improvement for US based client\nBenchmarking of trained sentence embedding models\nScaling Machine Learning models using Spark\nDashboard for Time Series forecasting using Dash & Plotly\n\nCognizant Techonology Solution :- Data Scientist (2016 - 2017)\n\nRetail store segmentation\nAnomaly Detection for machine parts failure\n\nSnapdeal :- Analyst Advanced Analytics (2014 - 2016)\n\nPrice optimization Engine\n\nPrice Elasticity Models\n\nLadyblush E-Commerce Pvt. Ltd (Start up) :- Engineer (2014 - 2014)\n\nE-commerce AI Chatbot\nData Analytics and Dashboarding\n\nShopclues :- Analyst (2013 - 2014)\n\nData Analytics and Dashboarding\n\n\n\nEducation\n\nB.Tech in Computer Science and Engineering\n\n\n\nCourses\n\nMachine Learning Course by Andrew NG\nDeep learning Course by Andrew NG\nBig Data Foundation by IBM\nIntroduction to Python by Kaggle\n\n\n\nTalks & Webinars\n\nIntroduction to Deep learning at Wipro Technologies on June 2017. [PPT]"
   },
   {
     "objectID": "myblog/posts/Fbeta-Measure/index.html",
@@ -495,6 +89,13 @@
     "title": "Fbeta-Measure",
     "section": "",
     "text": "\\[\nF_{1}=2.\\frac{{precision} \\times {recall}}{{precision} + {recall}}\n\\]\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.\n\n\n\\[\nF_{{\\beta}} = \\frac{(1 + {\\beta}^2). (precision.recall)}{({\\beta}^2.precision+recall)}\n\\]\nSummary\n\nPrecision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.\n\nF-measure provides a single score that summarizes the precision and recall.\n\nFbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score."
+  },
+  {
+    "objectID": "myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
+    "href": "myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
+    "title": "Successful delivering of Machine Learning Projects",
+    "section": "",
+    "text": "2. Selecting machine learning use cases and setting success metrics\nWe should aim to use machine learning where it is actually needed and not where it might be interesting. Some times simple analytics or rules get you 10-40% of business impact.Things to keep in mind include data readiness, business impact and machine learning applicability.\n\nA high impact use case without data or machine learing applicability ❌\nA use case with lots of data and high machine learning applicability but low business impact ❌\n\nBefore working on a project the team needs estimate its potential impact as well (Opportunity Sizing). So once we define business problem which can be solved with machine learning and done with opportunity sizing the next step is to outlining clear metrics to measure success.\nThe data science projects needs to have clear goal which is typically a target value for a clearly defined metric. In real world data science projects there are not just one but multiple metrics that model will evaluated against. Some of these evaluation metric won’t even be related to how your prediction performs against the ground truth. Other such metrics are like :\n\nOverall memory usage\nlatency of the prediction process\ncomplexity of predictive model\n\nReal world problems are indeed dominated by business and tech infrastructure concerns.\n\n\n3. Technical experts and domain experts should work together\nWe need to make sure that domain experts and technical experts or stakeholders work side by side. If relevant stakeholders are the part of entire process, everyone is most likely to accept, adopt and implement the solution. If a data scientist is working in silos then its very much unlikely that their models get implemented.\n\n\n4. Exploratory data analysis\nBefore building the model,we need to interrogate the data to see if there is any predictive power in the feature set. Read more about EDA here.\n\n\n5. A quick MVP\nIts good practice to build a minimum viable product which is build quickly and cheaply to validate the hypothesis before we commit extensive time and resource.\n\n\n6. Experiment Metrics\nWe should look for more than one metric to look when an experiment concludes.\n\n\n7. Regular Check-ins\nRather than meeting at the start and end of a model build, it is better to check-in frequently (e.g. once or twice a week) to discuss latest findings and align on if any course corrections are necessary."
   },
   {
     "objectID": "myblog/posts/Nearest-Neighbour-Classifier/index.html#strength",
@@ -546,139 +147,6 @@
     "text": "Predict Output\n\npredicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\nprint(predicted)\n\n[1]"
   },
   {
-    "objectID": "myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
-    "href": "myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
-    "title": "Successful delivering of Machine Learning Projects",
-    "section": "",
-    "text": "2. Selecting machine learning use cases and setting success metrics\nWe should aim to use machine learning where it is actually needed and not where it might be interesting. Some times simple analytics or rules get you 10-40% of business impact.Things to keep in mind include data readiness, business impact and machine learning applicability.\n\nA high impact use case without data or machine learing applicability ❌\nA use case with lots of data and high machine learning applicability but low business impact ❌\n\nBefore working on a project the team needs estimate its potential impact as well (Opportunity Sizing). So once we define business problem which can be solved with machine learning and done with opportunity sizing the next step is to outlining clear metrics to measure success.\nThe data science projects needs to have clear goal which is typically a target value for a clearly defined metric. In real world data science projects there are not just one but multiple metrics that model will evaluated against. Some of these evaluation metric won’t even be related to how your prediction performs against the ground truth. Other such metrics are like :\n\nOverall memory usage\nlatency of the prediction process\ncomplexity of predictive model\n\nReal world problems are indeed dominated by business and tech infrastructure concerns.\n\n\n3. Technical experts and domain experts should work together\nWe need to make sure that domain experts and technical experts or stakeholders work side by side. If relevant stakeholders are the part of entire process, everyone is most likely to accept, adopt and implement the solution. If a data scientist is working in silos then its very much unlikely that their models get implemented.\n\n\n4. Exploratory data analysis\nBefore building the model,we need to interrogate the data to see if there is any predictive power in the feature set. Read more about EDA here.\n\n\n5. A quick MVP\nIts good practice to build a minimum viable product which is build quickly and cheaply to validate the hypothesis before we commit extensive time and resource.\n\n\n6. Experiment Metrics\nWe should look for more than one metric to look when an experiment concludes.\n\n\n7. Regular Check-ins\nRather than meeting at the start and end of a model build, it is better to check-in frequently (e.g. once or twice a week) to discuss latest findings and align on if any course corrections are necessary."
-  },
-  {
-    "objectID": "myblog/blog.html",
-    "href": "myblog/blog.html",
-    "title": "Blog",
-    "section": "",
-    "text": "Listing the best books available in the market right now for data science.\n\n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.\n\n\n\n\n\n\nApr 10, 2017\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "myblog/posts/hypothesis-testing/index.html",
-    "href": "myblog/posts/hypothesis-testing/index.html",
-    "title": "Hypothesis Testing",
-    "section": "",
-    "text": "During hypothesis testing we confirm whether results we got is by chance ? If yes then experiment won’t be repeatable and so has little use.\nTwo ways of doing hypothesis testing are :-\nLet’s start with business case problem.\nQ :- Suppose that a PM claims that users on average spend about Rs. 50 per month on Amazon. However, you doubt this claim, and you believe that the average should be higher. So you sample 100 users and learn that the sample mean is Rs. 85. Would you reject the PM’s claim? Assume population standard deviation is 20."
-  },
-  {
-    "objectID": "myblog/posts/hypothesis-testing/index.html#p-value-approach",
-    "href": "myblog/posts/hypothesis-testing/index.html#p-value-approach",
-    "title": "Hypothesis Testing",
-    "section": "P-Value approach",
-    "text": "P-Value approach\n\nHypothesis\nSignificance level\nTest Statistics\n\nProbability of observing test statistics\nStatistical Decision\n\n1. Hypothesis\nHo : the average spend per user is Rs. 50\nHa : the average spend per user is greater than Rs. 50\n2. Significance level\n\\(\\alpha = 0.05\\)\n3. Test Statistics\n\\[\nZ-statistics  = \\frac{\\overline{X}-\\mu}{\\sigma/\\sqrt{n}}\n\\]\n\\[\n= \\frac{85-50}{20/\\sqrt{100}} =\\frac{35}{2} = 17.5\n\\]\n4. Probability of observing test statistics\nLooking into standard normal distribution table.\n\\(P-value < 0.0001 < \\alpha = 0.05\\)\n5. Statistical Decision\nAt alpha = 0.05 there is statistical significance to reject PM’s claim and conclude that the average spend per user is greater than Rs. 50.\nBusiness Case problem\nQ :- A Principal claims that the student in his school are above average intelligence. A random sample of 30 IQ scores have a mean of 112.5. Is there sufficient evidence to support the principal’s claim? The mean population IQ is 100 with standard deviation is 15."
-  },
-  {
-    "objectID": "myblog/posts/hypothesis-testing/index.html#critical-value-approach",
-    "href": "myblog/posts/hypothesis-testing/index.html#critical-value-approach",
-    "title": "Hypothesis Testing",
-    "section": "Critical Value Approach",
-    "text": "Critical Value Approach\n\nHypothesis\nSignificance level\nTest Statistics\n\nCritical Value\nStatistical Decision\n\n\n\n\n\n\n1. Hypothesis\nHo : the average IQ score is 100\nHa : the average IQ score is greater than Rs. 100\n2. Significance level\n\\(\\alpha = 0.05\\)\n3. Test Statistics\n\\[\nZ-statistics  = \\frac{\\overline{X}-\\mu}{\\sigma/\\sqrt{n}}\n\\]\n\\[\n= \\frac{112.5-100}{15/\\sqrt{30}} = 4.56\n\\]\n4. Z Critical Value\nLooking into standard normal distribution table.\n\\(Z Critical-value = 1.645\\)\n5. Statistical Decision\nAt alpha = 0.05 test statistics is greater than Z Critical value hence we can reject null hypothesis."
-  },
-  {
-    "objectID": "myblog/posts/test/index.html",
-    "href": "myblog/posts/test/index.html",
-    "title": "Observable JS",
-    "section": "",
-    "text": "viewof bill_length_min = Inputs.range(\n  [32, 50], \n  {value: 35, step: 1, label: \"Bill length (min):\"}\n)\nviewof islands = Inputs.checkbox(\n  [\"Torgersen\", \"Biscoe\", \"Dream\"], \n  { value: [\"Torgersen\", \"Biscoe\"], \n    label: \"Islands:\"\n  }\n)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nfiltered = data.filter(function(penguin) {\n  return bill_length_min < penguin.bill_length &&\n         islands.includes(penguin.island);\n})\n\n\n\n\n\n\n\nPlot.rectY(filtered, \n  Plot.binX(\n    {y: \"count\"}, \n    {x: \"body_mass\", fill: \"species\", thresholds: 20}\n  ))\n  .plot({\n    facet: {\n      data: filtered,\n      x: \"sex\",\n      y: \"species\",\n      marginRight: 80\n    },\n    marks: [\n      Plot.frame(),\n    ]\n  }\n)"
-  },
-  {
-    "objectID": "myblog/posts/top-languages/index.html",
-    "href": "myblog/posts/top-languages/index.html",
-    "title": "Most Popular programming languages 2004-2021",
-    "section": "",
-    "text": "chart\n\n\n\n\n\n\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\""
-  },
-  {
-    "objectID": "myblog/posts/decision-tree/Untitled.html",
-    "href": "myblog/posts/decision-tree/Untitled.html",
-    "title": "Decision Tree",
-    "section": "",
-    "text": "Decision Tree algorithm is one of the most intuitive ml technique."
-  },
-  {
-    "objectID": "myblog/posts/Nearest-Neighbour-Classifier/index.html",
-    "href": "myblog/posts/Nearest-Neighbour-Classifier/index.html",
-    "title": "Nearest Neighbour Classifier",
-    "section": "",
-    "text": "#![](https://i.imgur.com/bpU9JuI.gif)"
-  },
-  {
-    "objectID": "myblog/posts/gradient-descent/index.html",
-    "href": "myblog/posts/gradient-descent/index.html",
-    "title": "Gradient Descent from scratch for linear regression",
-    "section": "",
-    "text": "Step 1 : Defining the linear regression problem\nStep 2 : Initialize the parameters and hyperparameters\nStep 3 : Create gradient descent function\nStep 4 : Iterate gradient descent function and update parameters to minimize loss.\n\n\n\nimport numpy as np\nx = np.random.randn(10,1)\ny = 2*x + np.random.randn()\n\n\n\n\n\nw = 0\nb = 0\nlearning_rate = 0.01\n\n\n\n\n\ndef gradient_descent(x,y,w,b,learning_rate):\n    dldw = 0.0 \n    dldb = 0.0\n    N = x.shape[0]\n    \n    for xi, yi in zip(x,y):\n        dldw += -2*xi*(yi-(w*xi+b))\n        dldb += -2*(yi-(w*xi+b))\n    #make an update to the parameters\n    w = w - learning_rate*(1/N)*dldw\n    b = b - learning_rate*(1/N)*dldb\n    \n    return w,b\n\n\n\n\n\nfor epoch in range(300):\n    w, b = gradient_descent(x,y,w,b,learning_rate) \n    yhat =  w*x + b\n    loss =  np.divide(np.sum((y-yhat)**2, axis=0), x.shape[0])\n    print(f'{epoch} loss is {loss}, parameters w:{w}, b:{b}')\n\n0 loss is [3.31211004], parameters w:[0.03394664], b:[-0.00241723]\n1 loss is [3.2011369], parameters w:[0.06731399], b:[-0.00483577]\n2 loss is [3.09389844], parameters w:[0.100112], b:[-0.00725474]\n3 loss is [2.99026833], parameters w:[0.13235046], b:[-0.0096733]\n4 loss is [2.8901245], parameters w:[0.16403896], b:[-0.01209065]\n5 loss is [2.79334907], parameters w:[0.19518695], b:[-0.01450599]\n6 loss is [2.69982816], parameters w:[0.2258037], b:[-0.01691859]\n7 loss is [2.60945176], parameters w:[0.25589833], b:[-0.01932772]\n8 loss is [2.52211359], parameters w:[0.2854798], b:[-0.02173268]\n9 loss is [2.43771102], parameters w:[0.31455692], b:[-0.02413281]\n10 loss is [2.35614487], parameters w:[0.34313833], b:[-0.02652747]\n11 loss is [2.27731934], parameters w:[0.37123253], b:[-0.02891603]\n12 loss is [2.20114189], parameters w:[0.39884789], b:[-0.03129792]\n13 loss is [2.12752313], parameters w:[0.42599262], b:[-0.03367256]\n14 loss is [2.05637669], parameters w:[0.45267477], b:[-0.03603941]\n15 loss is [1.98761913], parameters w:[0.4789023], b:[-0.03839795]\n16 loss is [1.92116987], parameters w:[0.50468298], b:[-0.04074769]\n17 loss is [1.85695103], parameters w:[0.53002448], b:[-0.04308813]\n18 loss is [1.79488739], parameters w:[0.55493432], b:[-0.04541883]\n19 loss is [1.73490628], parameters w:[0.5794199], b:[-0.04773935]\n20 loss is [1.67693749], parameters w:[0.60348849], b:[-0.05004928]\n21 loss is [1.6209132], parameters w:[0.62714724], b:[-0.0523482]\n22 loss is [1.56676786], parameters w:[0.65040315], b:[-0.05463576]\n23 loss is [1.51443818], parameters w:[0.67326314], b:[-0.05691158]\n24 loss is [1.463863], parameters w:[0.69573398], b:[-0.05917532]\n25 loss is [1.41498321], parameters w:[0.71782234], b:[-0.06142665]\n26 loss is [1.36774173], parameters w:[0.73953477], b:[-0.06366526]\n27 loss is [1.32208339], parameters w:[0.76087769], b:[-0.06589085]\n28 loss is [1.27795492], parameters w:[0.78185744], b:[-0.06810315]\n29 loss is [1.23530481], parameters w:[0.80248024], b:[-0.07030189]\n30 loss is [1.19408333], parameters w:[0.82275218], b:[-0.07248682]\n31 loss is [1.1542424], parameters w:[0.84267927], b:[-0.0746577]\n32 loss is [1.11573559], parameters w:[0.86226742], b:[-0.07681431]\n33 loss is [1.07851804], parameters w:[0.88152242], b:[-0.07895644]\n34 loss is [1.04254639], parameters w:[0.90044997], b:[-0.08108389]\n35 loss is [1.00777875], parameters w:[0.91905568], b:[-0.08319647]\n36 loss is [0.97417466], parameters w:[0.93734503], b:[-0.08529402]\n37 loss is [0.94169501], parameters w:[0.95532345], b:[-0.08737636]\n38 loss is [0.91030202], parameters w:[0.97299626], b:[-0.08944336]\n39 loss is [0.87995918], parameters w:[0.99036866], b:[-0.09149486]\n40 loss is [0.85063121], parameters w:[1.00744581], b:[-0.09353074]\n41 loss is [0.82228404], parameters w:[1.02423274], b:[-0.09555088]\n42 loss is [0.79488472], parameters w:[1.04073441], b:[-0.09755518]\n43 loss is [0.76840144], parameters w:[1.05695571], b:[-0.09954352]\n44 loss is [0.74280345], parameters w:[1.07290142], b:[-0.10151582]\n45 loss is [0.71806103], parameters w:[1.08857624], b:[-0.103472]\n46 loss is [0.69414548], parameters w:[1.10398481], b:[-0.10541198]\n47 loss is [0.67102905], parameters w:[1.11913167], b:[-0.1073357]\n48 loss is [0.64868494], parameters w:[1.1340213], b:[-0.1092431]\n49 loss is [0.62708725], parameters w:[1.14865808], b:[-0.11113413]\n50 loss is [0.60621094], parameters w:[1.16304633], b:[-0.11300875]\n51 loss is [0.58603182], parameters w:[1.17719029], b:[-0.11486691]\n52 loss is [0.56652652], parameters w:[1.19109414], b:[-0.11670861]\n53 loss is [0.54767247], parameters w:[1.20476198], b:[-0.1185338]\n54 loss is [0.52944783], parameters w:[1.21819782], b:[-0.12034249]\n55 loss is [0.5118315], parameters w:[1.23140564], b:[-0.12213465]\n56 loss is [0.49480313], parameters w:[1.24438931], b:[-0.12391028]\n57 loss is [0.47834299], parameters w:[1.25715267], b:[-0.1256694]\n58 loss is [0.46243208], parameters w:[1.26969948], b:[-0.127412]\n59 loss is [0.44705198], parameters w:[1.28203342], b:[-0.1291381]\n60 loss is [0.43218494], parameters w:[1.29415812], b:[-0.13084771]\n61 loss is [0.41781377], parameters w:[1.30607717], b:[-0.13254087]\n62 loss is [0.40392188], parameters w:[1.31779405], b:[-0.1342176]\n63 loss is [0.39049322], parameters w:[1.32931223], b:[-0.13587793]\n64 loss is [0.3775123], parameters w:[1.34063508], b:[-0.13752191]\n65 loss is [0.36496413], parameters w:[1.35176593], b:[-0.13914956]\n66 loss is [0.35283424], parameters w:[1.36270807], b:[-0.14076094]\n67 loss is [0.34110864], parameters w:[1.3734647], b:[-0.1423561]\n68 loss is [0.3297738], parameters w:[1.38403899], b:[-0.14393509]\n69 loss is [0.31881666], parameters w:[1.39443404], b:[-0.14549796]\n70 loss is [0.3082246], parameters w:[1.4046529], b:[-0.14704478]\n71 loss is [0.2979854], parameters w:[1.41469859], b:[-0.14857561]\n72 loss is [0.28808727], parameters w:[1.42457404], b:[-0.15009052]\n73 loss is [0.27851882], parameters w:[1.43428216], b:[-0.15158957]\n74 loss is [0.26926903], parameters w:[1.4438258], b:[-0.15307285]\n75 loss is [0.26032724], parameters w:[1.45320775], b:[-0.15454041]\n76 loss is [0.25168318], parameters w:[1.46243078], b:[-0.15599235]\n77 loss is [0.2433269], parameters w:[1.47149758], b:[-0.15742874]\n78 loss is [0.23524878], parameters w:[1.48041082], b:[-0.15884966]\n79 loss is [0.22743954], parameters w:[1.48917311], b:[-0.1602552]\n80 loss is [0.2198902], parameters w:[1.49778701], b:[-0.16164544]\n81 loss is [0.21259208], parameters w:[1.50625506], b:[-0.16302048]\n82 loss is [0.2055368], parameters w:[1.51457974], b:[-0.16438041]\n83 loss is [0.19871625], parameters w:[1.52276348], b:[-0.16572531]\n84 loss is [0.1921226], parameters w:[1.53080869], b:[-0.16705528]\n85 loss is [0.18574828], parameters w:[1.53871771], b:[-0.16837042]\n86 loss is [0.17958597], parameters w:[1.54649288], b:[-0.16967083]\n87 loss is [0.17362859], parameters w:[1.55413645], b:[-0.1709566]\n88 loss is [0.16786932], parameters w:[1.56165068], b:[-0.17222784]\n89 loss is [0.16230154], parameters w:[1.56903775], b:[-0.17348464]\n90 loss is [0.15691888], parameters w:[1.57629984], b:[-0.17472711]\n91 loss is [0.15171514], parameters w:[1.58343906], b:[-0.17595535]\n92 loss is [0.14668439], parameters w:[1.59045751], b:[-0.17716947]\n93 loss is [0.14182083], parameters w:[1.59735724], b:[-0.17836957]\n94 loss is [0.13711891], parameters w:[1.60414026], b:[-0.17955576]\n95 loss is [0.13257324], parameters w:[1.61080857], b:[-0.18072815]\n96 loss is [0.1281786], parameters w:[1.6173641], b:[-0.18188684]\n97 loss is [0.12392998], parameters w:[1.62380878], b:[-0.18303195]\n98 loss is [0.11982249], parameters w:[1.63014448], b:[-0.18416359]\n99 loss is [0.11585145], parameters w:[1.63637307], b:[-0.18528185]\n100 loss is [0.1120123], parameters w:[1.64249635], b:[-0.18638687]\n101 loss is [0.10830065], parameters w:[1.64851612], b:[-0.18747873]\n102 loss is [0.10471227], parameters w:[1.65443414], b:[-0.18855757]\n103 loss is [0.10124303], parameters w:[1.66025213], b:[-0.18962348]\n104 loss is [0.09788899], parameters w:[1.66597179], b:[-0.19067659]\n105 loss is [0.09464629], parameters w:[1.6715948], b:[-0.191717]\n106 loss is [0.09151125], parameters w:[1.67712278], b:[-0.19274483]\n107 loss is [0.08848026], parameters w:[1.68255737], b:[-0.19376018]\n108 loss is [0.08554988], parameters w:[1.68790013], b:[-0.19476318]\n109 loss is [0.08271675], parameters w:[1.69315263], b:[-0.19575393]\n110 loss is [0.07997763], parameters w:[1.6983164], b:[-0.19673255]\n111 loss is [0.07732941], parameters w:[1.70339295], b:[-0.19769914]\n112 loss is [0.07476905], parameters w:[1.70838375], b:[-0.19865384]\n113 loss is [0.07229363], parameters w:[1.71329027], b:[-0.19959673]\n114 loss is [0.06990033], parameters w:[1.71811392], b:[-0.20052795]\n115 loss is [0.06758642], parameters w:[1.72285612], b:[-0.2014476]\n116 loss is [0.06534926], parameters w:[1.72751825], b:[-0.20235579]\n117 loss is [0.06318629], parameters w:[1.73210167], b:[-0.20325263]\n118 loss is [0.06109506], parameters w:[1.7366077], b:[-0.20413825]\n119 loss is [0.05907317], parameters w:[1.74103767], b:[-0.20501274]\n120 loss is [0.05711831], parameters w:[1.74539286], b:[-0.20587622]\n121 loss is [0.05522828], parameters w:[1.74967455], b:[-0.2067288]\n122 loss is [0.0534009], parameters w:[1.75388396], b:[-0.20757059]\n123 loss is [0.05163409], parameters w:[1.75802234], b:[-0.20840171]\n124 loss is [0.04992585], parameters w:[1.76209089], b:[-0.20922225]\n125 loss is [0.04827423], parameters w:[1.76609078], b:[-0.21003233]\n126 loss is [0.04667735], parameters w:[1.77002318], b:[-0.21083207]\n127 loss is [0.04513339], parameters w:[1.77388924], b:[-0.21162155]\n128 loss is [0.04364058], parameters w:[1.77769008], b:[-0.21240091]\n129 loss is [0.04219724], parameters w:[1.78142681], b:[-0.21317024]\n130 loss is [0.04080172], parameters w:[1.7851005], b:[-0.21392964]\n131 loss is [0.03945244], parameters w:[1.78871223], b:[-0.21467923]\n132 loss is [0.03814785], parameters w:[1.79226305], b:[-0.21541911]\n133 loss is [0.03688647], parameters w:[1.79575399], b:[-0.21614939]\n134 loss is [0.03566688], parameters w:[1.79918607], b:[-0.21687017]\n135 loss is [0.03448768], parameters w:[1.80256027], b:[-0.21758155]\n136 loss is [0.03334753], parameters w:[1.80587759], b:[-0.21828364]\n137 loss is [0.03224513], parameters w:[1.80913897], b:[-0.21897654]\n138 loss is [0.03117924], parameters w:[1.81234538], b:[-0.21966035]\n139 loss is [0.03014864], parameters w:[1.81549773], b:[-0.22033518]\n140 loss is [0.02915216], parameters w:[1.81859696], b:[-0.22100112]\n141 loss is [0.02818867], parameters w:[1.82164394], b:[-0.22165827]\n142 loss is [0.02725708], parameters w:[1.82463958], b:[-0.22230674]\n143 loss is [0.02635632], parameters w:[1.82758473], b:[-0.22294662]\n144 loss is [0.02548538], parameters w:[1.83048025], b:[-0.22357801]\n145 loss is [0.02464326], parameters w:[1.83332699], b:[-0.22420101]\n146 loss is [0.02382901], parameters w:[1.83612576], b:[-0.22481571]\n147 loss is [0.02304171], parameters w:[1.83887738], b:[-0.22542221]\n148 loss is [0.02228046], parameters w:[1.84158265], b:[-0.2260206]\n149 loss is [0.0215444], parameters w:[1.84424234], b:[-0.22661099]\n150 loss is [0.02083269], parameters w:[1.84685723], b:[-0.22719345]\n151 loss is [0.02014453], parameters w:[1.84942809], b:[-0.2277681]\n152 loss is [0.01947913], parameters w:[1.85195564], b:[-0.22833501]\n153 loss is [0.01883575], parameters w:[1.85444063], b:[-0.22889427]\n154 loss is [0.01821365], parameters w:[1.85688377], b:[-0.22944599]\n155 loss is [0.01761212], parameters w:[1.85928578], b:[-0.22999025]\n156 loss is [0.01703049], parameters w:[1.86164734], b:[-0.23052713]\n157 loss is [0.01646809], parameters w:[1.86396914], b:[-0.23105673]\n158 loss is [0.0159243], parameters w:[1.86625186], b:[-0.23157914]\n159 loss is [0.01539848], parameters w:[1.86849614], b:[-0.23209443]\n160 loss is [0.01489005], parameters w:[1.87070265], b:[-0.23260271]\n161 loss is [0.01439843], parameters w:[1.87287202], b:[-0.23310404]\n162 loss is [0.01392307], parameters w:[1.87500488], b:[-0.23359852]\n163 loss is [0.01346342], parameters w:[1.87710184], b:[-0.23408623]\n164 loss is [0.01301897], parameters w:[1.87916352], b:[-0.23456725]\n165 loss is [0.01258921], parameters w:[1.8811905], b:[-0.23504167]\n166 loss is [0.01217365], parameters w:[1.88318337], b:[-0.23550957]\n167 loss is [0.01177183], parameters w:[1.88514272], b:[-0.23597102]\n168 loss is [0.01138329], parameters w:[1.8870691], b:[-0.23642611]\n169 loss is [0.01100759], parameters w:[1.88896307], b:[-0.23687491]\n170 loss is [0.01064431], parameters w:[1.89082518], b:[-0.23731751]\n171 loss is [0.01029303], parameters w:[1.89265597], b:[-0.23775398]\n172 loss is [0.00995336], parameters w:[1.89445596], b:[-0.2381844]\n173 loss is [0.00962491], parameters w:[1.89622568], b:[-0.23860884]\n174 loss is [0.00930732], parameters w:[1.89796564], b:[-0.23902738]\n175 loss is [0.00900021], parameters w:[1.89967634], b:[-0.2394401]\n176 loss is [0.00870326], parameters w:[1.90135827], b:[-0.23984706]\n177 loss is [0.00841611], parameters w:[1.90301192], b:[-0.24024835]\n178 loss is [0.00813845], parameters w:[1.90463777], b:[-0.24064403]\n179 loss is [0.00786996], parameters w:[1.90623628], b:[-0.24103417]\n180 loss is [0.00761034], parameters w:[1.90780791], b:[-0.24141885]\n181 loss is [0.00735929], parameters w:[1.90935313], b:[-0.24179813]\n182 loss is [0.00711653], parameters w:[1.91087237], b:[-0.24217209]\n183 loss is [0.00688179], parameters w:[1.91236608], b:[-0.24254079]\n184 loss is [0.00665481], parameters w:[1.91383468], b:[-0.2429043]\n185 loss is [0.00643531], parameters w:[1.9152786], b:[-0.24326269]\n186 loss is [0.00622307], parameters w:[1.91669825], b:[-0.24361602]\n187 loss is [0.00601783], parameters w:[1.91809404], b:[-0.24396436]\n188 loss is [0.00581937], parameters w:[1.91946638], b:[-0.24430778]\n189 loss is [0.00562747], parameters w:[1.92081566], b:[-0.24464633]\n190 loss is [0.0054419], parameters w:[1.92214228], b:[-0.24498009]\n191 loss is [0.00526245], parameters w:[1.9234466], b:[-0.24530912]\n192 loss is [0.00508893], parameters w:[1.92472901], b:[-0.24563347]\n193 loss is [0.00492113], parameters w:[1.92598988], b:[-0.24595321]\n194 loss is [0.00475888], parameters w:[1.92722957], b:[-0.2462684]\n195 loss is [0.00460198], parameters w:[1.92844843], b:[-0.2465791]\n196 loss is [0.00445026], parameters w:[1.92964683], b:[-0.24688536]\n197 loss is [0.00430354], parameters w:[1.93082509], b:[-0.24718726]\n198 loss is [0.00416167], parameters w:[1.93198357], b:[-0.24748484]\n199 loss is [0.00402448], parameters w:[1.9331226], b:[-0.24777816]\n200 loss is [0.00389181], parameters w:[1.9342425], b:[-0.24806728]\n201 loss is [0.00376353], parameters w:[1.93534359], b:[-0.24835226]\n202 loss is [0.00363948], parameters w:[1.9364262], b:[-0.24863315]\n203 loss is [0.00351952], parameters w:[1.93749063], b:[-0.24891001]\n204 loss is [0.00340351], parameters w:[1.93853719], b:[-0.24918288]\n205 loss is [0.00329134], parameters w:[1.93956618], b:[-0.24945183]\n206 loss is [0.00318286], parameters w:[1.9405779], b:[-0.2497169]\n207 loss is [0.00307797], parameters w:[1.94157264], b:[-0.24997815]\n208 loss is [0.00297653], parameters w:[1.94255068], b:[-0.25023564]\n209 loss is [0.00287844], parameters w:[1.9435123], b:[-0.2504894]\n210 loss is [0.00278359], parameters w:[1.94445779], b:[-0.25073949]\n211 loss is [0.00269186], parameters w:[1.94538741], b:[-0.25098597]\n212 loss is [0.00260316], parameters w:[1.94630143], b:[-0.25122888]\n213 loss is [0.00251739], parameters w:[1.94720011], b:[-0.25146826]\n214 loss is [0.00243444], parameters w:[1.94808371], b:[-0.25170417]\n215 loss is [0.00235423], parameters w:[1.94895249], b:[-0.25193666]\n216 loss is [0.00227667], parameters w:[1.9498067], b:[-0.25216576]\n217 loss is [0.00220166], parameters w:[1.95064657], b:[-0.25239154]\n218 loss is [0.00212913], parameters w:[1.95147235], b:[-0.25261402]\n219 loss is [0.00205899], parameters w:[1.95228428], b:[-0.25283327]\n220 loss is [0.00199116], parameters w:[1.95308259], b:[-0.25304931]\n221 loss is [0.00192556], parameters w:[1.95386751], b:[-0.25326221]\n222 loss is [0.00186213], parameters w:[1.95463927], b:[-0.25347199]\n223 loss is [0.0018008], parameters w:[1.95539809], b:[-0.25367871]\n224 loss is [0.00174148], parameters w:[1.95614417], b:[-0.2538824]\n225 loss is [0.00168412], parameters w:[1.95687775], b:[-0.25408311]\n226 loss is [0.00162865], parameters w:[1.95759903], b:[-0.25428088]\n227 loss is [0.00157501], parameters w:[1.95830821], b:[-0.25447575]\n228 loss is [0.00152313], parameters w:[1.9590055], b:[-0.25466776]\n229 loss is [0.00147297], parameters w:[1.9596911], b:[-0.25485694]\n230 loss is [0.00142446], parameters w:[1.96036521], b:[-0.25504335]\n231 loss is [0.00137755], parameters w:[1.96102801], b:[-0.25522702]\n232 loss is [0.00133218], parameters w:[1.96167971], b:[-0.25540798]\n233 loss is [0.00128831], parameters w:[1.96232048], b:[-0.25558627]\n234 loss is [0.00124589], parameters w:[1.96295051], b:[-0.25576194]\n235 loss is [0.00120486], parameters w:[1.96356998], b:[-0.25593501]\n236 loss is [0.00116519], parameters w:[1.96417907], b:[-0.25610553]\n237 loss is [0.00112682], parameters w:[1.96477795], b:[-0.25627353]\n238 loss is [0.00108972], parameters w:[1.96536679], b:[-0.25643905]\n239 loss is [0.00105384], parameters w:[1.96594577], b:[-0.25660211]\n240 loss is [0.00101914], parameters w:[1.96651504], b:[-0.25676277]\n241 loss is [0.00098559], parameters w:[1.96707478], b:[-0.25692104]\n242 loss is [0.00095314], parameters w:[1.96762513], b:[-0.25707696]\n243 loss is [0.00092176], parameters w:[1.96816627], b:[-0.25723057]\n244 loss is [0.00089141], parameters w:[1.96869834], b:[-0.2573819]\n245 loss is [0.00086207], parameters w:[1.9692215], b:[-0.25753099]\n246 loss is [0.00083369], parameters w:[1.96973589], b:[-0.25767785]\n247 loss is [0.00080624], parameters w:[1.97024167], b:[-0.25782253]\n248 loss is [0.0007797], parameters w:[1.97073897], b:[-0.25796506]\n249 loss is [0.00075404], parameters w:[1.97122795], b:[-0.25810546]\n250 loss is [0.00072921], parameters w:[1.97170873], b:[-0.25824377]\n251 loss is [0.00070521], parameters w:[1.97218147], b:[-0.25838002]\n252 loss is [0.000682], parameters w:[1.97264628], b:[-0.25851424]\n253 loss is [0.00065955], parameters w:[1.97310331], b:[-0.25864645]\n254 loss is [0.00063784], parameters w:[1.97355269], b:[-0.25877668]\n255 loss is [0.00061685], parameters w:[1.97399455], b:[-0.25890497]\n256 loss is [0.00059655], parameters w:[1.974429], b:[-0.25903134]\n257 loss is [0.00057691], parameters w:[1.97485619], b:[-0.25915581]\n258 loss is [0.00055793], parameters w:[1.97527621], b:[-0.25927842]\n259 loss is [0.00053957], parameters w:[1.97568921], b:[-0.25939919]\n260 loss is [0.00052181], parameters w:[1.9760953], b:[-0.25951816]\n261 loss is [0.00050464], parameters w:[1.97649458], b:[-0.25963533]\n262 loss is [0.00048803], parameters w:[1.97688718], b:[-0.25975075]\n263 loss is [0.00047197], parameters w:[1.97727321], b:[-0.25986443]\n264 loss is [0.00045644], parameters w:[1.97765278], b:[-0.2599764]\n265 loss is [0.00044142], parameters w:[1.978026], b:[-0.26008669]\n266 loss is [0.00042689], parameters w:[1.97839297], b:[-0.26019532]\n267 loss is [0.00041285], parameters w:[1.9787538], b:[-0.26030232]\n268 loss is [0.00039926], parameters w:[1.97910859], b:[-0.2604077]\n269 loss is [0.00038613], parameters w:[1.97945744], b:[-0.26051149]\n270 loss is [0.00037342], parameters w:[1.97980045], b:[-0.26061372]\n271 loss is [0.00036113], parameters w:[1.98013773], b:[-0.2607144]\n272 loss is [0.00034925], parameters w:[1.98046936], b:[-0.26081357]\n273 loss is [0.00033776], parameters w:[1.98079545], b:[-0.26091123]\n274 loss is [0.00032665], parameters w:[1.98111607], b:[-0.26100742]\n275 loss is [0.0003159], parameters w:[1.98143134], b:[-0.26110216]\n276 loss is [0.00030551], parameters w:[1.98174133], b:[-0.26119546]\n277 loss is [0.00029546], parameters w:[1.98204613], b:[-0.26128734]\n278 loss is [0.00028574], parameters w:[1.98234584], b:[-0.26137784]\n279 loss is [0.00027634], parameters w:[1.98264053], b:[-0.26146697]\n280 loss is [0.00026725], parameters w:[1.98293029], b:[-0.26155474]\n281 loss is [0.00025846], parameters w:[1.98321521], b:[-0.26164118]\n282 loss is [0.00024995], parameters w:[1.98349536], b:[-0.26172631]\n283 loss is [0.00024173], parameters w:[1.98377083], b:[-0.26181015]\n284 loss is [0.00023378], parameters w:[1.98404169], b:[-0.26189271]\n285 loss is [0.00022609], parameters w:[1.98430802], b:[-0.26197402]\n286 loss is [0.00021865], parameters w:[1.98456989], b:[-0.26205409]\n287 loss is [0.00021146], parameters w:[1.98482739], b:[-0.26213294]\n288 loss is [0.00020451], parameters w:[1.98508058], b:[-0.26221059]\n289 loss is [0.00019778], parameters w:[1.98532954], b:[-0.26228706]\n290 loss is [0.00019127], parameters w:[1.98557434], b:[-0.26236237]\n291 loss is [0.00018498], parameters w:[1.98581504], b:[-0.26243652]\n292 loss is [0.0001789], parameters w:[1.98605172], b:[-0.26250955]\n293 loss is [0.00017302], parameters w:[1.98628444], b:[-0.26258146]\n294 loss is [0.00016733], parameters w:[1.98651327], b:[-0.26265227]\n295 loss is [0.00016182], parameters w:[1.98673828], b:[-0.26272201]\n296 loss is [0.0001565], parameters w:[1.98695953], b:[-0.26279067]\n297 loss is [0.00015135], parameters w:[1.98717707], b:[-0.26285829]\n298 loss is [0.00014638], parameters w:[1.98739098], b:[-0.26292487]\n299 loss is [0.00014156], parameters w:[1.98760132], b:[-0.26299043]"
-  },
-  {
-    "objectID": "myblog/posts/mastodon/index.html",
-    "href": "myblog/posts/mastodon/index.html",
-    "title": "Joined Mastodon",
-    "section": "",
-    "text": "What is Mastodon ?\nAccording to wiki Mastodon is free and open-source software for running self-hosted social networking services. It has microblogging features similar to Twitter, which are offered by a large number of independently run nodes, known as instances, each with its own code of conduct, terms of service, privacy policy, privacy options, and content moderation policies.\n\nMastodon was created by Eugen Rochko and announced on Hacker News in October 2016 and gained significant adoption in 2022 in the wake of Twitter’s acquisition by Elon Musk"
-  },
-  {
-    "objectID": "myblog/posts/another/Untitled.html",
-    "href": "myblog/posts/another/Untitled.html",
-    "title": "Graphs",
-    "section": "",
-    "text": "data = FileAttachment(\"penguins.csv\").csv({typed: true})\n\n\nviewof bins = Inputs.range([3, 20], {step: 1, label: \"Bins\"})\n\nPlot.plot({\n  marks: [\n    Plot.ruleY([0]),\n    Plot.rectY(data, Plot.binX({y: \"sum\"}, {x: \"flipper_length_mm\", thresholds: bins}))\n  ]\n})"
-  },
-  {
-    "objectID": "myblog/posts/another/Untitled.html#summary-table",
-    "href": "myblog/posts/another/Untitled.html#summary-table",
-    "title": "Graphs",
-    "section": "Summary Table",
-    "text": "Summary Table\n\nimport {SummaryTable} from \"@observablehq/summary-table\"\nviewof summary_data = SummaryTable(data, {label: \"Penguins Data\"})"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html",
-    "href": "myblog/posts/datascience_books/index.html",
-    "title": "The Best Data Science Books",
-    "section": "",
-    "text": "Python\n\nStatistics and Mathematics\n\nMachine Learning\n\nCompetitive Data Science\n\nProductionize models"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html#python",
-    "href": "myblog/posts/datascience_books/index.html#python",
-    "title": "The Best Data Science Books",
-    "section": "1. Python",
-    "text": "1. Python\n\nFluent Python\n\nPython Data Science Handbook"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html#statistics",
-    "href": "myblog/posts/datascience_books/index.html#statistics",
-    "title": "The Best Data Science Books",
-    "section": "2. Statistics",
-    "text": "2. Statistics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html#machine-learning",
-    "href": "myblog/posts/datascience_books/index.html#machine-learning",
-    "title": "The Best Data Science Books",
-    "section": "3. Machine Learning",
-    "text": "3. Machine Learning\n\nMachine Learning with PyTorch and Scikit-Learn"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html#competitive-data-science",
-    "href": "myblog/posts/datascience_books/index.html#competitive-data-science",
-    "title": "The Best Data Science Books",
-    "section": "4. Competitive Data Science",
-    "text": "4. Competitive Data Science\n\nThe Kaggle Book"
-  },
-  {
-    "objectID": "myblog/posts/datascience_books/index.html#productionize-models",
-    "href": "myblog/posts/datascience_books/index.html#productionize-models",
-    "title": "The Best Data Science Books",
-    "section": "5. Productionize models",
-    "text": "5. Productionize models\n\nDesigning Machine Learning Systems"
-  },
-  {
     "objectID": "myblog/posts/best-datascience-books/index.html",
     "href": "myblog/posts/best-datascience-books/index.html",
     "title": "The Best Data Science Books",
@@ -693,11 +161,11 @@
     "text": "1. Python\n\nFluent Python\n\nPython Data Science Handbook"
   },
   {
-    "objectID": "myblog/posts/best-datascience-books/index.html#statistics",
-    "href": "myblog/posts/best-datascience-books/index.html#statistics",
+    "objectID": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
+    "href": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
     "title": "The Best Data Science Books",
-    "section": "2. Statistics",
-    "text": "2. Statistics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
+    "section": "2. Statistics and Mathematics",
+    "text": "2. Statistics and Mathematics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
   },
   {
     "objectID": "myblog/posts/best-datascience-books/index.html#machine-learning",
@@ -721,66 +189,45 @@
     "text": "5. Productionize models\n\nDesigning Machine Learning Systems"
   },
   {
-    "objectID": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
-    "href": "myblog/posts/best-datascience-books/index.html#statistics-and-mathematics",
-    "title": "The Best Data Science Books",
-    "section": "2. Statistics and Mathematics",
-    "text": "2. Statistics and Mathematics\n\nPractical Statistics for Data Scientists\n\nMathematics for Machine Learning"
-  },
-  {
-    "objectID": "myblog/posts/fbeta-measure/index.html",
-    "href": "myblog/posts/fbeta-measure/index.html",
-    "title": "Fbeta-Measure",
+    "objectID": "myblog/posts/gradient-descent/index.html",
+    "href": "myblog/posts/gradient-descent/index.html",
+    "title": "Gradient Descent from scratch for linear regression",
     "section": "",
-    "text": "\\[\nF_{1}=2.\\frac{{precision} \\times {recall}}{{precision} + {recall}}\n\\]\nThe Fbeta-measure is a generalization of the F-measure that adds a configuration parameter called beta. A default beta value is 1.0, which is the same as the F-measure. A smaller beta value, such as 0.5, gives more weight to precision and less to recall, whereas a larger beta value, such as 2.0, gives less weight to precision and more weight to recall in the calculation of the score.\n\n\n\\[\nF_{{\\beta}} = \\frac{(1 + {\\beta}^2). (precision.recall)}{({\\beta}^2.precision+recall)}\n\\]\nSummary\n\nPrecision and recall provide two ways to summarize the errors made for the positive class in a binary classification problem.\n\nF-measure provides a single score that summarizes the precision and recall.\n\nFbeta-measure provides a configurable version of the F-measure to give more or less attention to the precision and recall measure when calculating a single score."
+    "text": "Step 1 : Defining the linear regression problem\nStep 2 : Initialize the parameters and hyperparameters\nStep 3 : Create gradient descent function\nStep 4 : Iterate gradient descent function and update parameters to minimize loss.\n\n\n\nimport numpy as np\nx = np.random.randn(10,1)\ny = 2*x + np.random.randn()\n\n\n\n\n\nw = 0\nb = 0\nlearning_rate = 0.01\n\n\n\n\n\ndef gradient_descent(x,y,w,b,learning_rate):\n    dldw = 0.0 \n    dldb = 0.0\n    N = x.shape[0]\n    \n    for xi, yi in zip(x,y):\n        dldw += -2*xi*(yi-(w*xi+b))\n        dldb += -2*(yi-(w*xi+b))\n    #make an update to the parameters\n    w = w - learning_rate*(1/N)*dldw\n    b = b - learning_rate*(1/N)*dldb\n    \n    return w,b\n\n\n\n\n\nfor epoch in range(300):\n    w, b = gradient_descent(x,y,w,b,learning_rate) \n    yhat =  w*x + b\n    loss =  np.divide(np.sum((y-yhat)**2, axis=0), x.shape[0])\n    print(f'{epoch} loss is {loss}, parameters w:{w}, b:{b}')\n\n0 loss is [3.31211004], parameters w:[0.03394664], b:[-0.00241723]\n1 loss is [3.2011369], parameters w:[0.06731399], b:[-0.00483577]\n2 loss is [3.09389844], parameters w:[0.100112], b:[-0.00725474]\n3 loss is [2.99026833], parameters w:[0.13235046], b:[-0.0096733]\n4 loss is [2.8901245], parameters w:[0.16403896], b:[-0.01209065]\n5 loss is [2.79334907], parameters w:[0.19518695], b:[-0.01450599]\n6 loss is [2.69982816], parameters w:[0.2258037], b:[-0.01691859]\n7 loss is [2.60945176], parameters w:[0.25589833], b:[-0.01932772]\n8 loss is [2.52211359], parameters w:[0.2854798], b:[-0.02173268]\n9 loss is [2.43771102], parameters w:[0.31455692], b:[-0.02413281]\n10 loss is [2.35614487], parameters w:[0.34313833], b:[-0.02652747]\n11 loss is [2.27731934], parameters w:[0.37123253], b:[-0.02891603]\n12 loss is [2.20114189], parameters w:[0.39884789], b:[-0.03129792]\n13 loss is [2.12752313], parameters w:[0.42599262], b:[-0.03367256]\n14 loss is [2.05637669], parameters w:[0.45267477], b:[-0.03603941]\n15 loss is [1.98761913], parameters w:[0.4789023], b:[-0.03839795]\n16 loss is [1.92116987], parameters w:[0.50468298], b:[-0.04074769]\n17 loss is [1.85695103], parameters w:[0.53002448], b:[-0.04308813]\n18 loss is [1.79488739], parameters w:[0.55493432], b:[-0.04541883]\n19 loss is [1.73490628], parameters w:[0.5794199], b:[-0.04773935]\n20 loss is [1.67693749], parameters w:[0.60348849], b:[-0.05004928]\n21 loss is [1.6209132], parameters w:[0.62714724], b:[-0.0523482]\n22 loss is [1.56676786], parameters w:[0.65040315], b:[-0.05463576]\n23 loss is [1.51443818], parameters w:[0.67326314], b:[-0.05691158]\n24 loss is [1.463863], parameters w:[0.69573398], b:[-0.05917532]\n25 loss is [1.41498321], parameters w:[0.71782234], b:[-0.06142665]\n26 loss is [1.36774173], parameters w:[0.73953477], b:[-0.06366526]\n27 loss is [1.32208339], parameters w:[0.76087769], b:[-0.06589085]\n28 loss is [1.27795492], parameters w:[0.78185744], b:[-0.06810315]\n29 loss is [1.23530481], parameters w:[0.80248024], b:[-0.07030189]\n30 loss is [1.19408333], parameters w:[0.82275218], b:[-0.07248682]\n31 loss is [1.1542424], parameters w:[0.84267927], b:[-0.0746577]\n32 loss is [1.11573559], parameters w:[0.86226742], b:[-0.07681431]\n33 loss is [1.07851804], parameters w:[0.88152242], b:[-0.07895644]\n34 loss is [1.04254639], parameters w:[0.90044997], b:[-0.08108389]\n35 loss is [1.00777875], parameters w:[0.91905568], b:[-0.08319647]\n36 loss is [0.97417466], parameters w:[0.93734503], b:[-0.08529402]\n37 loss is [0.94169501], parameters w:[0.95532345], b:[-0.08737636]\n38 loss is [0.91030202], parameters w:[0.97299626], b:[-0.08944336]\n39 loss is [0.87995918], parameters w:[0.99036866], b:[-0.09149486]\n40 loss is [0.85063121], parameters w:[1.00744581], b:[-0.09353074]\n41 loss is [0.82228404], parameters w:[1.02423274], b:[-0.09555088]\n42 loss is [0.79488472], parameters w:[1.04073441], b:[-0.09755518]\n43 loss is [0.76840144], parameters w:[1.05695571], b:[-0.09954352]\n44 loss is [0.74280345], parameters w:[1.07290142], b:[-0.10151582]\n45 loss is [0.71806103], parameters w:[1.08857624], b:[-0.103472]\n46 loss is [0.69414548], parameters w:[1.10398481], b:[-0.10541198]\n47 loss is [0.67102905], parameters w:[1.11913167], b:[-0.1073357]\n48 loss is [0.64868494], parameters w:[1.1340213], b:[-0.1092431]\n49 loss is [0.62708725], parameters w:[1.14865808], b:[-0.11113413]\n50 loss is [0.60621094], parameters w:[1.16304633], b:[-0.11300875]\n51 loss is [0.58603182], parameters w:[1.17719029], b:[-0.11486691]\n52 loss is [0.56652652], parameters w:[1.19109414], b:[-0.11670861]\n53 loss is [0.54767247], parameters w:[1.20476198], b:[-0.1185338]\n54 loss is [0.52944783], parameters w:[1.21819782], b:[-0.12034249]\n55 loss is [0.5118315], parameters w:[1.23140564], b:[-0.12213465]\n56 loss is [0.49480313], parameters w:[1.24438931], b:[-0.12391028]\n57 loss is [0.47834299], parameters w:[1.25715267], b:[-0.1256694]\n58 loss is [0.46243208], parameters w:[1.26969948], b:[-0.127412]\n59 loss is [0.44705198], parameters w:[1.28203342], b:[-0.1291381]\n60 loss is [0.43218494], parameters w:[1.29415812], b:[-0.13084771]\n61 loss is [0.41781377], parameters w:[1.30607717], b:[-0.13254087]\n62 loss is [0.40392188], parameters w:[1.31779405], b:[-0.1342176]\n63 loss is [0.39049322], parameters w:[1.32931223], b:[-0.13587793]\n64 loss is [0.3775123], parameters w:[1.34063508], b:[-0.13752191]\n65 loss is [0.36496413], parameters w:[1.35176593], b:[-0.13914956]\n66 loss is [0.35283424], parameters w:[1.36270807], b:[-0.14076094]\n67 loss is [0.34110864], parameters w:[1.3734647], b:[-0.1423561]\n68 loss is [0.3297738], parameters w:[1.38403899], b:[-0.14393509]\n69 loss is [0.31881666], parameters w:[1.39443404], b:[-0.14549796]\n70 loss is [0.3082246], parameters w:[1.4046529], b:[-0.14704478]\n71 loss is [0.2979854], parameters w:[1.41469859], b:[-0.14857561]\n72 loss is [0.28808727], parameters w:[1.42457404], b:[-0.15009052]\n73 loss is [0.27851882], parameters w:[1.43428216], b:[-0.15158957]\n74 loss is [0.26926903], parameters w:[1.4438258], b:[-0.15307285]\n75 loss is [0.26032724], parameters w:[1.45320775], b:[-0.15454041]\n76 loss is [0.25168318], parameters w:[1.46243078], b:[-0.15599235]\n77 loss is [0.2433269], parameters w:[1.47149758], b:[-0.15742874]\n78 loss is [0.23524878], parameters w:[1.48041082], b:[-0.15884966]\n79 loss is [0.22743954], parameters w:[1.48917311], b:[-0.1602552]\n80 loss is [0.2198902], parameters w:[1.49778701], b:[-0.16164544]\n81 loss is [0.21259208], parameters w:[1.50625506], b:[-0.16302048]\n82 loss is [0.2055368], parameters w:[1.51457974], b:[-0.16438041]\n83 loss is [0.19871625], parameters w:[1.52276348], b:[-0.16572531]\n84 loss is [0.1921226], parameters w:[1.53080869], b:[-0.16705528]\n85 loss is [0.18574828], parameters w:[1.53871771], b:[-0.16837042]\n86 loss is [0.17958597], parameters w:[1.54649288], b:[-0.16967083]\n87 loss is [0.17362859], parameters w:[1.55413645], b:[-0.1709566]\n88 loss is [0.16786932], parameters w:[1.56165068], b:[-0.17222784]\n89 loss is [0.16230154], parameters w:[1.56903775], b:[-0.17348464]\n90 loss is [0.15691888], parameters w:[1.57629984], b:[-0.17472711]\n91 loss is [0.15171514], parameters w:[1.58343906], b:[-0.17595535]\n92 loss is [0.14668439], parameters w:[1.59045751], b:[-0.17716947]\n93 loss is [0.14182083], parameters w:[1.59735724], b:[-0.17836957]\n94 loss is [0.13711891], parameters w:[1.60414026], b:[-0.17955576]\n95 loss is [0.13257324], parameters w:[1.61080857], b:[-0.18072815]\n96 loss is [0.1281786], parameters w:[1.6173641], b:[-0.18188684]\n97 loss is [0.12392998], parameters w:[1.62380878], b:[-0.18303195]\n98 loss is [0.11982249], parameters w:[1.63014448], b:[-0.18416359]\n99 loss is [0.11585145], parameters w:[1.63637307], b:[-0.18528185]\n100 loss is [0.1120123], parameters w:[1.64249635], b:[-0.18638687]\n101 loss is [0.10830065], parameters w:[1.64851612], b:[-0.18747873]\n102 loss is [0.10471227], parameters w:[1.65443414], b:[-0.18855757]\n103 loss is [0.10124303], parameters w:[1.66025213], b:[-0.18962348]\n104 loss is [0.09788899], parameters w:[1.66597179], b:[-0.19067659]\n105 loss is [0.09464629], parameters w:[1.6715948], b:[-0.191717]\n106 loss is [0.09151125], parameters w:[1.67712278], b:[-0.19274483]\n107 loss is [0.08848026], parameters w:[1.68255737], b:[-0.19376018]\n108 loss is [0.08554988], parameters w:[1.68790013], b:[-0.19476318]\n109 loss is [0.08271675], parameters w:[1.69315263], b:[-0.19575393]\n110 loss is [0.07997763], parameters w:[1.6983164], b:[-0.19673255]\n111 loss is [0.07732941], parameters w:[1.70339295], b:[-0.19769914]\n112 loss is [0.07476905], parameters w:[1.70838375], b:[-0.19865384]\n113 loss is [0.07229363], parameters w:[1.71329027], b:[-0.19959673]\n114 loss is [0.06990033], parameters w:[1.71811392], b:[-0.20052795]\n115 loss is [0.06758642], parameters w:[1.72285612], b:[-0.2014476]\n116 loss is [0.06534926], parameters w:[1.72751825], b:[-0.20235579]\n117 loss is [0.06318629], parameters w:[1.73210167], b:[-0.20325263]\n118 loss is [0.06109506], parameters w:[1.7366077], b:[-0.20413825]\n119 loss is [0.05907317], parameters w:[1.74103767], b:[-0.20501274]\n120 loss is [0.05711831], parameters w:[1.74539286], b:[-0.20587622]\n121 loss is [0.05522828], parameters w:[1.74967455], b:[-0.2067288]\n122 loss is [0.0534009], parameters w:[1.75388396], b:[-0.20757059]\n123 loss is [0.05163409], parameters w:[1.75802234], b:[-0.20840171]\n124 loss is [0.04992585], parameters w:[1.76209089], b:[-0.20922225]\n125 loss is [0.04827423], parameters w:[1.76609078], b:[-0.21003233]\n126 loss is [0.04667735], parameters w:[1.77002318], b:[-0.21083207]\n127 loss is [0.04513339], parameters w:[1.77388924], b:[-0.21162155]\n128 loss is [0.04364058], parameters w:[1.77769008], b:[-0.21240091]\n129 loss is [0.04219724], parameters w:[1.78142681], b:[-0.21317024]\n130 loss is [0.04080172], parameters w:[1.7851005], b:[-0.21392964]\n131 loss is [0.03945244], parameters w:[1.78871223], b:[-0.21467923]\n132 loss is [0.03814785], parameters w:[1.79226305], b:[-0.21541911]\n133 loss is [0.03688647], parameters w:[1.79575399], b:[-0.21614939]\n134 loss is [0.03566688], parameters w:[1.79918607], b:[-0.21687017]\n135 loss is [0.03448768], parameters w:[1.80256027], b:[-0.21758155]\n136 loss is [0.03334753], parameters w:[1.80587759], b:[-0.21828364]\n137 loss is [0.03224513], parameters w:[1.80913897], b:[-0.21897654]\n138 loss is [0.03117924], parameters w:[1.81234538], b:[-0.21966035]\n139 loss is [0.03014864], parameters w:[1.81549773], b:[-0.22033518]\n140 loss is [0.02915216], parameters w:[1.81859696], b:[-0.22100112]\n141 loss is [0.02818867], parameters w:[1.82164394], b:[-0.22165827]\n142 loss is [0.02725708], parameters w:[1.82463958], b:[-0.22230674]\n143 loss is [0.02635632], parameters w:[1.82758473], b:[-0.22294662]\n144 loss is [0.02548538], parameters w:[1.83048025], b:[-0.22357801]\n145 loss is [0.02464326], parameters w:[1.83332699], b:[-0.22420101]\n146 loss is [0.02382901], parameters w:[1.83612576], b:[-0.22481571]\n147 loss is [0.02304171], parameters w:[1.83887738], b:[-0.22542221]\n148 loss is [0.02228046], parameters w:[1.84158265], b:[-0.2260206]\n149 loss is [0.0215444], parameters w:[1.84424234], b:[-0.22661099]\n150 loss is [0.02083269], parameters w:[1.84685723], b:[-0.22719345]\n151 loss is [0.02014453], parameters w:[1.84942809], b:[-0.2277681]\n152 loss is [0.01947913], parameters w:[1.85195564], b:[-0.22833501]\n153 loss is [0.01883575], parameters w:[1.85444063], b:[-0.22889427]\n154 loss is [0.01821365], parameters w:[1.85688377], b:[-0.22944599]\n155 loss is [0.01761212], parameters w:[1.85928578], b:[-0.22999025]\n156 loss is [0.01703049], parameters w:[1.86164734], b:[-0.23052713]\n157 loss is [0.01646809], parameters w:[1.86396914], b:[-0.23105673]\n158 loss is [0.0159243], parameters w:[1.86625186], b:[-0.23157914]\n159 loss is [0.01539848], parameters w:[1.86849614], b:[-0.23209443]\n160 loss is [0.01489005], parameters w:[1.87070265], b:[-0.23260271]\n161 loss is [0.01439843], parameters w:[1.87287202], b:[-0.23310404]\n162 loss is [0.01392307], parameters w:[1.87500488], b:[-0.23359852]\n163 loss is [0.01346342], parameters w:[1.87710184], b:[-0.23408623]\n164 loss is [0.01301897], parameters w:[1.87916352], b:[-0.23456725]\n165 loss is [0.01258921], parameters w:[1.8811905], b:[-0.23504167]\n166 loss is [0.01217365], parameters w:[1.88318337], b:[-0.23550957]\n167 loss is [0.01177183], parameters w:[1.88514272], b:[-0.23597102]\n168 loss is [0.01138329], parameters w:[1.8870691], b:[-0.23642611]\n169 loss is [0.01100759], parameters w:[1.88896307], b:[-0.23687491]\n170 loss is [0.01064431], parameters w:[1.89082518], b:[-0.23731751]\n171 loss is [0.01029303], parameters w:[1.89265597], b:[-0.23775398]\n172 loss is [0.00995336], parameters w:[1.89445596], b:[-0.2381844]\n173 loss is [0.00962491], parameters w:[1.89622568], b:[-0.23860884]\n174 loss is [0.00930732], parameters w:[1.89796564], b:[-0.23902738]\n175 loss is [0.00900021], parameters w:[1.89967634], b:[-0.2394401]\n176 loss is [0.00870326], parameters w:[1.90135827], b:[-0.23984706]\n177 loss is [0.00841611], parameters w:[1.90301192], b:[-0.24024835]\n178 loss is [0.00813845], parameters w:[1.90463777], b:[-0.24064403]\n179 loss is [0.00786996], parameters w:[1.90623628], b:[-0.24103417]\n180 loss is [0.00761034], parameters w:[1.90780791], b:[-0.24141885]\n181 loss is [0.00735929], parameters w:[1.90935313], b:[-0.24179813]\n182 loss is [0.00711653], parameters w:[1.91087237], b:[-0.24217209]\n183 loss is [0.00688179], parameters w:[1.91236608], b:[-0.24254079]\n184 loss is [0.00665481], parameters w:[1.91383468], b:[-0.2429043]\n185 loss is [0.00643531], parameters w:[1.9152786], b:[-0.24326269]\n186 loss is [0.00622307], parameters w:[1.91669825], b:[-0.24361602]\n187 loss is [0.00601783], parameters w:[1.91809404], b:[-0.24396436]\n188 loss is [0.00581937], parameters w:[1.91946638], b:[-0.24430778]\n189 loss is [0.00562747], parameters w:[1.92081566], b:[-0.24464633]\n190 loss is [0.0054419], parameters w:[1.92214228], b:[-0.24498009]\n191 loss is [0.00526245], parameters w:[1.9234466], b:[-0.24530912]\n192 loss is [0.00508893], parameters w:[1.92472901], b:[-0.24563347]\n193 loss is [0.00492113], parameters w:[1.92598988], b:[-0.24595321]\n194 loss is [0.00475888], parameters w:[1.92722957], b:[-0.2462684]\n195 loss is [0.00460198], parameters w:[1.92844843], b:[-0.2465791]\n196 loss is [0.00445026], parameters w:[1.92964683], b:[-0.24688536]\n197 loss is [0.00430354], parameters w:[1.93082509], b:[-0.24718726]\n198 loss is [0.00416167], parameters w:[1.93198357], b:[-0.24748484]\n199 loss is [0.00402448], parameters w:[1.9331226], b:[-0.24777816]\n200 loss is [0.00389181], parameters w:[1.9342425], b:[-0.24806728]\n201 loss is [0.00376353], parameters w:[1.93534359], b:[-0.24835226]\n202 loss is [0.00363948], parameters w:[1.9364262], b:[-0.24863315]\n203 loss is [0.00351952], parameters w:[1.93749063], b:[-0.24891001]\n204 loss is [0.00340351], parameters w:[1.93853719], b:[-0.24918288]\n205 loss is [0.00329134], parameters w:[1.93956618], b:[-0.24945183]\n206 loss is [0.00318286], parameters w:[1.9405779], b:[-0.2497169]\n207 loss is [0.00307797], parameters w:[1.94157264], b:[-0.24997815]\n208 loss is [0.00297653], parameters w:[1.94255068], b:[-0.25023564]\n209 loss is [0.00287844], parameters w:[1.9435123], b:[-0.2504894]\n210 loss is [0.00278359], parameters w:[1.94445779], b:[-0.25073949]\n211 loss is [0.00269186], parameters w:[1.94538741], b:[-0.25098597]\n212 loss is [0.00260316], parameters w:[1.94630143], b:[-0.25122888]\n213 loss is [0.00251739], parameters w:[1.94720011], b:[-0.25146826]\n214 loss is [0.00243444], parameters w:[1.94808371], b:[-0.25170417]\n215 loss is [0.00235423], parameters w:[1.94895249], b:[-0.25193666]\n216 loss is [0.00227667], parameters w:[1.9498067], b:[-0.25216576]\n217 loss is [0.00220166], parameters w:[1.95064657], b:[-0.25239154]\n218 loss is [0.00212913], parameters w:[1.95147235], b:[-0.25261402]\n219 loss is [0.00205899], parameters w:[1.95228428], b:[-0.25283327]\n220 loss is [0.00199116], parameters w:[1.95308259], b:[-0.25304931]\n221 loss is [0.00192556], parameters w:[1.95386751], b:[-0.25326221]\n222 loss is [0.00186213], parameters w:[1.95463927], b:[-0.25347199]\n223 loss is [0.0018008], parameters w:[1.95539809], b:[-0.25367871]\n224 loss is [0.00174148], parameters w:[1.95614417], b:[-0.2538824]\n225 loss is [0.00168412], parameters w:[1.95687775], b:[-0.25408311]\n226 loss is [0.00162865], parameters w:[1.95759903], b:[-0.25428088]\n227 loss is [0.00157501], parameters w:[1.95830821], b:[-0.25447575]\n228 loss is [0.00152313], parameters w:[1.9590055], b:[-0.25466776]\n229 loss is [0.00147297], parameters w:[1.9596911], b:[-0.25485694]\n230 loss is [0.00142446], parameters w:[1.96036521], b:[-0.25504335]\n231 loss is [0.00137755], parameters w:[1.96102801], b:[-0.25522702]\n232 loss is [0.00133218], parameters w:[1.96167971], b:[-0.25540798]\n233 loss is [0.00128831], parameters w:[1.96232048], b:[-0.25558627]\n234 loss is [0.00124589], parameters w:[1.96295051], b:[-0.25576194]\n235 loss is [0.00120486], parameters w:[1.96356998], b:[-0.25593501]\n236 loss is [0.00116519], parameters w:[1.96417907], b:[-0.25610553]\n237 loss is [0.00112682], parameters w:[1.96477795], b:[-0.25627353]\n238 loss is [0.00108972], parameters w:[1.96536679], b:[-0.25643905]\n239 loss is [0.00105384], parameters w:[1.96594577], b:[-0.25660211]\n240 loss is [0.00101914], parameters w:[1.96651504], b:[-0.25676277]\n241 loss is [0.00098559], parameters w:[1.96707478], b:[-0.25692104]\n242 loss is [0.00095314], parameters w:[1.96762513], b:[-0.25707696]\n243 loss is [0.00092176], parameters w:[1.96816627], b:[-0.25723057]\n244 loss is [0.00089141], parameters w:[1.96869834], b:[-0.2573819]\n245 loss is [0.00086207], parameters w:[1.9692215], b:[-0.25753099]\n246 loss is [0.00083369], parameters w:[1.96973589], b:[-0.25767785]\n247 loss is [0.00080624], parameters w:[1.97024167], b:[-0.25782253]\n248 loss is [0.0007797], parameters w:[1.97073897], b:[-0.25796506]\n249 loss is [0.00075404], parameters w:[1.97122795], b:[-0.25810546]\n250 loss is [0.00072921], parameters w:[1.97170873], b:[-0.25824377]\n251 loss is [0.00070521], parameters w:[1.97218147], b:[-0.25838002]\n252 loss is [0.000682], parameters w:[1.97264628], b:[-0.25851424]\n253 loss is [0.00065955], parameters w:[1.97310331], b:[-0.25864645]\n254 loss is [0.00063784], parameters w:[1.97355269], b:[-0.25877668]\n255 loss is [0.00061685], parameters w:[1.97399455], b:[-0.25890497]\n256 loss is [0.00059655], parameters w:[1.974429], b:[-0.25903134]\n257 loss is [0.00057691], parameters w:[1.97485619], b:[-0.25915581]\n258 loss is [0.00055793], parameters w:[1.97527621], b:[-0.25927842]\n259 loss is [0.00053957], parameters w:[1.97568921], b:[-0.25939919]\n260 loss is [0.00052181], parameters w:[1.9760953], b:[-0.25951816]\n261 loss is [0.00050464], parameters w:[1.97649458], b:[-0.25963533]\n262 loss is [0.00048803], parameters w:[1.97688718], b:[-0.25975075]\n263 loss is [0.00047197], parameters w:[1.97727321], b:[-0.25986443]\n264 loss is [0.00045644], parameters w:[1.97765278], b:[-0.2599764]\n265 loss is [0.00044142], parameters w:[1.978026], b:[-0.26008669]\n266 loss is [0.00042689], parameters w:[1.97839297], b:[-0.26019532]\n267 loss is [0.00041285], parameters w:[1.9787538], b:[-0.26030232]\n268 loss is [0.00039926], parameters w:[1.97910859], b:[-0.2604077]\n269 loss is [0.00038613], parameters w:[1.97945744], b:[-0.26051149]\n270 loss is [0.00037342], parameters w:[1.97980045], b:[-0.26061372]\n271 loss is [0.00036113], parameters w:[1.98013773], b:[-0.2607144]\n272 loss is [0.00034925], parameters w:[1.98046936], b:[-0.26081357]\n273 loss is [0.00033776], parameters w:[1.98079545], b:[-0.26091123]\n274 loss is [0.00032665], parameters w:[1.98111607], b:[-0.26100742]\n275 loss is [0.0003159], parameters w:[1.98143134], b:[-0.26110216]\n276 loss is [0.00030551], parameters w:[1.98174133], b:[-0.26119546]\n277 loss is [0.00029546], parameters w:[1.98204613], b:[-0.26128734]\n278 loss is [0.00028574], parameters w:[1.98234584], b:[-0.26137784]\n279 loss is [0.00027634], parameters w:[1.98264053], b:[-0.26146697]\n280 loss is [0.00026725], parameters w:[1.98293029], b:[-0.26155474]\n281 loss is [0.00025846], parameters w:[1.98321521], b:[-0.26164118]\n282 loss is [0.00024995], parameters w:[1.98349536], b:[-0.26172631]\n283 loss is [0.00024173], parameters w:[1.98377083], b:[-0.26181015]\n284 loss is [0.00023378], parameters w:[1.98404169], b:[-0.26189271]\n285 loss is [0.00022609], parameters w:[1.98430802], b:[-0.26197402]\n286 loss is [0.00021865], parameters w:[1.98456989], b:[-0.26205409]\n287 loss is [0.00021146], parameters w:[1.98482739], b:[-0.26213294]\n288 loss is [0.00020451], parameters w:[1.98508058], b:[-0.26221059]\n289 loss is [0.00019778], parameters w:[1.98532954], b:[-0.26228706]\n290 loss is [0.00019127], parameters w:[1.98557434], b:[-0.26236237]\n291 loss is [0.00018498], parameters w:[1.98581504], b:[-0.26243652]\n292 loss is [0.0001789], parameters w:[1.98605172], b:[-0.26250955]\n293 loss is [0.00017302], parameters w:[1.98628444], b:[-0.26258146]\n294 loss is [0.00016733], parameters w:[1.98651327], b:[-0.26265227]\n295 loss is [0.00016182], parameters w:[1.98673828], b:[-0.26272201]\n296 loss is [0.0001565], parameters w:[1.98695953], b:[-0.26279067]\n297 loss is [0.00015135], parameters w:[1.98717707], b:[-0.26285829]\n298 loss is [0.00014638], parameters w:[1.98739098], b:[-0.26292487]\n299 loss is [0.00014156], parameters w:[1.98760132], b:[-0.26299043]"
   },
   {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#strength",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#strength",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Strength",
-    "text": "Strength\n\nSimple and effective\nMakes no assumption about data\nFast Training Process"
+    "objectID": "myblog/posts/top-languages/index.html",
+    "href": "myblog/posts/top-languages/index.html",
+    "title": "Most Popular programming languages 2004-2021",
+    "section": "",
+    "text": "chart\n\n\n\n\n\n\n\ndata = FileAttachment(\"pypl.csv\").csv({typed: true})\n\nformatNumber = d3.format(\".1%\")\n\n\nformatDate = d3.utcFormat(\"%b %Y\")\n\ntickFormat = \"%\"\n\nk = 2\n\nimport {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from \"@d3/bar-chart-race\""
   },
   {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#weakness",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#weakness",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Weakness",
-    "text": "Weakness\n\nDoesn’t produce model, limiting the ability to understand how features are related to class\nRequires selection of k\nSlow classification phase\nCategorical features and missing data require pre processing\n\nThe k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.\nFor finding the distance k-NN algorithm uses Euclidean distance."
+    "objectID": "myblog/posts/hypothesis-testing/index.html",
+    "href": "myblog/posts/hypothesis-testing/index.html",
+    "title": "Hypothesis Testing",
+    "section": "",
+    "text": "During hypothesis testing we confirm whether results we got is by chance ? If yes then experiment won’t be repeatable and so has little use.\nTwo ways of doing hypothesis testing are :-\nLet’s start with business case problem.\nQ :- Suppose that a PM claims that users on average spend about Rs. 50 per month on Amazon. However, you doubt this claim, and you believe that the average should be higher. So you sample 100 users and learn that the sample mean is Rs. 85. Would you reject the PM’s claim? Assume population standard deviation is 20."
   },
   {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#defining-the-dataset",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#defining-the-dataset",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Defining the dataset",
-    "text": "Defining the dataset\n\n# First Feature\nweather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',\n'Rainy','Sunny','Overcast','Overcast','Rainy']\n# Second Feature\ntemp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']\n\n# Label or target varible\nplay=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']\n\nWe have two features weather and temperature and one label play."
+    "objectID": "myblog/posts/hypothesis-testing/index.html#p-value-approach",
+    "href": "myblog/posts/hypothesis-testing/index.html#p-value-approach",
+    "title": "Hypothesis Testing",
+    "section": "P-Value approach",
+    "text": "P-Value approach\n\nHypothesis\nSignificance level\nTest Statistics\n\nProbability of observing test statistics\nStatistical Decision\n\n1. Hypothesis\nHo : the average spend per user is Rs. 50\nHa : the average spend per user is greater than Rs. 50\n2. Significance level\n\\(\\alpha = 0.05\\)\n3. Test Statistics\n\\[\nZ-statistics  = \\frac{\\overline{X}-\\mu}{\\sigma/\\sqrt{n}}\n\\]\n\\[\n= \\frac{85-50}{20/\\sqrt{100}} =\\frac{35}{2} = 17.5\n\\]\n4. Probability of observing test statistics\nLooking into standard normal distribution table.\n\\(P-value < 0.0001 < \\alpha = 0.05\\)\n5. Statistical Decision\nAt alpha = 0.05 there is statistical significance to reject PM’s claim and conclude that the average spend per user is greater than Rs. 50.\nBusiness Case problem\nQ :- A Principal claims that the student in his school are above average intelligence. A random sample of 30 IQ scores have a mean of 112.5. Is there sufficient evidence to support the principal’s claim? The mean population IQ is 100 with standard deviation is 15."
   },
   {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#encoding-data-columns",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#encoding-data-columns",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Encoding data columns",
-    "text": "Encoding data columns\n\nfrom sklearn import preprocessing\n\n#creating labelEncoder\nle = preprocessing.LabelEncoder()\n\n# Converting string labels into numbers.\nweather_encoded=le.fit_transform(weather)\n\nSimilarly, you can encode temperature and label into numeric columns.\n\n# converting string labels into numbers\ntemp_encoded=le.fit_transform(temp)\nlabel=le.fit_transform(play)"
+    "objectID": "myblog/posts/hypothesis-testing/index.html#critical-value-approach",
+    "href": "myblog/posts/hypothesis-testing/index.html#critical-value-approach",
+    "title": "Hypothesis Testing",
+    "section": "Critical Value Approach",
+    "text": "Critical Value Approach\n\nHypothesis\nSignificance level\nTest Statistics\n\nCritical Value\nStatistical Decision\n\n\n\n\n\n\n1. Hypothesis\nHo : the average IQ score is 100\nHa : the average IQ score is greater than Rs. 100\n2. Significance level\n\\(\\alpha = 0.05\\)\n3. Test Statistics\n\\[\nZ-statistics  = \\frac{\\overline{X}-\\mu}{\\sigma/\\sqrt{n}}\n\\]\n\\[\n= \\frac{112.5-100}{15/\\sqrt{30}} = 4.56\n\\]\n4. Z Critical Value\nLooking into standard normal distribution table.\n\\(Z Critical-value = 1.645\\)\n5. Statistical Decision\nAt alpha = 0.05 test statistics is greater than Z Critical value hence we can reject null hypothesis."
   },
   {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#combining-features",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#combining-features",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Combining Features",
-    "text": "Combining Features\n\n#combinig weather and temp into single listof tuples\nfeatures=list(zip(weather_encoded,temp_encoded))"
-  },
-  {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#generating-models",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#generating-models",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Generating Models",
-    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)"
-  },
-  {
-    "objectID": "myblog/posts/nearest-neighbour-classifier/index.html#predict-output",
-    "href": "myblog/posts/nearest-neighbour-classifier/index.html#predict-output",
-    "title": "Nearest Neighbour Classifier",
-    "section": "Predict Output",
-    "text": "Predict Output\n\npredicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\nprint(predicted)\n\n[1]"
+    "objectID": "myblog/blog.html",
+    "href": "myblog/blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Listing the best books available in the market right now for data science.\n\n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nGradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.\n\n\n\n\n\n\nApr 10, 2017\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   }
 ]
