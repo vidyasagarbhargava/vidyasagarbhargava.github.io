@@ -8,9 +8,9 @@
 
 <meta name="author" content="Vidyasagar Bhargava">
 <meta name="dcterms.date" content="2017-04-10">
-<meta name="description" content="Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.">
+<meta name="description" content="In this post we will implement gradient descent algorithm from scratch using numpy for linear regression.">
 
-<title>Gradient Descent from scratch for linear regression</title>
+<title>Linear regression using gradient descent</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -120,7 +120,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script type="module" src="../../../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../../../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -158,10 +161,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Gradient Descent from scratch for linear regression</h1>
+      <h1 class="title">Linear regression using gradient descent</h1>
                   <div>
         <div class="description">
-          Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function. The idea is to take repeated steps in the opposite direction of the gradient of the function at the current point, because this is the direction of steepest descent.
+          In this post we will implement gradient descent algorithm from scratch using numpy for linear regression.
         </div>
       </div>
                           <div class="quarto-categories">
@@ -199,379 +202,270 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#steps-for-gradient-descent-for-linear-regression" id="toc-steps-for-gradient-descent-for-linear-regression" class="nav-link active" data-scroll-target="#steps-for-gradient-descent-for-linear-regression">Steps for gradient descent for linear regression</a>
+  <li><a href="#simple-linear-regression" id="toc-simple-linear-regression" class="nav-link active" data-scroll-target="#simple-linear-regression">Simple Linear Regression</a></li>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a>
   <ul class="collapse">
-  <li><a href="#defining-the-linear-regression-problem" id="toc-defining-the-linear-regression-problem" class="nav-link" data-scroll-target="#defining-the-linear-regression-problem">Defining the linear regression problem</a></li>
-  <li><a href="#initializing-parameters-w-and-b-and-hyperparameter-i.e.-learning_rate" id="toc-initializing-parameters-w-and-b-and-hyperparameter-i.e.-learning_rate" class="nav-link" data-scroll-target="#initializing-parameters-w-and-b-and-hyperparameter-i.e.-learning_rate">Initializing parameters <code>w</code> and <code>b</code> and hyperparameter i.e.&nbsp;<code>learning_rate</code></a></li>
-  <li><a href="#create-gradient-descent-function" id="toc-create-gradient-descent-function" class="nav-link" data-scroll-target="#create-gradient-descent-function">Create gradient descent function</a></li>
-  <li><a href="#iterate-gradient-descent-function-and-update-parameters-to-minimize-loss." id="toc-iterate-gradient-descent-function-and-update-parameters-to-minimize-loss." class="nav-link" data-scroll-target="#iterate-gradient-descent-function-and-update-parameters-to-minimize-loss.">Iterate gradient descent function and update parameters to minimize loss.</a></li>
+  <li><a href="#step-1---compute-the-loss" id="toc-step-1---compute-the-loss" class="nav-link" data-scroll-target="#step-1---compute-the-loss">Step 1 :- Compute the loss</a></li>
+  <li><a href="#step-2---compute-the-gradient" id="toc-step-2---compute-the-gradient" class="nav-link" data-scroll-target="#step-2---compute-the-gradient">Step 2 :- Compute the gradient</a></li>
+  <li><a href="#step-3---update-the-parameters" id="toc-step-3---update-the-parameters" class="nav-link" data-scroll-target="#step-3---update-the-parameters">Step 3 :- Update the Parameters</a></li>
+  <li><a href="#step-4--repeat" id="toc-step-4--repeat" class="nav-link" data-scroll-target="#step-4--repeat">Step 4:- Repeat</a></li>
+  </ul></li>
+  <li><a href="#gradient-descent-variants" id="toc-gradient-descent-variants" class="nav-link" data-scroll-target="#gradient-descent-variants">Gradient Descent Variants</a></li>
+  <li><a href="#implementing-linear-regression-using-batch-gradient-descent" id="toc-implementing-linear-regression-using-batch-gradient-descent" class="nav-link" data-scroll-target="#implementing-linear-regression-using-batch-gradient-descent">Implementing Linear Regression using batch gradient descent</a>
+  <ul class="collapse">
+  <li><a href="#generate-synthetic-data" id="toc-generate-synthetic-data" class="nav-link" data-scroll-target="#generate-synthetic-data">Generate Synthetic data</a></li>
+  <li><a href="#initialize-parameters-w-and-b-and-hyperparameter-learning_rate" id="toc-initialize-parameters-w-and-b-and-hyperparameter-learning_rate" class="nav-link" data-scroll-target="#initialize-parameters-w-and-b-and-hyperparameter-learning_rate">Initialize parameters (w and b) and hyperparameter (learning_rate)</a></li>
+  <li><a href="#gradient-descent-algorithm" id="toc-gradient-descent-algorithm" class="nav-link" data-scroll-target="#gradient-descent-algorithm">Gradient Descent algorithm</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
-<section id="steps-for-gradient-descent-for-linear-regression" class="level2">
-<h2 class="anchored" data-anchor-id="steps-for-gradient-descent-for-linear-regression">Steps for gradient descent for linear regression</h2>
-<p>Step 1 : Defining the linear regression problem<br>
-Step 2 : Initialize the parameters and hyperparameters<br>
-Step 3 : Create gradient descent function<br>
-Step 4 : Iterate gradient descent function and update parameters to minimize loss.</p>
-<section id="defining-the-linear-regression-problem" class="level3">
-<h3 class="anchored" data-anchor-id="defining-the-linear-regression-problem">Defining the linear regression problem</h3>
+<section id="simple-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="simple-linear-regression">Simple Linear Regression</h2>
+<p>A simple linear regression equation with one feature is defined as :</p>
+<p><span class="math display">\[y = b + w * x + \epsilon\]</span></p>
+<p>Here w is coefficient and b is intercept term and <span class="math inline">\(\epsilon\)</span> is the noise.</p>
+</section>
+<section id="gradient-descent" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h2>
+<p>Gradient descent is an optimization algorithm used to minimize some function by iteratively moving in the direction of steepest descent as defined by the negative of the gradient. In machine learning, we use gradient descent to update the parameters of our model. Parameters refer to coefficients in Linear Regression and weights in neural networks.</p>
+<p><strong>Steps to implement gradient descent</strong><br>
+Step 1 - Compute the loss<br>
+Step 2 - Compute the gradient<br>
+Step 3 - Update the parameters<br>
+Step 4 - Repeat Step 1 to 3</p>
+<section id="step-1---compute-the-loss" class="level3">
+<h3 class="anchored" data-anchor-id="step-1---compute-the-loss">Step 1 :- Compute the loss</h3>
+<p>For regression problem loss is given by mean squared error (MSE).</p>
+<p><span class="math display">\[ MSE  = \frac{1}{N} \sum\limits_{i=1}^{N} (y-\hat{y_i})^2 \]</span> <span class="math display">\[ MSE  = \frac{1}{N} \sum\limits_{i=1}^{N} (y-b-wx_i)^2 \]</span></p>
+</section>
+<section id="step-2---compute-the-gradient" class="level3">
+<h3 class="anchored" data-anchor-id="step-2---compute-the-gradient">Step 2 :- Compute the gradient</h3>
+<p>Gradient is a vector with function’s partial derivatives for components.</p>
+<p><span class="math display">\[ \Delta (MSE)  = [\frac{\partial MSE}{\partial w}, \frac{\partial MSE}{\partial b}] \]</span></p>
+<p>It also tell the direction of steepest ascent which means in which direction one should step to increase the function most quickly.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A derivative tells us how much a given quantity changes when we change slightly some other quantity.</p>
+</div>
+</div>
+<p>In our case we are interested how much our MSE loss change when we vary one of our two parameters.</p>
+<p><span class="math display">\[ \frac{\partial MSE}{\partial w} = \frac{\partial MSE}{\partial \hat{y}}.\frac{\partial \hat{y}}{\partial w} = \frac{1}{N} \sum\limits_{i=1}^{N} 2(y-b-wx_i).(-x_i) = -2\frac{1}{N} \sum\limits_{i=1}^{N}(x_i)(y-\hat{y_i}) \]</span> <span class="math display">\[ \frac{\partial MSE}{\partial b} = \frac{\partial MSE}{\partial \hat{y}}.\frac{\partial \hat{y}}{\partial b} = \frac{1}{N} \sum\limits_{i=1}^{N} 2(y-b-wx_i).(-1) = -2\frac{1}{N} \sum\limits_{i=1}^{N}(y-\hat{y_i}) \]</span></p>
+</section>
+<section id="step-3---update-the-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="step-3---update-the-parameters">Step 3 :- Update the Parameters</h3>
+<p>Now we will update the parameters by using gradients to minimize the loss. But gradient tells the direction of steepest ascent so we will multiply by -1.</p>
+<p><span class="math display">\[ w  = w - \eta\frac{\partial MSE}{\partial w} \]</span><br>
+<span class="math display">\[ b  = b - \eta\frac{\partial MSE}{\partial b} \]</span></p>
+</section>
+<section id="step-4--repeat" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="step-4--repeat">Step 4:- Repeat</h3>
+<p>Now we will use updated parameters and start with step 1 again. We will repeat this process for multiple epochs. This is also known as training the model.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>An epoch is completed when all the data points has been used for calculating the loss.</p>
+</div></div><hr>
+<p>Click below to add some new points and see how algorithm adjust the slope of line over time to meet best fit.</p>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="2" data-source-offset="-1"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 1;"><span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">p5</span>(sketch <span class="kw">=&gt;</span> {</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> system<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">//set up some default points</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">/*    </span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  */</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> data <span class="op">=</span> [</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createVector</span>(<span class="op">.</span><span class="dv">105</span><span class="op">,</span> <span class="op">.</span><span class="dv">423333</span>)<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createVector</span>(<span class="op">.</span><span class="dv">58</span><span class="op">,</span> <span class="op">.</span><span class="dv">526666</span>)<span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createVector</span>(<span class="op">.</span><span class="dv">75</span><span class="op">,</span> <span class="op">.</span><span class="dv">82666</span>)<span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createVector</span>(<span class="op">.</span><span class="dv">3475</span><span class="op">,</span> <span class="op">.</span><span class="dv">183333</span>)<span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createVector</span>(<span class="op">.</span><span class="dv">3195</span><span class="op">,</span> <span class="op">.</span><span class="dv">543353</span>)<span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> m <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> b <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  sketch<span class="op">.</span><span class="at">setup</span> <span class="op">=</span> <span class="kw">function</span>() {</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">createCanvas</span>(<span class="dv">800</span><span class="op">,</span> <span class="dv">350</span>)<span class="op">;</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">background</span>(<span class="dv">51</span>)<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> gradientDescent <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> learning_rate <span class="op">=</span> <span class="fl">0.05</span><span class="op">;</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> data<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> x <span class="op">=</span> data[i]<span class="op">.</span><span class="at">x</span><span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> y <span class="op">=</span> data[i]<span class="op">.</span><span class="at">y</span><span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> guess <span class="op">=</span> m <span class="op">*</span> x <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> error <span class="op">=</span> y <span class="op">-</span> guess<span class="op">;</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>      m <span class="op">=</span> m <span class="op">+</span> (error <span class="op">*</span> x) <span class="op">*</span> learning_rate<span class="op">;</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>      b <span class="op">=</span> b <span class="op">+</span> (error) <span class="op">*</span> learning_rate<span class="op">;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> drawLine <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> x1 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> y1 <span class="op">=</span> m <span class="op">*</span> x1 <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> x2 <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> y2 <span class="op">=</span> m <span class="op">*</span> x2 <span class="op">+</span> b<span class="op">;</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    x1 <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(x1<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">width</span>)<span class="op">;</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    y1 <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(y1<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">height</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    x2 <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(x2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">width</span>)<span class="op">;</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    y2 <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(y2<span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">height</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">stroke</span>(<span class="dv">101</span><span class="op">,</span> <span class="dv">74</span><span class="op">,</span> <span class="dv">78</span>)<span class="op">;</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">strokeWeight</span>(<span class="dv">2</span>)<span class="op">;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">line</span>(x1<span class="op">,</span> y1<span class="op">,</span> x2<span class="op">,</span> y2)<span class="op">;</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  sketch<span class="op">.</span><span class="at">mousePressed</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> x <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(sketch<span class="op">.</span><span class="at">mouseX</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">width</span><span class="op">,</span> <span class="dv">0</span> <span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> y <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(sketch<span class="op">.</span><span class="at">mouseY</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">height</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>    <span class="kw">var</span> point <span class="op">=</span> sketch<span class="op">.</span><span class="fu">createVector</span>(x<span class="op">,</span> y)<span class="op">;</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>    data<span class="op">.</span><span class="fu">push</span>(point)<span class="op">;</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  sketch<span class="op">.</span><span class="at">draw</span> <span class="op">=</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    sketch<span class="op">.</span><span class="fu">background</span>(<span class="dv">230</span><span class="op">,</span> <span class="dv">221</span><span class="op">,</span> <span class="dv">222</span>)</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> data<span class="op">.</span><span class="at">length</span><span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> x <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(data[i]<span class="op">.</span><span class="at">x</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">width</span>)<span class="op">;</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>      <span class="kw">var</span> y <span class="op">=</span> sketch<span class="op">.</span><span class="fu">map</span>(data[i]<span class="op">.</span><span class="at">y</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> sketch<span class="op">.</span><span class="at">height</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>      sketch<span class="op">.</span><span class="fu">fill</span>(<span class="dv">32</span><span class="op">,</span> <span class="dv">178</span><span class="op">,</span> <span class="dv">170</span>)<span class="op">;</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>      sketch<span class="op">.</span><span class="fu">stroke</span>(<span class="dv">32</span><span class="op">,</span> <span class="dv">178</span><span class="op">,</span> <span class="dv">170</span>)<span class="op">;</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>      sketch<span class="op">.</span><span class="fu">ellipse</span>(x<span class="op">,</span> y<span class="op">,</span> <span class="dv">8</span><span class="op">,</span> <span class="dv">8</span>)<span class="op">;</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(data<span class="op">.</span><span class="at">length</span> <span class="op">&gt;</span> <span class="dv">1</span>) {</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>      <span class="fu">gradientDescent</span>()<span class="op">;</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>      <span class="fu">drawLine</span>()<span class="op">;</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="81" data-source-offset="-1828"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 80;"><span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {p5} <span class="im">from</span> <span class="st">"@tmcw/p5"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gradient-descent-variants" class="level2">
+<h2 class="anchored" data-anchor-id="gradient-descent-variants">Gradient Descent Variants</h2>
+<ul>
+<li>Batch Gradient Descent</li>
+<li>Stochastic Gradient Descent</li>
+<li>Mini Batch Gradient Descent</li>
+</ul>
+<p>If we use all the points in the training set to compute loss then it is <strong>batch gradient descent</strong>. If we use single data point and update our parameters it <strong>stochastic gradinet descent</strong>. Anything between 1 and N is <strong>mini batch gradient descent</strong>.</p>
+</section>
+<section id="implementing-linear-regression-using-batch-gradient-descent" class="level2">
+<h2 class="anchored" data-anchor-id="implementing-linear-regression-using-batch-gradient-descent">Implementing Linear Regression using batch gradient descent</h2>
+<p>Now its time to implement our linear regression model using batch gradient descent.</p>
+<section id="generate-synthetic-data" class="level3">
+<h3 class="anchored" data-anchor-id="generate-synthetic-data">Generate Synthetic data</h3>
+<p>Using the above equation we will generate some synthetic data with w = 2 and b = 1 and some random noise.</p>
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">10</span>,<span class="dv">1</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.randn(<span class="dv">100</span>,<span class="dv">1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.randn(<span class="dv">100</span>,<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Our goal will be to accurately predict the value of w (i.e.&nbsp;2) and b (i.e.&nbsp;1).</p>
 </section>
-<section id="initializing-parameters-w-and-b-and-hyperparameter-i.e.-learning_rate" class="level3">
-<h3 class="anchored" data-anchor-id="initializing-parameters-w-and-b-and-hyperparameter-i.e.-learning_rate">Initializing parameters <code>w</code> and <code>b</code> and hyperparameter i.e.&nbsp;<code>learning_rate</code></h3>
+<section id="initialize-parameters-w-and-b-and-hyperparameter-learning_rate" class="level3">
+<h3 class="anchored" data-anchor-id="initialize-parameters-w-and-b-and-hyperparameter-learning_rate">Initialize parameters (w and b) and hyperparameter (learning_rate)</h3>
+<p>So we will initialize the learnable parameters w and b with some random values and try to find right value by minimizing the loss function. The value of the hyperparameter i.e.&nbsp;learning rate is fixed.</p>
 <div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>learning_rate <span class="op">=</span> <span class="fl">0.01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.random.randn(<span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.random.randn(<span class="dv">1</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="create-gradient-descent-function" class="level3">
-<h3 class="anchored" data-anchor-id="create-gradient-descent-function">Create gradient descent function</h3>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gradient_descent(x,y,w,b,learning_rate):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    dldw <span class="op">=</span> <span class="fl">0.0</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    dldb <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> x.shape[<span class="dv">0</span>]</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xi, yi <span class="kw">in</span> <span class="bu">zip</span>(x,y):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        dldw <span class="op">+=</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>xi<span class="op">*</span>(yi<span class="op">-</span>(w<span class="op">*</span>xi<span class="op">+</span>b))</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        dldb <span class="op">+=</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>(yi<span class="op">-</span>(w<span class="op">*</span>xi<span class="op">+</span>b))</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#make an update to the parameters</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> w <span class="op">-</span> learning_rate<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>N)<span class="op">*</span>dldw</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> b <span class="op">-</span> learning_rate<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>N)<span class="op">*</span>dldb</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w,b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="gradient-descent-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-descent-algorithm">Gradient Descent algorithm</h3>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gradient_descent(x, y, w, b, lr):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#compute the loss</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    yhat <span class="op">=</span>  b <span class="op">+</span> w<span class="op">*</span>x</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    error <span class="op">=</span> (y<span class="op">-</span>yhat)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    loss  <span class="op">=</span> (error<span class="op">*</span><span class="dv">2</span>).mean()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#compute the gradients</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    b_grad <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>error.mean()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    w_grad <span class="op">=</span> <span class="op">-</span><span class="dv">2</span><span class="op">*</span>(x<span class="op">*</span>error).mean()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#update the parameters</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> b <span class="op">-</span> lr <span class="op">*</span> b_grad</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> w <span class="op">-</span> lr <span class="op">*</span> w_grad</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w,b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="iterate-gradient-descent-function-and-update-parameters-to-minimize-loss." class="level3">
-<h3 class="anchored" data-anchor-id="iterate-gradient-descent-function-and-update-parameters-to-minimize-loss.">Iterate gradient descent function and update parameters to minimize loss.</h3>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">300</span>):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    w, b <span class="op">=</span> gradient_descent(x,y,w,b,learning_rate) </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    yhat <span class="op">=</span>  w<span class="op">*</span>x <span class="op">+</span> b</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span>  np.divide(np.<span class="bu">sum</span>((y<span class="op">-</span>yhat)<span class="op">**</span><span class="dv">2</span>, axis<span class="op">=</span><span class="dv">0</span>), x.shape[<span class="dv">0</span>])</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss"> loss is </span><span class="sc">{</span>loss<span class="sc">}</span><span class="ss">, parameters w:</span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">, b:</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># implementing multiple epochs </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    w,b <span class="op">=</span> gradient_descent(x, y, w, b, lr)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(b,w)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0 loss is [3.31211004], parameters w:[0.03394664], b:[-0.00241723]
-1 loss is [3.2011369], parameters w:[0.06731399], b:[-0.00483577]
-2 loss is [3.09389844], parameters w:[0.100112], b:[-0.00725474]
-3 loss is [2.99026833], parameters w:[0.13235046], b:[-0.0096733]
-4 loss is [2.8901245], parameters w:[0.16403896], b:[-0.01209065]
-5 loss is [2.79334907], parameters w:[0.19518695], b:[-0.01450599]
-6 loss is [2.69982816], parameters w:[0.2258037], b:[-0.01691859]
-7 loss is [2.60945176], parameters w:[0.25589833], b:[-0.01932772]
-8 loss is [2.52211359], parameters w:[0.2854798], b:[-0.02173268]
-9 loss is [2.43771102], parameters w:[0.31455692], b:[-0.02413281]
-10 loss is [2.35614487], parameters w:[0.34313833], b:[-0.02652747]
-11 loss is [2.27731934], parameters w:[0.37123253], b:[-0.02891603]
-12 loss is [2.20114189], parameters w:[0.39884789], b:[-0.03129792]
-13 loss is [2.12752313], parameters w:[0.42599262], b:[-0.03367256]
-14 loss is [2.05637669], parameters w:[0.45267477], b:[-0.03603941]
-15 loss is [1.98761913], parameters w:[0.4789023], b:[-0.03839795]
-16 loss is [1.92116987], parameters w:[0.50468298], b:[-0.04074769]
-17 loss is [1.85695103], parameters w:[0.53002448], b:[-0.04308813]
-18 loss is [1.79488739], parameters w:[0.55493432], b:[-0.04541883]
-19 loss is [1.73490628], parameters w:[0.5794199], b:[-0.04773935]
-20 loss is [1.67693749], parameters w:[0.60348849], b:[-0.05004928]
-21 loss is [1.6209132], parameters w:[0.62714724], b:[-0.0523482]
-22 loss is [1.56676786], parameters w:[0.65040315], b:[-0.05463576]
-23 loss is [1.51443818], parameters w:[0.67326314], b:[-0.05691158]
-24 loss is [1.463863], parameters w:[0.69573398], b:[-0.05917532]
-25 loss is [1.41498321], parameters w:[0.71782234], b:[-0.06142665]
-26 loss is [1.36774173], parameters w:[0.73953477], b:[-0.06366526]
-27 loss is [1.32208339], parameters w:[0.76087769], b:[-0.06589085]
-28 loss is [1.27795492], parameters w:[0.78185744], b:[-0.06810315]
-29 loss is [1.23530481], parameters w:[0.80248024], b:[-0.07030189]
-30 loss is [1.19408333], parameters w:[0.82275218], b:[-0.07248682]
-31 loss is [1.1542424], parameters w:[0.84267927], b:[-0.0746577]
-32 loss is [1.11573559], parameters w:[0.86226742], b:[-0.07681431]
-33 loss is [1.07851804], parameters w:[0.88152242], b:[-0.07895644]
-34 loss is [1.04254639], parameters w:[0.90044997], b:[-0.08108389]
-35 loss is [1.00777875], parameters w:[0.91905568], b:[-0.08319647]
-36 loss is [0.97417466], parameters w:[0.93734503], b:[-0.08529402]
-37 loss is [0.94169501], parameters w:[0.95532345], b:[-0.08737636]
-38 loss is [0.91030202], parameters w:[0.97299626], b:[-0.08944336]
-39 loss is [0.87995918], parameters w:[0.99036866], b:[-0.09149486]
-40 loss is [0.85063121], parameters w:[1.00744581], b:[-0.09353074]
-41 loss is [0.82228404], parameters w:[1.02423274], b:[-0.09555088]
-42 loss is [0.79488472], parameters w:[1.04073441], b:[-0.09755518]
-43 loss is [0.76840144], parameters w:[1.05695571], b:[-0.09954352]
-44 loss is [0.74280345], parameters w:[1.07290142], b:[-0.10151582]
-45 loss is [0.71806103], parameters w:[1.08857624], b:[-0.103472]
-46 loss is [0.69414548], parameters w:[1.10398481], b:[-0.10541198]
-47 loss is [0.67102905], parameters w:[1.11913167], b:[-0.1073357]
-48 loss is [0.64868494], parameters w:[1.1340213], b:[-0.1092431]
-49 loss is [0.62708725], parameters w:[1.14865808], b:[-0.11113413]
-50 loss is [0.60621094], parameters w:[1.16304633], b:[-0.11300875]
-51 loss is [0.58603182], parameters w:[1.17719029], b:[-0.11486691]
-52 loss is [0.56652652], parameters w:[1.19109414], b:[-0.11670861]
-53 loss is [0.54767247], parameters w:[1.20476198], b:[-0.1185338]
-54 loss is [0.52944783], parameters w:[1.21819782], b:[-0.12034249]
-55 loss is [0.5118315], parameters w:[1.23140564], b:[-0.12213465]
-56 loss is [0.49480313], parameters w:[1.24438931], b:[-0.12391028]
-57 loss is [0.47834299], parameters w:[1.25715267], b:[-0.1256694]
-58 loss is [0.46243208], parameters w:[1.26969948], b:[-0.127412]
-59 loss is [0.44705198], parameters w:[1.28203342], b:[-0.1291381]
-60 loss is [0.43218494], parameters w:[1.29415812], b:[-0.13084771]
-61 loss is [0.41781377], parameters w:[1.30607717], b:[-0.13254087]
-62 loss is [0.40392188], parameters w:[1.31779405], b:[-0.1342176]
-63 loss is [0.39049322], parameters w:[1.32931223], b:[-0.13587793]
-64 loss is [0.3775123], parameters w:[1.34063508], b:[-0.13752191]
-65 loss is [0.36496413], parameters w:[1.35176593], b:[-0.13914956]
-66 loss is [0.35283424], parameters w:[1.36270807], b:[-0.14076094]
-67 loss is [0.34110864], parameters w:[1.3734647], b:[-0.1423561]
-68 loss is [0.3297738], parameters w:[1.38403899], b:[-0.14393509]
-69 loss is [0.31881666], parameters w:[1.39443404], b:[-0.14549796]
-70 loss is [0.3082246], parameters w:[1.4046529], b:[-0.14704478]
-71 loss is [0.2979854], parameters w:[1.41469859], b:[-0.14857561]
-72 loss is [0.28808727], parameters w:[1.42457404], b:[-0.15009052]
-73 loss is [0.27851882], parameters w:[1.43428216], b:[-0.15158957]
-74 loss is [0.26926903], parameters w:[1.4438258], b:[-0.15307285]
-75 loss is [0.26032724], parameters w:[1.45320775], b:[-0.15454041]
-76 loss is [0.25168318], parameters w:[1.46243078], b:[-0.15599235]
-77 loss is [0.2433269], parameters w:[1.47149758], b:[-0.15742874]
-78 loss is [0.23524878], parameters w:[1.48041082], b:[-0.15884966]
-79 loss is [0.22743954], parameters w:[1.48917311], b:[-0.1602552]
-80 loss is [0.2198902], parameters w:[1.49778701], b:[-0.16164544]
-81 loss is [0.21259208], parameters w:[1.50625506], b:[-0.16302048]
-82 loss is [0.2055368], parameters w:[1.51457974], b:[-0.16438041]
-83 loss is [0.19871625], parameters w:[1.52276348], b:[-0.16572531]
-84 loss is [0.1921226], parameters w:[1.53080869], b:[-0.16705528]
-85 loss is [0.18574828], parameters w:[1.53871771], b:[-0.16837042]
-86 loss is [0.17958597], parameters w:[1.54649288], b:[-0.16967083]
-87 loss is [0.17362859], parameters w:[1.55413645], b:[-0.1709566]
-88 loss is [0.16786932], parameters w:[1.56165068], b:[-0.17222784]
-89 loss is [0.16230154], parameters w:[1.56903775], b:[-0.17348464]
-90 loss is [0.15691888], parameters w:[1.57629984], b:[-0.17472711]
-91 loss is [0.15171514], parameters w:[1.58343906], b:[-0.17595535]
-92 loss is [0.14668439], parameters w:[1.59045751], b:[-0.17716947]
-93 loss is [0.14182083], parameters w:[1.59735724], b:[-0.17836957]
-94 loss is [0.13711891], parameters w:[1.60414026], b:[-0.17955576]
-95 loss is [0.13257324], parameters w:[1.61080857], b:[-0.18072815]
-96 loss is [0.1281786], parameters w:[1.6173641], b:[-0.18188684]
-97 loss is [0.12392998], parameters w:[1.62380878], b:[-0.18303195]
-98 loss is [0.11982249], parameters w:[1.63014448], b:[-0.18416359]
-99 loss is [0.11585145], parameters w:[1.63637307], b:[-0.18528185]
-100 loss is [0.1120123], parameters w:[1.64249635], b:[-0.18638687]
-101 loss is [0.10830065], parameters w:[1.64851612], b:[-0.18747873]
-102 loss is [0.10471227], parameters w:[1.65443414], b:[-0.18855757]
-103 loss is [0.10124303], parameters w:[1.66025213], b:[-0.18962348]
-104 loss is [0.09788899], parameters w:[1.66597179], b:[-0.19067659]
-105 loss is [0.09464629], parameters w:[1.6715948], b:[-0.191717]
-106 loss is [0.09151125], parameters w:[1.67712278], b:[-0.19274483]
-107 loss is [0.08848026], parameters w:[1.68255737], b:[-0.19376018]
-108 loss is [0.08554988], parameters w:[1.68790013], b:[-0.19476318]
-109 loss is [0.08271675], parameters w:[1.69315263], b:[-0.19575393]
-110 loss is [0.07997763], parameters w:[1.6983164], b:[-0.19673255]
-111 loss is [0.07732941], parameters w:[1.70339295], b:[-0.19769914]
-112 loss is [0.07476905], parameters w:[1.70838375], b:[-0.19865384]
-113 loss is [0.07229363], parameters w:[1.71329027], b:[-0.19959673]
-114 loss is [0.06990033], parameters w:[1.71811392], b:[-0.20052795]
-115 loss is [0.06758642], parameters w:[1.72285612], b:[-0.2014476]
-116 loss is [0.06534926], parameters w:[1.72751825], b:[-0.20235579]
-117 loss is [0.06318629], parameters w:[1.73210167], b:[-0.20325263]
-118 loss is [0.06109506], parameters w:[1.7366077], b:[-0.20413825]
-119 loss is [0.05907317], parameters w:[1.74103767], b:[-0.20501274]
-120 loss is [0.05711831], parameters w:[1.74539286], b:[-0.20587622]
-121 loss is [0.05522828], parameters w:[1.74967455], b:[-0.2067288]
-122 loss is [0.0534009], parameters w:[1.75388396], b:[-0.20757059]
-123 loss is [0.05163409], parameters w:[1.75802234], b:[-0.20840171]
-124 loss is [0.04992585], parameters w:[1.76209089], b:[-0.20922225]
-125 loss is [0.04827423], parameters w:[1.76609078], b:[-0.21003233]
-126 loss is [0.04667735], parameters w:[1.77002318], b:[-0.21083207]
-127 loss is [0.04513339], parameters w:[1.77388924], b:[-0.21162155]
-128 loss is [0.04364058], parameters w:[1.77769008], b:[-0.21240091]
-129 loss is [0.04219724], parameters w:[1.78142681], b:[-0.21317024]
-130 loss is [0.04080172], parameters w:[1.7851005], b:[-0.21392964]
-131 loss is [0.03945244], parameters w:[1.78871223], b:[-0.21467923]
-132 loss is [0.03814785], parameters w:[1.79226305], b:[-0.21541911]
-133 loss is [0.03688647], parameters w:[1.79575399], b:[-0.21614939]
-134 loss is [0.03566688], parameters w:[1.79918607], b:[-0.21687017]
-135 loss is [0.03448768], parameters w:[1.80256027], b:[-0.21758155]
-136 loss is [0.03334753], parameters w:[1.80587759], b:[-0.21828364]
-137 loss is [0.03224513], parameters w:[1.80913897], b:[-0.21897654]
-138 loss is [0.03117924], parameters w:[1.81234538], b:[-0.21966035]
-139 loss is [0.03014864], parameters w:[1.81549773], b:[-0.22033518]
-140 loss is [0.02915216], parameters w:[1.81859696], b:[-0.22100112]
-141 loss is [0.02818867], parameters w:[1.82164394], b:[-0.22165827]
-142 loss is [0.02725708], parameters w:[1.82463958], b:[-0.22230674]
-143 loss is [0.02635632], parameters w:[1.82758473], b:[-0.22294662]
-144 loss is [0.02548538], parameters w:[1.83048025], b:[-0.22357801]
-145 loss is [0.02464326], parameters w:[1.83332699], b:[-0.22420101]
-146 loss is [0.02382901], parameters w:[1.83612576], b:[-0.22481571]
-147 loss is [0.02304171], parameters w:[1.83887738], b:[-0.22542221]
-148 loss is [0.02228046], parameters w:[1.84158265], b:[-0.2260206]
-149 loss is [0.0215444], parameters w:[1.84424234], b:[-0.22661099]
-150 loss is [0.02083269], parameters w:[1.84685723], b:[-0.22719345]
-151 loss is [0.02014453], parameters w:[1.84942809], b:[-0.2277681]
-152 loss is [0.01947913], parameters w:[1.85195564], b:[-0.22833501]
-153 loss is [0.01883575], parameters w:[1.85444063], b:[-0.22889427]
-154 loss is [0.01821365], parameters w:[1.85688377], b:[-0.22944599]
-155 loss is [0.01761212], parameters w:[1.85928578], b:[-0.22999025]
-156 loss is [0.01703049], parameters w:[1.86164734], b:[-0.23052713]
-157 loss is [0.01646809], parameters w:[1.86396914], b:[-0.23105673]
-158 loss is [0.0159243], parameters w:[1.86625186], b:[-0.23157914]
-159 loss is [0.01539848], parameters w:[1.86849614], b:[-0.23209443]
-160 loss is [0.01489005], parameters w:[1.87070265], b:[-0.23260271]
-161 loss is [0.01439843], parameters w:[1.87287202], b:[-0.23310404]
-162 loss is [0.01392307], parameters w:[1.87500488], b:[-0.23359852]
-163 loss is [0.01346342], parameters w:[1.87710184], b:[-0.23408623]
-164 loss is [0.01301897], parameters w:[1.87916352], b:[-0.23456725]
-165 loss is [0.01258921], parameters w:[1.8811905], b:[-0.23504167]
-166 loss is [0.01217365], parameters w:[1.88318337], b:[-0.23550957]
-167 loss is [0.01177183], parameters w:[1.88514272], b:[-0.23597102]
-168 loss is [0.01138329], parameters w:[1.8870691], b:[-0.23642611]
-169 loss is [0.01100759], parameters w:[1.88896307], b:[-0.23687491]
-170 loss is [0.01064431], parameters w:[1.89082518], b:[-0.23731751]
-171 loss is [0.01029303], parameters w:[1.89265597], b:[-0.23775398]
-172 loss is [0.00995336], parameters w:[1.89445596], b:[-0.2381844]
-173 loss is [0.00962491], parameters w:[1.89622568], b:[-0.23860884]
-174 loss is [0.00930732], parameters w:[1.89796564], b:[-0.23902738]
-175 loss is [0.00900021], parameters w:[1.89967634], b:[-0.2394401]
-176 loss is [0.00870326], parameters w:[1.90135827], b:[-0.23984706]
-177 loss is [0.00841611], parameters w:[1.90301192], b:[-0.24024835]
-178 loss is [0.00813845], parameters w:[1.90463777], b:[-0.24064403]
-179 loss is [0.00786996], parameters w:[1.90623628], b:[-0.24103417]
-180 loss is [0.00761034], parameters w:[1.90780791], b:[-0.24141885]
-181 loss is [0.00735929], parameters w:[1.90935313], b:[-0.24179813]
-182 loss is [0.00711653], parameters w:[1.91087237], b:[-0.24217209]
-183 loss is [0.00688179], parameters w:[1.91236608], b:[-0.24254079]
-184 loss is [0.00665481], parameters w:[1.91383468], b:[-0.2429043]
-185 loss is [0.00643531], parameters w:[1.9152786], b:[-0.24326269]
-186 loss is [0.00622307], parameters w:[1.91669825], b:[-0.24361602]
-187 loss is [0.00601783], parameters w:[1.91809404], b:[-0.24396436]
-188 loss is [0.00581937], parameters w:[1.91946638], b:[-0.24430778]
-189 loss is [0.00562747], parameters w:[1.92081566], b:[-0.24464633]
-190 loss is [0.0054419], parameters w:[1.92214228], b:[-0.24498009]
-191 loss is [0.00526245], parameters w:[1.9234466], b:[-0.24530912]
-192 loss is [0.00508893], parameters w:[1.92472901], b:[-0.24563347]
-193 loss is [0.00492113], parameters w:[1.92598988], b:[-0.24595321]
-194 loss is [0.00475888], parameters w:[1.92722957], b:[-0.2462684]
-195 loss is [0.00460198], parameters w:[1.92844843], b:[-0.2465791]
-196 loss is [0.00445026], parameters w:[1.92964683], b:[-0.24688536]
-197 loss is [0.00430354], parameters w:[1.93082509], b:[-0.24718726]
-198 loss is [0.00416167], parameters w:[1.93198357], b:[-0.24748484]
-199 loss is [0.00402448], parameters w:[1.9331226], b:[-0.24777816]
-200 loss is [0.00389181], parameters w:[1.9342425], b:[-0.24806728]
-201 loss is [0.00376353], parameters w:[1.93534359], b:[-0.24835226]
-202 loss is [0.00363948], parameters w:[1.9364262], b:[-0.24863315]
-203 loss is [0.00351952], parameters w:[1.93749063], b:[-0.24891001]
-204 loss is [0.00340351], parameters w:[1.93853719], b:[-0.24918288]
-205 loss is [0.00329134], parameters w:[1.93956618], b:[-0.24945183]
-206 loss is [0.00318286], parameters w:[1.9405779], b:[-0.2497169]
-207 loss is [0.00307797], parameters w:[1.94157264], b:[-0.24997815]
-208 loss is [0.00297653], parameters w:[1.94255068], b:[-0.25023564]
-209 loss is [0.00287844], parameters w:[1.9435123], b:[-0.2504894]
-210 loss is [0.00278359], parameters w:[1.94445779], b:[-0.25073949]
-211 loss is [0.00269186], parameters w:[1.94538741], b:[-0.25098597]
-212 loss is [0.00260316], parameters w:[1.94630143], b:[-0.25122888]
-213 loss is [0.00251739], parameters w:[1.94720011], b:[-0.25146826]
-214 loss is [0.00243444], parameters w:[1.94808371], b:[-0.25170417]
-215 loss is [0.00235423], parameters w:[1.94895249], b:[-0.25193666]
-216 loss is [0.00227667], parameters w:[1.9498067], b:[-0.25216576]
-217 loss is [0.00220166], parameters w:[1.95064657], b:[-0.25239154]
-218 loss is [0.00212913], parameters w:[1.95147235], b:[-0.25261402]
-219 loss is [0.00205899], parameters w:[1.95228428], b:[-0.25283327]
-220 loss is [0.00199116], parameters w:[1.95308259], b:[-0.25304931]
-221 loss is [0.00192556], parameters w:[1.95386751], b:[-0.25326221]
-222 loss is [0.00186213], parameters w:[1.95463927], b:[-0.25347199]
-223 loss is [0.0018008], parameters w:[1.95539809], b:[-0.25367871]
-224 loss is [0.00174148], parameters w:[1.95614417], b:[-0.2538824]
-225 loss is [0.00168412], parameters w:[1.95687775], b:[-0.25408311]
-226 loss is [0.00162865], parameters w:[1.95759903], b:[-0.25428088]
-227 loss is [0.00157501], parameters w:[1.95830821], b:[-0.25447575]
-228 loss is [0.00152313], parameters w:[1.9590055], b:[-0.25466776]
-229 loss is [0.00147297], parameters w:[1.9596911], b:[-0.25485694]
-230 loss is [0.00142446], parameters w:[1.96036521], b:[-0.25504335]
-231 loss is [0.00137755], parameters w:[1.96102801], b:[-0.25522702]
-232 loss is [0.00133218], parameters w:[1.96167971], b:[-0.25540798]
-233 loss is [0.00128831], parameters w:[1.96232048], b:[-0.25558627]
-234 loss is [0.00124589], parameters w:[1.96295051], b:[-0.25576194]
-235 loss is [0.00120486], parameters w:[1.96356998], b:[-0.25593501]
-236 loss is [0.00116519], parameters w:[1.96417907], b:[-0.25610553]
-237 loss is [0.00112682], parameters w:[1.96477795], b:[-0.25627353]
-238 loss is [0.00108972], parameters w:[1.96536679], b:[-0.25643905]
-239 loss is [0.00105384], parameters w:[1.96594577], b:[-0.25660211]
-240 loss is [0.00101914], parameters w:[1.96651504], b:[-0.25676277]
-241 loss is [0.00098559], parameters w:[1.96707478], b:[-0.25692104]
-242 loss is [0.00095314], parameters w:[1.96762513], b:[-0.25707696]
-243 loss is [0.00092176], parameters w:[1.96816627], b:[-0.25723057]
-244 loss is [0.00089141], parameters w:[1.96869834], b:[-0.2573819]
-245 loss is [0.00086207], parameters w:[1.9692215], b:[-0.25753099]
-246 loss is [0.00083369], parameters w:[1.96973589], b:[-0.25767785]
-247 loss is [0.00080624], parameters w:[1.97024167], b:[-0.25782253]
-248 loss is [0.0007797], parameters w:[1.97073897], b:[-0.25796506]
-249 loss is [0.00075404], parameters w:[1.97122795], b:[-0.25810546]
-250 loss is [0.00072921], parameters w:[1.97170873], b:[-0.25824377]
-251 loss is [0.00070521], parameters w:[1.97218147], b:[-0.25838002]
-252 loss is [0.000682], parameters w:[1.97264628], b:[-0.25851424]
-253 loss is [0.00065955], parameters w:[1.97310331], b:[-0.25864645]
-254 loss is [0.00063784], parameters w:[1.97355269], b:[-0.25877668]
-255 loss is [0.00061685], parameters w:[1.97399455], b:[-0.25890497]
-256 loss is [0.00059655], parameters w:[1.974429], b:[-0.25903134]
-257 loss is [0.00057691], parameters w:[1.97485619], b:[-0.25915581]
-258 loss is [0.00055793], parameters w:[1.97527621], b:[-0.25927842]
-259 loss is [0.00053957], parameters w:[1.97568921], b:[-0.25939919]
-260 loss is [0.00052181], parameters w:[1.9760953], b:[-0.25951816]
-261 loss is [0.00050464], parameters w:[1.97649458], b:[-0.25963533]
-262 loss is [0.00048803], parameters w:[1.97688718], b:[-0.25975075]
-263 loss is [0.00047197], parameters w:[1.97727321], b:[-0.25986443]
-264 loss is [0.00045644], parameters w:[1.97765278], b:[-0.2599764]
-265 loss is [0.00044142], parameters w:[1.978026], b:[-0.26008669]
-266 loss is [0.00042689], parameters w:[1.97839297], b:[-0.26019532]
-267 loss is [0.00041285], parameters w:[1.9787538], b:[-0.26030232]
-268 loss is [0.00039926], parameters w:[1.97910859], b:[-0.2604077]
-269 loss is [0.00038613], parameters w:[1.97945744], b:[-0.26051149]
-270 loss is [0.00037342], parameters w:[1.97980045], b:[-0.26061372]
-271 loss is [0.00036113], parameters w:[1.98013773], b:[-0.2607144]
-272 loss is [0.00034925], parameters w:[1.98046936], b:[-0.26081357]
-273 loss is [0.00033776], parameters w:[1.98079545], b:[-0.26091123]
-274 loss is [0.00032665], parameters w:[1.98111607], b:[-0.26100742]
-275 loss is [0.0003159], parameters w:[1.98143134], b:[-0.26110216]
-276 loss is [0.00030551], parameters w:[1.98174133], b:[-0.26119546]
-277 loss is [0.00029546], parameters w:[1.98204613], b:[-0.26128734]
-278 loss is [0.00028574], parameters w:[1.98234584], b:[-0.26137784]
-279 loss is [0.00027634], parameters w:[1.98264053], b:[-0.26146697]
-280 loss is [0.00026725], parameters w:[1.98293029], b:[-0.26155474]
-281 loss is [0.00025846], parameters w:[1.98321521], b:[-0.26164118]
-282 loss is [0.00024995], parameters w:[1.98349536], b:[-0.26172631]
-283 loss is [0.00024173], parameters w:[1.98377083], b:[-0.26181015]
-284 loss is [0.00023378], parameters w:[1.98404169], b:[-0.26189271]
-285 loss is [0.00022609], parameters w:[1.98430802], b:[-0.26197402]
-286 loss is [0.00021865], parameters w:[1.98456989], b:[-0.26205409]
-287 loss is [0.00021146], parameters w:[1.98482739], b:[-0.26213294]
-288 loss is [0.00020451], parameters w:[1.98508058], b:[-0.26221059]
-289 loss is [0.00019778], parameters w:[1.98532954], b:[-0.26228706]
-290 loss is [0.00019127], parameters w:[1.98557434], b:[-0.26236237]
-291 loss is [0.00018498], parameters w:[1.98581504], b:[-0.26243652]
-292 loss is [0.0001789], parameters w:[1.98605172], b:[-0.26250955]
-293 loss is [0.00017302], parameters w:[1.98628444], b:[-0.26258146]
-294 loss is [0.00016733], parameters w:[1.98651327], b:[-0.26265227]
-295 loss is [0.00016182], parameters w:[1.98673828], b:[-0.26272201]
-296 loss is [0.0001565], parameters w:[1.98695953], b:[-0.26279067]
-297 loss is [0.00015135], parameters w:[1.98717707], b:[-0.26285829]
-298 loss is [0.00014638], parameters w:[1.98739098], b:[-0.26292487]
-299 loss is [0.00014156], parameters w:[1.98760132], b:[-0.26299043]</code></pre>
+<pre><code>[1.00716235] [1.85616176]</code></pre>
 </div>
 </div>
+<p>Let’s compare our output with scikit-learn’s Linear Regression</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>lr.fit(x, y)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(lr.intercept_, lr.coef_[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1.00742783] [1.85674284]</code></pre>
+</div>
+</div>
+<p>Our result matches upto few decimal places that means we have correctly implemented our batch gradient descent algorithm.</p>
 
 
 </section>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\np5(sketch => {\n  let system;\n  \n  //set up some default points\n  \n  /*    \n  */\n  \n  let data = [\n    sketch.createVector(.105, .423333),\n    sketch.createVector(.58, .526666),\n    sketch.createVector(.75, .82666),\n    sketch.createVector(.3475, .183333),\n    sketch.createVector(.3195, .543353),\n  ];\n  \n  let m = 1;\n  let b = 0;\n  \n  sketch.setup = function() {\n    sketch.createCanvas(800, 350);\n    sketch.background(51);\n  };\n  \n  const gradientDescent = () => {\n    var learning_rate = 0.05;\n    \n    for(var i = 0; i < data.length; i++) {\n      var x = data[i].x;\n      var y = data[i].y;\n      \n      var guess = m * x + b;\n      var error = y - guess;\n      \n      m = m + (error * x) * learning_rate;\n      b = b + (error) * learning_rate;\n    }\n  }\n  \n  const drawLine = () => {\n    var x1 = 0;\n    var y1 = m * x1 + b;\n    var x2 = 1;\n    var y2 = m * x2 + b;\n    \n    x1 = sketch.map(x1, 0, 1, 0, sketch.width);\n    y1 = sketch.map(y1, 0, 1, sketch.height, 0);\n    x2 = sketch.map(x2, 0, 1, 0, sketch.width);\n    y2 = sketch.map(y2, 0, 1, sketch.height, 0);\n    \n    sketch.stroke(101, 74, 78);\n    sketch.strokeWeight(2);\n    sketch.line(x1, y1, x2, y2);\n  }\n \n  sketch.mousePressed = () => {\n    var x = sketch.map(sketch.mouseX, 0, sketch.width, 0 , 1);\n    var y = sketch.map(sketch.mouseY, 0, sketch.height, 1, 0);\n    var point = sketch.createVector(x, y);\n    data.push(point);\n  }\n  \n  sketch.draw = () => {\n    sketch.background(230, 221, 222)\n    for (var i = 0; i < data.length; i++) {\n      var x = sketch.map(data[i].x, 0, 1, 0, sketch.width);\n      var y = sketch.map(data[i].y, 0, 1, sketch.height, 0);\n      sketch.fill(32, 178, 170);\n      sketch.stroke(32, 178, 170);\n      sketch.ellipse(x, y, 8, 8);\n    }\n    \n    if(data.length > 1) {\n      gradientDescent();\n      drawLine();\n    }\n  }\n})\n\nimport {p5} from \"@tmcw/p5\"\n\n"}]}
+</script>
+<script type="module">
+window._ojs.paths.runtimeToDoc = "../../myblog/posts/gradient-descent";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "../../..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const icon = "";
