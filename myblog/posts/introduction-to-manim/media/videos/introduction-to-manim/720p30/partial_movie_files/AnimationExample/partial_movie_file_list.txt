@@ -1,0 +1,3 @@
+# This file is used internally by FFMPEG.
+file 'file:/Users/vidyasagar.bhargava/Documents/newwebsite/mysite/myblog/posts/introduction-to-manim/media/videos/introduction-to-manim/720p30/partial_movie_files/AnimationExample/1442198651_3482370649_1128193041.mp4'
+file 'file:/Users/vidyasagar.bhargava/Documents/newwebsite/mysite/myblog/posts/introduction-to-manim/media/videos/introduction-to-manim/720p30/partial_movie_files/AnimationExample/3137237488_894887841_3540522623.mp4'

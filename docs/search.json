@@ -137,7 +137,7 @@
     "href": "myblog/posts/Nearest-Neighbour-Classifier/index.html#generating-models",
     "title": "Nearest Neighbour Classifier",
     "section": "Generating Models",
-    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)"
+    "text": "Generating Models\n\nfrom sklearn.neighbors import KNeighborsClassifier\nmodel = KNeighborsClassifier(n_neighbors=3)\n\n# Train the model using the training sets\nmodel.fit(features,label)\n\nKNeighborsClassifier(n_neighbors=3)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.KNeighborsClassifierKNeighborsClassifier(n_neighbors=3)"
   },
   {
     "objectID": "myblog/posts/Nearest-Neighbour-Classifier/index.html#predict-output",
@@ -228,7 +228,7 @@
     "href": "myblog/blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Listing the best books available in the market right now for data science.\n\n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nJun 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nJun 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nJun 11, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 8, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nJul 13, 2019\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\n\nApr 10, 2017\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "Creating beautiful mathematical animations using Manim\n\n\n\n\n\n\nJan 26, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nListing the best books available in the market right now for data science.\n\n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\n\nSep 7, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\n\nApr 4, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\n\nFeb 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\n\nDec 10, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\n\nMar 12, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\n\nMar 6, 2020\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "myblog/posts/gradient-descent/index.html#gradient-descent-algorithm",
@@ -270,7 +270,7 @@
     "href": "myblog/posts/gradient-descent/index.html#gradient-descent-variants",
     "title": "Linear regression using gradient descent",
     "section": "Gradient Descent Variants",
-    "text": "Gradient Descent Variants\n\nBatch Gradient Descent\nStochastic Gradient Descent\nMini Batch Gradient Descent\n\nIf we use all the points in the training set to compute loss then it is batch gradient descent. If we use single data point and update our parameters it stochastic gradinet descent. Anything between 1 and N is mini batch gradient descent."
+    "text": "Gradient Descent Variants\n\nBatch Gradient Descent\nStochastic Gradient Descent\nMini Batch Gradient Descent\n\nIf we use all the points in the training set to compute loss then it is batch gradient descent. If we use single data point and update our parameters it stochastic gradient descent. Anything between 1 and N is mini batch gradient descent."
   },
   {
     "objectID": "myblog/posts/gradient-descent/index.html#implementing-linear-regression-using-batch-gradient-descent",
@@ -278,5 +278,26 @@
     "title": "Linear regression using gradient descent",
     "section": "Implementing Linear Regression using batch gradient descent",
     "text": "Implementing Linear Regression using batch gradient descent\nNow its time to implement our linear regression model using batch gradient descent.\n\nGenerate Synthetic data\nUsing the above equation we will generate some synthetic data with w = 2 and b = 1 and some random noise.\n\nimport numpy as np\nnp.random.seed(42)\n\nx = np.random.randn(100,1)\ny = 1 + 2*x + np.random.randn(100,1)\n\nOur goal will be to accurately predict the value of w (i.e. 2) and b (i.e. 1).\n\n\nInitialize parameters (w and b) and hyperparameter (learning_rate)\nSo we will initialize the learnable parameters w and b with some random values and try to find right value by minimizing the loss function. The value of the hyperparameter i.e. learning rate is fixed.\n\nw = np.random.randn(1)\nb = np.random.randn(1)\nlr = 0.001\n\n\n\nGradient Descent algorithm\n\ndef gradient_descent(x, y, w, b, lr):\n    \n    #compute the loss\n    yhat =  b + w*x\n    error = (y-yhat)\n    loss  = (error*2).mean()\n    \n    #compute the gradients\n    b_grad = -2*error.mean()\n    w_grad = -2*(x*error).mean()\n    \n    #update the parameters\n    b = b - lr * b_grad\n    w = w - lr * w_grad\n    return w,b\n\n\n# implementing multiple epochs \n\nfor epoch in range(5000):\n    w,b = gradient_descent(x, y, w, b, lr)\nprint(b,w)\n\n[1.00716235] [1.85616176]\n\n\nLet’s compare our output with scikit-learn’s Linear Regression\n\nfrom sklearn.linear_model import LinearRegression\nlr = LinearRegression()\nlr.fit(x, y)\nprint(lr.intercept_, lr.coef_[0])\n\n[1.00742783] [1.85674284]\n\n\nOur result matches upto few decimal places that means we have correctly implemented our batch gradient descent algorithm."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Vidyasagar Bhargava",
+    "section": "Education",
+    "text": "Education\nB.Tech in Computer Science & Engineering | University of Uttar Pradesh"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Vidyasagar Bhargava",
+    "section": "Experience",
+    "text": "Experience\nTVS Motors (2021-Present) Predictive maintenance Snapdeal (2015-2019) Price Optimization"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-manim/Untitled.html",
+    "href": "myblog/posts/introduction-to-manim/Untitled.html",
+    "title": "Introduction to Manim",
+    "section": "",
+    "text": "A community maintained Python library for creating mathematical animations.\n\n\n%%manim -qm SimpleExample\n\nclass SimpleExample(Scene):\n    def construct(self):\n        blue_circle = Circle(color='#654a4e', fill_opacity=0.5)\n        green_square = Square(color='#20B2AA', fill_opacity=0.5)\n        green_square.next_to(blue_circle, RIGHT)\n        self.add(blue_circle, green_square)\n\n\n\n\n\n%%manim -qm AnimationExample\nclass AnimationExample(Scene):\n    def construct(self):\n        ax = Axes(x_range =(-3,3), y_range=(-3,3))\n        curve = ax.plot(lambda x: (x+2)*x*(x-2)/2, color='#654a4e')\n        self.add(ax,curve)\n       # self.play(Create(ax))\n\n\n\n\nGetting the area\n\n%%manim -qm AnimationExample\nclass AnimationExample(Scene):\n    def construct(self):\n        ax = Axes(x_range =(-3,3), y_range=(-3,3))\n        curve = ax.plot(lambda x: (x+2)*x*(x-2)/2, color='#654a4e')\n        area = ax.get_area(curve, x_range=(-2,0))\n        self.add(ax,curve, area)\n\n\n\n\nNow lets see some animation\n\n\n%%manim -v WARNING  --progress_bar None   --disable_caching AnimationExample\nconfig.media_embed = True\n\n\nclass AnimationExample(Scene):\n    def construct(self):\n        self.camera.background_color = '#e6ddde'\n        ax = Axes(x_range =(-3,3), y_range=(-3,3))\n        curve = ax.plot(lambda x: (x+2)*x*(x-2)/2, color='#654a4e')\n        area = ax.get_area(curve, x_range=(-2,0))\n        self.add(ax,curve, area)\n        self.play(Create(ax), Create(curve))\n        self.play(FadeIn(area))\n\n\n \n Your browser does not support the video tag.\n \n\n\n\nTo be continued…"
   }
 ]
