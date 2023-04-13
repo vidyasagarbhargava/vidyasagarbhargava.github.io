@@ -13,12 +13,6 @@ about:
     - icon: quora
       text: Quora
       href: https://www.quora.com/profile/Vidyasagar-Bhargava
-    - icon: spotify
-      text: Spotify
-      href: https://open.spotify.com/show/0E1uwd8egtoOTSY45Rcejs
-    - icon: youtube
-      text: Youtube
-      href: https://www.youtube.com/channel/UCqB_HU0K_u1klFhRvDMAZBQ
     - icon: bi-layers-fill
       text: Speaker Deck
       href: https://speakerdeck.com/vidyasagarbhargava
