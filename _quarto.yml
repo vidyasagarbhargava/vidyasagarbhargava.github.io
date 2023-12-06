@@ -10,8 +10,6 @@ website:
         text: Home
       - href: myblog/blog.qmd
         text: Blog
-      - href: cv.qmd
-        text: CV
       - href: london.qmd
         text: London 
 
