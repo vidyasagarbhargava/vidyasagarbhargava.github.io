@@ -24,7 +24,7 @@ about:
 
 ## Bio
 
-I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, working for connected mobility solutions department. My interests include Explainable AI, Computer Vision and Generative AI. I have 10+ years of experience in the field of Machine learning and Data Science where I worked with various clients in developing prescriptive as well as predictive solutions to address core business problems. 
+I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, working for connected mobility solutions department. My interests include **Explainable AI**, **Computer Vision** and **Generative AI**. I have 10+ years of experience in the field of Machine learning and Data Science where I worked with various clients in developing prescriptive as well as predictive solutions to address core business problems. 
 
 
 
@@ -33,28 +33,29 @@ I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, workin
 ### Major Projects 
 
 -------------------------------------------------------
-* Root Cause Analysis for Low Range Trips in EVs.
-* Predictive Maintenance for ICE Vehicles
-* Range Prediction for Electric Vehicle
-* Churn Prediction for Telecom Company
-* NPS Improvement for US based client
-* Benchmarking of trained sentence embedding models
-* Scaling Machine Learning models using Spark
-* Dashboard for Time Series forecasting using Dash & Plotly
+* Root Cause Analysis for Low Range Trips in EVs  
+* Predictive Maintenance of Brakes in two wheelers  
+* Range Prediction and Analysis for EVs
+* Churn Prediction in Telecom Industry
+* Price optimization Engine for Scientific Pricing of Fashion Products
+* NPS Improvement using explainable AI
 * Retail store segmentation
 * Anomaly Detection for machine parts failure
-* Price optimization Engine based on price elasticity models
-
 
 ### Education 
 
 * B.Tech in Computer Science and Engineering
+* XII in Computer Science
 
 ### Courses
-* Machine Learning Course by Andrew NG
-* Deep learning Course by Andrew NG
-* Big Data Foundation by IBM
-* Introduction to Python by Kaggle
+* [Neural Networks and Deep Learning](https://coursera.org/share/df47600c32654a6020f4ec27cbc1f121)
+* [Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/verify/ZZLZ3U6GTBUL)
+* [Big Data Foundation](https://www.credly.com/badges/39dba64e-03a2-47ae-816f-c5064cb88d93/linked_in_profile)
+* [Introduction to Python](https://www.kaggle.com/learn/certification/vidyasagarbhargava/python)
+
+## Honors & Awards  
+* Thinking Hat at Wipro Limited | 2018
+* Bull's Eye Award at Snapdeal | 2015
 
 ## Talks & Webinars
 
