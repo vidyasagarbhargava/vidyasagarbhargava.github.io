@@ -10,6 +10,8 @@ website:
         text: Home
       - href: myblog/blog.qmd
         text: Blog
+      - href: research/research.qmd
+        text: Research Papers
       - href: london.qmd
         text: London 
 

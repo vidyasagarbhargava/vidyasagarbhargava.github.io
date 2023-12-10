@@ -1,0 +1,15 @@
+---
+title: "Research Papers"
+listing:
+  contents: posts
+  fields: [date, title, author, image, description]
+  sort: "date desc"
+  type: default
+  categories: false
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: false
+
+---
+In this series I try to understand and implement research papers using python and deeplearning frameworks like pytorch or JAX.

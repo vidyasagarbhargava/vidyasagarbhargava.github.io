@@ -1,14 +1,13 @@
 ---
-title: "Activities in London"
+title: "Namaste London 🙏"
 ---
-My short stay at London before pandemic hit the world and I had to come back to India.
+My short stay at London | 2019-2020
 
 ## UCL x DeepMind Lecture Series 
 
 Attended amazing lecture series on deep learning by Deep Mind in early 2020 at UCL London.
 
 ![](photos/ucl.jpeg)
-
 
 
 ## Machine Learning at Imperial College London

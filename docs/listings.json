@@ -15,5 +15,11 @@
       "/myblog/posts/Fbeta-Measure/index.html",
       "/myblog/posts/Nearest-Neighbour-Classifier/index.html"
     ]
+  },
+  {
+    "listing": "/research/research.html",
+    "items": [
+      "/research/posts/lenet/index.html"
+    ]
   }
 ]
