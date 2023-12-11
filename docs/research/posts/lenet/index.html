@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#architecture" id="toc-architecture" class="nav-link active" data-scroll-target="#architecture">Architecture</a></li>
+  <li><a href="#architecture-detail" id="toc-architecture-detail" class="nav-link active" data-scroll-target="#architecture-detail">Architecture Detail</a></li>
   <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a>
   <ul class="collapse">
   <li><a href="#dataset-understanding" id="toc-dataset-understanding" class="nav-link" data-scroll-target="#dataset-understanding">Dataset Understanding</a>
@@ -205,8 +205,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <hr>
-<section id="architecture" class="level1">
-<h1>Architecture</h1>
+<section id="architecture-detail" class="level1">
+<h1>Architecture Detail</h1>
 <p><img src="https://i.imgur.com/vv3VcAt.png" class="img-fluid"></p>
 <p><strong>Input</strong> : The input for LeNet5 architecture is grey scale images which are 32x32 size. Since these are grey scale images hence channel is 1.</p>
 <p><strong>Architecture</strong> : LeNet5 has 5 layers with 2 convolutional and three fully connected layers. The first convolutional layers has filter size of <code>5x5</code> with 6 such filters. Now these will decrease the width and height of image while increasing the depth (channels) of image. The output will be <code>28x28x6</code>.</p>
@@ -234,6 +234,103 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 </div>
 <p>After this pooling is applied to decrease the feature map by half i.e.&nbsp;<code>14x14x6</code>. Again same filter size <code>5x5</code> with 16 filters is now applied to the output followed by a pooling layer. This reduces the output feature map to <code>5x5x16</code>.</p>
 <p>After this, a convolutional layer of size 5x5 with 120 filters is applied to flatten the feature map to 120 values.Then comes the first fully connected layer, with 84 neurons. Finally, we have the output layer which has 10 output neurons, since the MNIST data have 10 classes for each of the represented 10 numerical digits.</p>
+<table class="table-striped table-hover table">
+<caption>LeNet-5 Architecture Detail</caption>
+<colgroup>
+<col style="width: 27%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th style="text-align: left;">#Filters/Neurons</th>
+<th style="text-align: right;">Filter Size</th>
+<th style="text-align: center;">stride</th>
+<th style="text-align: center;">size of Feature Map</th>
+<th style="text-align: center;">Activation Function</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>input</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">32x32x1</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>conv 1</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">5x5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">28x28x6</td>
+<td style="text-align: center;">tanh</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>Average Pooling</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: right;">2x2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">14x14x6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>conv 2</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">5x5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">10x10x16</td>
+<td style="text-align: center;">tanh</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>Average Pooling</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: right;">2x2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5x5x16</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>conv 3</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: right;">5x5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">tanh</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td>FC</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">84</td>
+<td style="text-align: center;">tanh</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td>FC</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: right;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">softmax</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="implementation" class="level1">
 <h1>Implementation</h1>
