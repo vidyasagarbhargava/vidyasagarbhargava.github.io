@@ -146,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#architecture-detail" id="toc-architecture-detail" class="nav-link active" data-scroll-target="#architecture-detail">Architecture Detail</a></li>
+  <li><a href="#architecture" id="toc-architecture" class="nav-link active" data-scroll-target="#architecture">Architecture</a></li>
   <li><a href="#implementation" id="toc-implementation" class="nav-link" data-scroll-target="#implementation">Implementation</a>
   <ul class="collapse">
   <li><a href="#dataset-understanding" id="toc-dataset-understanding" class="nav-link" data-scroll-target="#dataset-understanding">Dataset Understanding</a>
@@ -177,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div>
   <div class="description">
-    LeNet-5 is introduced by <strong>Yann LeCun, Leon Bottou, Yoshua Bengio and Patrick Haffner</strong> in the year 1998 in the paper <strong><a href="http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf">Gradient-Based Learning Applied to Document Recognition</a>.</strong> LeNet is a classic convolutional neural network employing the use of convolutions, pooling and fully connected layers. It was used for the handwritten digit recognition task with the MNIST dataset.
+    LeNet-5 is introduced by <strong>Yann LeCun, Leon Bottou, Yoshua Bengio</strong> and <strong>Patrick Haffner</strong> in the year 1998 in the paper <strong><a href="http://vision.stanford.edu/cs598_spring07/papers/Lecun98.pdf">Gradient-Based Learning Applied to Document Recognition</a>.</strong> LeNet is a classic convolutional neural network employing the use of convolutions, pooling and fully connected layers. It was used for the handwritten digit recognition task with the MNIST dataset.
   </div>
 </div>
 
@@ -205,18 +205,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <hr>
-<section id="architecture-detail" class="level1">
-<h1>Architecture Detail</h1>
+<section id="architecture" class="level1">
+<h1>Architecture</h1>
+<p>To understand LeNet-5 in detail lets go through each component of the architecture.</p>
 <p><img src="https://i.imgur.com/vv3VcAt.png" class="img-fluid"></p>
-<p><strong>Input</strong> : The input for LeNet5 architecture is grey scale images which are 32x32 size. Since these are grey scale images hence channel is 1.</p>
-<p><strong>Architecture</strong> : LeNet5 has 5 layers with 2 convolutional and three fully connected layers. The first convolutional layers has filter size of <code>5x5</code> with 6 such filters. Now these will decrease the width and height of image while increasing the depth (channels) of image. The output will be <code>28x28x6</code>.</p>
+<p>The input for LeNet-5 architecture is grey scale images which are 32x32 size. Since these are grey scale images hence channel is 1.</p>
+<p>LeNet-5 has 5 layers with 3 convolutional layers with a combination of average pooling and two fully connected layers. The first convolutional layers has filter size of 5x5 with 6 such filters. Now these will decrease the width and height of image while increasing the depth (channels) of image. The output will be 28x28x6.</p>
+<p>Here is simplified version of architecture. <img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2021/03/Screenshot-from-2021-03-18-12-52-17.png" class="img-fluid"></p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-How we get output as <code>28x28x6</code>?
+How we get output as 28x28x6?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -228,11 +230,11 @@ How we get output as <code>28x28x6</code>?
 * P is the number of padding applied<br>
 * S is the number of strides</p>
 <p>W = 32, F = 5, P =0, S = 1 the output depth will be equal to the number of filters applied i.e.&nbsp;= 6.<br>
-Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</code>.</p>
+Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is 28x28x6.</p>
 </div>
 </div>
 </div>
-<p>After this pooling is applied to decrease the feature map by half i.e.&nbsp;<code>14x14x6</code>. Again same filter size <code>5x5</code> with 16 filters is now applied to the output followed by a pooling layer. This reduces the output feature map to <code>5x5x16</code>.</p>
+<p>After this pooling is applied to decrease the feature map by half i.e.&nbsp;14x14x6. Again same filter size 5x5 with 16 filters is now applied to the output followed by a pooling layer. This reduces the output feature map to 5x5x16.</p>
 <p>After this, a convolutional layer of size 5x5 with 120 filters is applied to flatten the feature map to 120 values.Then comes the first fully connected layer, with 84 neurons. Finally, we have the output layer which has 10 output neurons, since the MNIST data have 10 classes for each of the represented 10 numerical digits.</p>
 <table class="table-striped table-hover table">
 <caption>LeNet-5 Architecture Detail</caption>
@@ -272,7 +274,7 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <td style="text-align: right;">5x5</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">28x28x6</td>
-<td style="text-align: center;">tanh</td>
+<td style="text-align: center;">Relu</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
@@ -290,7 +292,7 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <td style="text-align: right;">5x5</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">10x10x16</td>
-<td style="text-align: center;">tanh</td>
+<td style="text-align: center;">Relu</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
@@ -308,7 +310,7 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <td style="text-align: right;">5x5</td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">120</td>
-<td style="text-align: center;">tanh</td>
+<td style="text-align: center;">Relu</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="odd">
@@ -317,7 +319,7 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <td style="text-align: right;">-</td>
 <td style="text-align: center;">-</td>
 <td style="text-align: center;">84</td>
-<td style="text-align: center;">tanh</td>
+<td style="text-align: center;">Relu</td>
 <td style="text-align: center;"></td>
 </tr>
 <tr class="even">
@@ -331,6 +333,19 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 </tr>
 </tbody>
 </table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In original paper <code>sigmoid</code> is used as activation Function. Here we are replacing it recently most popular one i.e.&nbsp;<code>Relu</code>.</p>
+</div>
+</div>
 </section>
 <section id="implementation" class="level1">
 <h1>Implementation</h1>
@@ -348,10 +363,10 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 </ul>
 <section id="dataset-understanding" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-understanding">Dataset Understanding</h2>
-<p>Here we will be using famous MNIST dataset which contains hand written digits. These are greyscale with size of <code>28x28</code> composed of 60,000 training images and 10,000 testing images.</p>
+<p>Here we will be using famous MNIST dataset which contains hand written digits. These are greyscale with size of 28x28 composed of 60,000 training images and 10,000 testing images.</p>
 <section id="importing-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="importing-libraries">Importing Libraries</h3>
-<div class="cell" data-execution_count="11">
+<div class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># loading the relevant libraries</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn </span>
@@ -371,9 +386,22 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <section id="loading-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="loading-the-dataset">Loading the Dataset</h3>
 <p>Using the torchvision library we will load the dataset.</p>
-<div class="cell" data-execution_count="7">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The MNIST data can’t be used as it is for the LeNet5 architecture. The LeNet5 architecture accepts the input to be 32x32 and the MNIST images are 28x28. We can fix this by resizing the images, normalizing them using the pre-calculated mean and standard deviation (available online), and finally storing them as tensors.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Loading the dataset and preprocessing</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the dataset and preprocessing</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> torchvision.datasets.MNIST(root <span class="op">=</span> <span class="st">'./data'</span>,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                           train <span class="op">=</span> <span class="va">True</span>,</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                                           transform <span class="op">=</span> transforms.Compose([</span>
@@ -402,24 +430,11 @@ Applying formula ([32-5+2*0]/1)+1= 28. So the output volume is <code>28x28x6</co
 <span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                           shuffle <span class="op">=</span> <span class="va">True</span>)</span>
 <span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The MNIST data can’t be used as it is for the LeNet5 architecture. The LeNet5 architecture accepts the input to be 32x32 and the MNIST images are 28x28. We can fix this by resizing the images, normalizing them using the pre-calculated mean and standard deviation (available online), and finally storing them as tensors.</p>
-</div>
-</div>
 </section>
 <section id="lenet5-from-scratch" class="level3">
 <h3 class="anchored" data-anchor-id="lenet5-from-scratch">LeNet5 from Scratch</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Defining the convolutional neural network</span></span>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining the convolutional neural network</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LeNet5(nn.Module):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, num_classes):</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -453,22 +468,22 @@ Important
 </section>
 <section id="setting-up-hyperparameters" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-hyperparameters">Setting up hyperparameters</h3>
-<div class="cell" data-execution_count="8">
+<div class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> LeNet5(num_classes).to(device)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the loss function</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the loss function</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cost <span class="op">=</span> nn.CrossEntropyLoss()</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the optimizer with the model parameters and learning rate</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Setting the optimizer with the model parameters and learning rate</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.Adam(model.parameters(), lr<span class="op">=</span>learning_rate)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#this is defined to print how many steps are remaining when training</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># this is defined to print how many steps are remaining when training</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>total_step <span class="op">=</span> <span class="bu">len</span>(train_loader)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="model-training" class="level3">
 <h3 class="anchored" data-anchor-id="model-training">Model Training</h3>
-<div class="cell" data-execution_count="9">
+<div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>total_step <span class="op">=</span> <span class="bu">len</span>(train_loader)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, (images, labels) <span class="kw">in</span> <span class="bu">enumerate</span>(train_loader):  </span>
@@ -488,33 +503,33 @@ Important
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span> (<span class="st">'Epoch [</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">], Step [</span><span class="sc">{}</span><span class="st">/</span><span class="sc">{}</span><span class="st">], Loss: </span><span class="sc">{:.4f}</span><span class="st">'</span> </span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                           .<span class="bu">format</span>(epoch<span class="op">+</span><span class="dv">1</span>, num_epochs, i<span class="op">+</span><span class="dv">1</span>, total_step, loss.item()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch [1/10], Step [400/938], Loss: 0.0479
-Epoch [1/10], Step [800/938], Loss: 0.0914
-Epoch [2/10], Step [400/938], Loss: 0.0037
-Epoch [2/10], Step [800/938], Loss: 0.0340
-Epoch [3/10], Step [400/938], Loss: 0.1965
-Epoch [3/10], Step [800/938], Loss: 0.0506
-Epoch [4/10], Step [400/938], Loss: 0.0844
-Epoch [4/10], Step [800/938], Loss: 0.0350
-Epoch [5/10], Step [400/938], Loss: 0.0124
-Epoch [5/10], Step [800/938], Loss: 0.0635
-Epoch [6/10], Step [400/938], Loss: 0.0359
-Epoch [6/10], Step [800/938], Loss: 0.0013
-Epoch [7/10], Step [400/938], Loss: 0.0028
-Epoch [7/10], Step [800/938], Loss: 0.0324
-Epoch [8/10], Step [400/938], Loss: 0.0084
-Epoch [8/10], Step [800/938], Loss: 0.0299
-Epoch [9/10], Step [400/938], Loss: 0.0019
-Epoch [9/10], Step [800/938], Loss: 0.0951
-Epoch [10/10], Step [400/938], Loss: 0.1446
-Epoch [10/10], Step [800/938], Loss: 0.0311</code></pre>
+<pre><code>Epoch [1/10], Step [400/938], Loss: 0.1018
+Epoch [1/10], Step [800/938], Loss: 0.0178
+Epoch [2/10], Step [400/938], Loss: 0.0299
+Epoch [2/10], Step [800/938], Loss: 0.0044
+Epoch [3/10], Step [400/938], Loss: 0.0335
+Epoch [3/10], Step [800/938], Loss: 0.0365
+Epoch [4/10], Step [400/938], Loss: 0.0217
+Epoch [4/10], Step [800/938], Loss: 0.0110
+Epoch [5/10], Step [400/938], Loss: 0.0063
+Epoch [5/10], Step [800/938], Loss: 0.0620
+Epoch [6/10], Step [400/938], Loss: 0.0178
+Epoch [6/10], Step [800/938], Loss: 0.0588
+Epoch [7/10], Step [400/938], Loss: 0.0092
+Epoch [7/10], Step [800/938], Loss: 0.0120
+Epoch [8/10], Step [400/938], Loss: 0.0048
+Epoch [8/10], Step [800/938], Loss: 0.0455
+Epoch [9/10], Step [400/938], Loss: 0.0067
+Epoch [9/10], Step [800/938], Loss: 0.0589
+Epoch [10/10], Step [400/938], Loss: 0.0015
+Epoch [10/10], Step [800/938], Loss: 0.0030</code></pre>
 </div>
 </div>
 <p>As we can see, the loss is decreasing with every epoch which shows that our model is indeed learning.</p>
 </section>
 <section id="model-testing" class="level3">
 <h3 class="anchored" data-anchor-id="model-testing">Model Testing</h3>
-<div class="cell" data-execution_count="10">
+<div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the model</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In test phase, we don't need to compute gradients (for memory efficiency)</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -532,18 +547,17 @@ Epoch [10/10], Step [800/938], Loss: 0.0311</code></pre>
 <span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">'Accuracy of the network on the 10000 test images: </span><span class="sc">{}</span><span class="st"> %'</span>.<span class="bu">format</span>(<span class="dv">100</span> <span class="op">*</span> correct <span class="op">/</span> total))</span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>     </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Accuracy of the network on the 10000 test images: 98.95 %</code></pre>
+<pre><code>Accuracy of the network on the 10000 test images: 98.97 %</code></pre>
 </div>
 </div>
-<p>Using this model, we get around 98.95% accuracy which is quite good.</p>
+<p>Using this model, we get around 98.97% accuracy which is quite good.</p>
 </section>
 </section>
 </section>
 <section id="conclusions" class="level1">
 <h1>Conclusions</h1>
 <ul>
-<li>We started by learning the architecture of LeNet5 and the different kinds of layers in that.<br>
-</li>
+<li>Understood the architecture of LeNet5</li>
 <li>Then we built LeNet5 from scratch along with defining hyperparameters for the model.<br>
 </li>
 <li>Finally, we trained and tested our model on the MNIST dataset, and the model seemed to perform well on the test dataset.</li>
