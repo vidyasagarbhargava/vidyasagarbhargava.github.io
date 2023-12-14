@@ -19,6 +19,7 @@
   {
     "listing": "/research/research.html",
     "items": [
+      "/research/posts/alexnet/index.html",
       "/research/posts/lenet/index.html"
     ]
   }
