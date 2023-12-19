@@ -389,7 +389,7 @@
     "href": "research/research.html",
     "title": "Research Papers",
     "section": "",
-    "text": "In this series I try to understand and implement research papers using python and deeplearning frameworks like pytorch or JAX.\n\n\n\n\n\n\n\n\n  \n\n\n\n\nAlexnet\n\n\n\n\n\nAlexNet is the first deep architecture which was introduced by one of the pioneers in deep learning Geoffrey Hinton and his colleagues. It is a simple yet powerful network architecture, which helped pave the way for groundbreaking research in Deep Learning as it is now.\n\n\n\n\n\n\nMay 12, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\nLeNet-5\n\n\n\n\n\nLeNet-5 is introduced by Yann LeCun, Leon Bottou, Yoshua Bengio and Patrick Haffner in the year 1998 in the paper Gradient-Based Learning Applied to Document Recognition. LeNet is a classic convolutional neural network employing the use of convolutions, pooling and fully connected layers. It was used for the handwritten digit recognition task with the MNIST dataset.\n\n\n\n\n\n\nMay 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
+    "text": "Implementation of top research papers in the field of Deep learning and understanding the architecture and maths behind the same.\n\n\n\n\n\n\n\n\n  \n\n\n\n\nAlexnet\n\n\n\n\n\nAlexNet is the first deep architecture which was introduced by Alex Krizhevsky and his colleagues in 2012. It was designed to classify images for the ImageNet LSVRC-2010 competition where it achieved state of the art results. It is a simple yet powerful network architecture, which helped pave the way for groundbreaking research in Deep Learning as it is now.You can read more about the model in original research paper here\n\n\n\n\n\n\nMay 12, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n  \n\n\n\n\nLeNet-5\n\n\n\n\n\nLeNet-5 is introduced by Yann LeCun, Leon Bottou, Yoshua Bengio and Patrick Haffner in the year 1998 in the paper Gradient-Based Learning Applied to Document Recognition. LeNet is a classic convolutional neural network employing the use of convolutions, pooling and fully connected layers. It was used for the handwritten digit recognition task with the MNIST dataset.\n\n\n\n\n\n\nMay 8, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "research/papers/alexnet/index.html",
@@ -438,6 +438,27 @@
     "href": "research/posts/alexnet/index.html",
     "title": "Alexnet",
     "section": "",
-    "text": "Architecture"
+    "text": "Unlike LeNet-5 the famous Alexnet network was operated with 3-channel images which were (224x224x3) in size. It also used max pooling with ReLU activations when subsampling. The kernels used for convolutions were either 11x11, 5x5, or 3x3 while kernels used for max pooling were 3x3 in size. It classified images into 1000 classes. It also utilized multiple GPUs."
+  },
+  {
+    "objectID": "research/posts/alexnet.html",
+    "href": "research/posts/alexnet.html",
+    "title": "Alexnet",
+    "section": "",
+    "text": "import pandas as pd \nimport numpy as np"
+  },
+  {
+    "objectID": "research/posts/alexnet/index.html#architecture",
+    "href": "research/posts/alexnet/index.html#architecture",
+    "title": "Alexnet",
+    "section": "",
+    "text": "Unlike LeNet-5 the famous Alexnet network was operated with 3-channel images which were (224x224x3) in size. It also used max pooling with ReLU activations when subsampling. The kernels used for convolutions were either 11x11, 5x5, or 3x3 while kernels used for max pooling were 3x3 in size. It classified images into 1000 classes. It also utilized multiple GPUs."
+  },
+  {
+    "objectID": "research/posts/alexnet/index.html#data-loading",
+    "href": "research/posts/alexnet/index.html#data-loading",
+    "title": "Alexnet",
+    "section": "Data Loading",
+    "text": "Data Loading\n\nDataset\nLet’s start by loading and then pre-processing the data. For our purposes, we will be using the CIFAR10 dataset. The dataset consists of 60000 32x32 colour images in 10 classes, with 6000 images per class. There are 50000 training images and 10000 test images.\nClasses in the dataset are completely mututally exclusive. There is no overlap.\n\n\n\nimporting the libraries\nLet’s start by importing the required libraries along with defining a variable device, so that the Notebook knows to use a GPU to train the model if it’s available.\n\nimport numpy as np\nimport torch\nimport torch.nn as nn\nfrom torchvision import datasets\nfrom torchvision import transforms\nfrom torch.utils.data.sampler import SubsetRandomSampler\n\n\n# Device configuration\ndevice = torch.device('cuda' if torch.cuda.is_available() else 'cpu')"
   }
 ]

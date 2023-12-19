@@ -12,4 +12,4 @@ page-layout: full
 title-block-banner: false
 
 ---
-In this series I try to understand and implement research papers using python and deeplearning frameworks like pytorch or JAX.
+Implementation of top research papers in the field of Deep learning and understanding the architecture and maths behind the same. 
