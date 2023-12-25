@@ -426,20 +426,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Loss 0.02796, Accuracy 1.00000 Throughput 2555.69304 (it/s)</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="58">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mish(x: mx.array) <span class="op">-&gt;</span> mx.array:</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">r"""Applies the Mish function, element-wise.</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Mish: A Self Regularized Non-Monotonic Neural Activation Function.</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Reference: https://arxiv.org/abs/1908.08681</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="co">    .. math::</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co">        </span><span class="ch">\t</span><span class="co">ext{Mish}(x) = x * </span><span class="ch">\t</span><span class="co">ext{Tanh}(</span><span class="ch">\t</span><span class="co">ext{Softplus}(x))</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x <span class="op">*</span> mx.tanh(softplus(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
 </section>
