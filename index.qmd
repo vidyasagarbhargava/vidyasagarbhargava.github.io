@@ -1,6 +1,6 @@
 ---
 title: Vidyasagar Bhargava
-image: images/profile41.png
+image: images/profile4.png
 about:
   template: trestles
   links:

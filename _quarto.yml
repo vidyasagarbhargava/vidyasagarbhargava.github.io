@@ -19,7 +19,7 @@ format:
   html:
     mainfont: system-ui
     fontsize: 95%
-    theme: [journal, theme.scss]
-    backgroundcolor: "#e6ddde"
+    theme: [cosmo, theme.scss]
+    backgroundcolor: "#ffffff"
     css: styles.css
     toc: true

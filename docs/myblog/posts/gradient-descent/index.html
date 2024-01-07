@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.537">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -83,7 +83,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -92,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -103,14 +110,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -119,21 +153,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../myblog/blog.html" rel="" target="">
- <span class="menu-text">Blog</span></a>
+    <a class="nav-link" href="../../../myblog/blog.html"> 
+<span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../london.html" rel="" target="">
- <span class="menu-text">London</span></a>
+    <a class="nav-link" href="../../../research/research.html"> 
+<span class="menu-text">Research Papers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../london.html"> 
+<span class="menu-text">London</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -203,6 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -375,7 +414,7 @@ Note
 <section id="generate-synthetic-data" class="level3">
 <h3 class="anchored" data-anchor-id="generate-synthetic-data">Generate Synthetic data</h3>
 <p>Using the above equation we will generate some synthetic data with w = 2 and b = 1 and some random noise.</p>
-<div class="cell" data-execution_count="1">
+<div id="c3f28a5a-e3e3-49f9-8a14-a603df02c98c" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -387,7 +426,7 @@ Note
 <section id="initialize-parameters-w-and-b-and-hyperparameter-learning_rate" class="level3">
 <h3 class="anchored" data-anchor-id="initialize-parameters-w-and-b-and-hyperparameter-learning_rate">Initialize parameters (w and b) and hyperparameter (learning_rate)</h3>
 <p>So we will initialize the learnable parameters w and b with some random values and try to find right value by minimizing the loss function. The value of the hyperparameter i.e.&nbsp;learning rate is fixed.</p>
-<div class="cell" data-execution_count="2">
+<div id="901a918e-6932-4917-b0c6-00011f719d3d" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.random.randn(<span class="dv">1</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.random.randn(<span class="dv">1</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> <span class="fl">0.001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -395,7 +434,7 @@ Note
 </section>
 <section id="gradient-descent-algorithm" class="level3">
 <h3 class="anchored" data-anchor-id="gradient-descent-algorithm">Gradient Descent algorithm</h3>
-<div class="cell" data-execution_count="3">
+<div id="66244a84-5b87-4cf5-87b9-434026349264" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gradient_descent(x, y, w, b, lr):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#compute the loss</span></span>
@@ -412,7 +451,7 @@ Note
 <span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> w <span class="op">-</span> lr <span class="op">*</span> w_grad</span>
 <span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> w,b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell" data-execution_count="4">
+<div id="6cc6a871-c4b9-4ae0-873c-5f3bdc891ea6" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># implementing multiple epochs </span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>):</span>
@@ -423,7 +462,7 @@ Note
 </div>
 </div>
 <p>Let’s compare our output with scikit-learn’s Linear Regression</p>
-<div class="cell" data-execution_count="5">
+<div id="5db4aa3e-dc9f-46f1-84f3-6ea7500ebbee" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lr <span class="op">=</span> LinearRegression()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>lr.fit(x, y)</span>
@@ -440,7 +479,7 @@ Note
 
 </main> <!-- /main -->
 <script type="ojs-module-contents">
-{"contents":[{"methodName":"interpret","cellName":"ojs-cell-1","inline":false,"source":"\np5(sketch => {\n  let system;\n  \n  //set up some default points\n  \n  /*    \n  */\n  \n  let data = [\n    sketch.createVector(.105, .423333),\n    sketch.createVector(.58, .526666),\n    sketch.createVector(.75, .82666),\n    sketch.createVector(.3475, .183333),\n    sketch.createVector(.3195, .543353),\n  ];\n  \n  let m = 1;\n  let b = 0;\n  \n  sketch.setup = function() {\n    sketch.createCanvas(800, 350);\n    sketch.background(51);\n  };\n  \n  const gradientDescent = () => {\n    var learning_rate = 0.05;\n    \n    for(var i = 0; i < data.length; i++) {\n      var x = data[i].x;\n      var y = data[i].y;\n      \n      var guess = m * x + b;\n      var error = y - guess;\n      \n      m = m + (error * x) * learning_rate;\n      b = b + (error) * learning_rate;\n    }\n  }\n  \n  const drawLine = () => {\n    var x1 = 0;\n    var y1 = m * x1 + b;\n    var x2 = 1;\n    var y2 = m * x2 + b;\n    \n    x1 = sketch.map(x1, 0, 1, 0, sketch.width);\n    y1 = sketch.map(y1, 0, 1, sketch.height, 0);\n    x2 = sketch.map(x2, 0, 1, 0, sketch.width);\n    y2 = sketch.map(y2, 0, 1, sketch.height, 0);\n    \n    sketch.stroke(101, 74, 78);\n    sketch.strokeWeight(2);\n    sketch.line(x1, y1, x2, y2);\n  }\n \n  sketch.mousePressed = () => {\n    var x = sketch.map(sketch.mouseX, 0, sketch.width, 0 , 1);\n    var y = sketch.map(sketch.mouseY, 0, sketch.height, 1, 0);\n    var point = sketch.createVector(x, y);\n    data.push(point);\n  }\n  \n  sketch.draw = () => {\n    sketch.background(230, 221, 222)\n    for (var i = 0; i < data.length; i++) {\n      var x = sketch.map(data[i].x, 0, 1, 0, sketch.width);\n      var y = sketch.map(data[i].y, 0, 1, sketch.height, 0);\n      sketch.fill(32, 178, 170);\n      sketch.stroke(32, 178, 170);\n      sketch.ellipse(x, y, 8, 8);\n    }\n    \n    if(data.length > 1) {\n      gradientDescent();\n      drawLine();\n    }\n  }\n})\n\nimport {p5} from \"@tmcw/p5\"\n\n"}]}
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6IlxucDUoc2tldGNoID0+IHtcbiAgbGV0IHN5c3RlbTtcbiAgXG4gIC8vc2V0IHVwIHNvbWUgZGVmYXVsdCBwb2ludHNcbiAgXG4gIC8qICAgIFxuICAqL1xuICBcbiAgbGV0IGRhdGEgPSBbXG4gICAgc2tldGNoLmNyZWF0ZVZlY3RvciguMTA1LCAuNDIzMzMzKSxcbiAgICBza2V0Y2guY3JlYXRlVmVjdG9yKC41OCwgLjUyNjY2NiksXG4gICAgc2tldGNoLmNyZWF0ZVZlY3RvciguNzUsIC44MjY2NiksXG4gICAgc2tldGNoLmNyZWF0ZVZlY3RvciguMzQ3NSwgLjE4MzMzMyksXG4gICAgc2tldGNoLmNyZWF0ZVZlY3RvciguMzE5NSwgLjU0MzM1MyksXG4gIF07XG4gIFxuICBsZXQgbSA9IDE7XG4gIGxldCBiID0gMDtcbiAgXG4gIHNrZXRjaC5zZXR1cCA9IGZ1bmN0aW9uKCkge1xuICAgIHNrZXRjaC5jcmVhdGVDYW52YXMoODAwLCAzNTApO1xuICAgIHNrZXRjaC5iYWNrZ3JvdW5kKDUxKTtcbiAgfTtcbiAgXG4gIGNvbnN0IGdyYWRpZW50RGVzY2VudCA9ICgpID0+IHtcbiAgICB2YXIgbGVhcm5pbmdfcmF0ZSA9IDAuMDU7XG4gICAgXG4gICAgZm9yKHZhciBpID0gMDsgaSA8IGRhdGEubGVuZ3RoOyBpKyspIHtcbiAgICAgIHZhciB4ID0gZGF0YVtpXS54O1xuICAgICAgdmFyIHkgPSBkYXRhW2ldLnk7XG4gICAgICBcbiAgICAgIHZhciBndWVzcyA9IG0gKiB4ICsgYjtcbiAgICAgIHZhciBlcnJvciA9IHkgLSBndWVzcztcbiAgICAgIFxuICAgICAgbSA9IG0gKyAoZXJyb3IgKiB4KSAqIGxlYXJuaW5nX3JhdGU7XG4gICAgICBiID0gYiArIChlcnJvcikgKiBsZWFybmluZ19yYXRlO1xuICAgIH1cbiAgfVxuICBcbiAgY29uc3QgZHJhd0xpbmUgPSAoKSA9PiB7XG4gICAgdmFyIHgxID0gMDtcbiAgICB2YXIgeTEgPSBtICogeDEgKyBiO1xuICAgIHZhciB4MiA9IDE7XG4gICAgdmFyIHkyID0gbSAqIHgyICsgYjtcbiAgICBcbiAgICB4MSA9IHNrZXRjaC5tYXAoeDEsIDAsIDEsIDAsIHNrZXRjaC53aWR0aCk7XG4gICAgeTEgPSBza2V0Y2gubWFwKHkxLCAwLCAxLCBza2V0Y2guaGVpZ2h0LCAwKTtcbiAgICB4MiA9IHNrZXRjaC5tYXAoeDIsIDAsIDEsIDAsIHNrZXRjaC53aWR0aCk7XG4gICAgeTIgPSBza2V0Y2gubWFwKHkyLCAwLCAxLCBza2V0Y2guaGVpZ2h0LCAwKTtcbiAgICBcbiAgICBza2V0Y2guc3Ryb2tlKDEwMSwgNzQsIDc4KTtcbiAgICBza2V0Y2guc3Ryb2tlV2VpZ2h0KDIpO1xuICAgIHNrZXRjaC5saW5lKHgxLCB5MSwgeDIsIHkyKTtcbiAgfVxuIFxuICBza2V0Y2gubW91c2VQcmVzc2VkID0gKCkgPT4ge1xuICAgIHZhciB4ID0gc2tldGNoLm1hcChza2V0Y2gubW91c2VYLCAwLCBza2V0Y2gud2lkdGgsIDAgLCAxKTtcbiAgICB2YXIgeSA9IHNrZXRjaC5tYXAoc2tldGNoLm1vdXNlWSwgMCwgc2tldGNoLmhlaWdodCwgMSwgMCk7XG4gICAgdmFyIHBvaW50ID0gc2tldGNoLmNyZWF0ZVZlY3Rvcih4LCB5KTtcbiAgICBkYXRhLnB1c2gocG9pbnQpO1xuICB9XG4gIFxuICBza2V0Y2guZHJhdyA9ICgpID0+IHtcbiAgICBza2V0Y2guYmFja2dyb3VuZCgyMzAsIDIyMSwgMjIyKVxuICAgIGZvciAodmFyIGkgPSAwOyBpIDwgZGF0YS5sZW5ndGg7IGkrKykge1xuICAgICAgdmFyIHggPSBza2V0Y2gubWFwKGRhdGFbaV0ueCwgMCwgMSwgMCwgc2tldGNoLndpZHRoKTtcbiAgICAgIHZhciB5ID0gc2tldGNoLm1hcChkYXRhW2ldLnksIDAsIDEsIHNrZXRjaC5oZWlnaHQsIDApO1xuICAgICAgc2tldGNoLmZpbGwoMzIsIDE3OCwgMTcwKTtcbiAgICAgIHNrZXRjaC5zdHJva2UoMzIsIDE3OCwgMTcwKTtcbiAgICAgIHNrZXRjaC5lbGxpcHNlKHgsIHksIDgsIDgpO1xuICAgIH1cbiAgICBcbiAgICBpZihkYXRhLmxlbmd0aCA+IDEpIHtcbiAgICAgIGdyYWRpZW50RGVzY2VudCgpO1xuICAgICAgZHJhd0xpbmUoKTtcbiAgICB9XG4gIH1cbn0pXG5cbmltcG9ydCB7cDV9IGZyb20gXCJAdG1jdy9wNVwiXG5cbiJ9XX0=
 </script>
 <script type="module">
 if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
@@ -529,10 +568,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -542,8 +580,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -556,6 +603,120 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -599,6 +760,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -624,6 +786,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -684,6 +872,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

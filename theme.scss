@@ -1,58 +1,60 @@
 /*-- scss:defaults --*/
 // Base document colors
 
-$link-color: #654a4e;
-$body-color: #654a4e;
+$link-color: #3e3e3e;
+$body-color: #333333;
+$title-block-banner-color: #39729E;
 // Code blocks
 //$code-block-bg-alpha: -.8;
 
 // navbar
 
-$navbar-bg: #e6ddde; 
-$navbar-fg: #654a4e;
-$navbar-hl: #753742;
+$navbar-bg: #ffffff;
+$navbar-fg: #767575;
+$navbar-hl: #39729E;
+
+$link-hover-decoration: underline;
+$link-hover-color: #39729E;
+$headings-color: #39729E;
+
 
 //font
 
 //$font-family-sans-serif: "Helvetica Neue";
 //$font-family-monospace: Menlo;
 
-//$link-hover-decoration: underline;
-//$link-hover-color: #753742;
-
-
 //footer.footer .nav-footer, #quarto-header nav
 
 
 
-.navbar-expand-lg .navbar-collapse .nav-item{
+.navbar-expand-lg .navbar-collapse .nav-item {
     position: relative;
-    
+
 }
 
 
-.navbar-expand-lg .navbar-collapse .nav-item.active:after{
+.navbar-expand-lg .navbar-collapse .nav-item.active:after {
     content: "";
     position: absolute;
-    background-color: #654a4e;
+    background-color: #39729E;
     height: 1.5px;
     width: 35%;
     border-bottom: 5px;
-    
+
 }
 
-.navbar-expand-lg .navbar-collapse .nav-item:after{
+.navbar-expand-lg .navbar-collapse .nav-item:after {
     content: "";
     position: absolute;
-    background-color: #654a4e;
+    background-color: #39729E;
     height: 1.5px;
     width: 0%;
     border-bottom: 2px;
     transition: width 0.5s;
-    
+
 }
 
-.navbar-expand-lg .navbar-collapse .nav-item:hover::after{
+.navbar-expand-lg .navbar-collapse .nav-item:hover::after {
     width: 100%;
 }
 
@@ -68,5 +70,5 @@ $font-family-sans-serif: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemF
 
 // litera is serif by default: revert to san-serif
 p {
-  font-family: $font-family-sans-serif;
+    font-family: $font-family-sans-serif;
 }
