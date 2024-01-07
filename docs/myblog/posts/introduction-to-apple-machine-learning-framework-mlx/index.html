@@ -211,8 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="key-features-of-mlx" class="level3">
 <h3 class="anchored" data-anchor-id="key-features-of-mlx">Key Features of MLX</h3>
-<section id="familiar-apis" class="level4">
-<h4 class="anchored" data-anchor-id="familiar-apis">1. Familiar APIs</h4>
+<p><strong>1. Familiar APIs</strong></p>
 <p>MLX has a Python API that closely follows NumPy. MLX also has a fully featured C++ API, which closely mirrors the Python API. MLX has higher-level packages like mlx.nn and mlx.optimizers with APIs that closely follow PyTorch to simplify building more complex models.</p>
 <div id="cell-3" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> mlx.core <span class="im">as</span> mx</span>
@@ -235,9 +234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>float32</code></pre>
 </div>
 </div>
-</section>
-<section id="lazy-computation" class="level4">
-<h4 class="anchored" data-anchor-id="lazy-computation">2. Lazy computation:</h4>
+<p><strong>2. Lazy computation</strong></p>
 <p>Computations in MLX are lazy. That means outputs of MLX operations are not computed untill they are needed.</p>
 <div id="cell-7" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a <span class="op">+</span> b   <span class="co"># c not yet evaluated</span></span>
@@ -248,9 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>array([2, 4, 6, 8], dtype=float32)</code></pre>
 </div>
 </div>
-</section>
-<section id="composable-function-transformations-dynamic-graph-construction" class="level4">
-<h4 class="anchored" data-anchor-id="composable-function-transformations-dynamic-graph-construction">3. Composable function transformations &amp; Dynamic graph construction :</h4>
+<p><strong>3. Composable function transformations &amp; Dynamic graph construction</strong></p>
 <p>MLX supports composable function transformations for automatic differentiation, automatic vectorization, and computation graph optimization.</p>
 <p>Computation graphs in MLX are constructed dynamically. Changing the shapes of function arguments does not trigger slow compilations, and debugging is simple and intuitive.</p>
 <div id="cell-9" class="cell" data-execution_count="12">
@@ -274,9 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>array(-0, dtype=float32)</code></pre>
 </div>
 </div>
-</section>
-<section id="unified-memory-architecture" class="level4">
-<h4 class="anchored" data-anchor-id="unified-memory-architecture">4. Unified memory Architecture</h4>
+<p><strong>4. Unified memory Architecture</strong></p>
 <p>A notable difference from MLX and other frameworks is the unified memory model. Arrays in MLX live in shared memory. Operations on MLX arrays can be performed on any of the supported device types without transferring data.</p>
 <p>Let’s see an example</p>
 <div id="cell-13" class="cell">
@@ -303,9 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>d <span class="op">=</span> mx.add(a, c, stream<span class="op">=</span>mx.gpu)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If there are dependencies (meaning one operation depends on the result of another), MLX takes care of managing them. For instance, if you add ‘a’ and ‘b’ on the CPU and then perform another addition on the GPU that depends on the result from the CPU, MLX ensures that the GPU operation waits for the CPU operation to finish before it starts.</p>
-</section>
-<section id="example" class="level4">
-<h4 class="anchored" data-anchor-id="example">Example</h4>
+<p>Example</p>
 <div id="cell-21" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun(a, b, d1, d2):</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  x <span class="op">=</span> mx.matmul(a, b, stream<span class="op">=</span>d1)</span>
@@ -318,9 +309,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> mx.random.uniform(shape<span class="op">=</span>(<span class="dv">512</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The first matmul operation is good fit for the GPU since it is more compute dense. The second sequence of operations are better fit for the CPU, since they are very small and would be probably overhead bound on GPU.</p>
-</section>
-<section id="multi-device" class="level4">
-<h4 class="anchored" data-anchor-id="multi-device">5. Multi-device</h4>
+<p><strong>5. Multi-device</strong></p>
 <p>Operations can run on any of the supported devices (currently the CPU and the GPU). The framework is intended to be user-friendly, but still efficient to train and deploy models. The design of the framework itself is also conceptually simple.</p>
 <div id="cell-25" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mx.default_stream(mx.default_device())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -328,7 +317,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Stream(Device(gpu, 0), 0)</code></pre>
 </div>
 </div>
-</section>
 </section>
 <section id="linear-regression-implementation" class="level3">
 <h3 class="anchored" data-anchor-id="linear-regression-implementation">Linear Regression implementation</h3>
