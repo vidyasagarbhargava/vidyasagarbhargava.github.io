@@ -1,5 +1,6 @@
 ---
 title: "Namaste London 🙏"
+comments: false
 ---
 My short stay at London | 2019-2020
 

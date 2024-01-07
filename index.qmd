@@ -19,6 +19,7 @@ about:
     - text: Mastodon
       icon: mastodon
       url: "https://sigmoid.social/@vidyasagar"
+comments: false
 ---
 ::: {.column-page}
 

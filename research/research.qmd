@@ -10,6 +10,6 @@ listing:
   filter-ui: false
 page-layout: full
 title-block-banner: false
-
+comments: false
 ---
 Implementation of top research papers in the field of Deep learning and understanding the architecture and maths behind the same. 
