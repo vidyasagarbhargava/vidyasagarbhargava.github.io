@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.537">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Vidyasagar Bhargava">
+<meta name="dcterms.date" content="2024-03-01">
+<meta name="description" content="Polars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.">
+
+<title>Polars for Feature Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<link href="../../../logo.svg" rel="icon" type="image/svg+xml">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../myblog/blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../research/research.html"> 
+<span class="menu-text">Research Papers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../london.html"> 
+<span class="menu-text">London</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Polars for Feature Engineering</h1>
+                  <div>
+        <div class="description">
+          Polars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">polars</div>
+                <div class="quarto-category">feature engineering</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Vidyasagar Bhargava </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 1, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#select-columns" id="toc-select-columns" class="nav-link active" data-scroll-target="#select-columns">1. Select Columns</a></li>
+  <li><a href="#create-columns" id="toc-create-columns" class="nav-link" data-scroll-target="#create-columns">2. Create Columns</a></li>
+  <li><a href="#filter" id="toc-filter" class="nav-link" data-scroll-target="#filter">3. Filter</a></li>
+  <li><a href="#join" id="toc-join" class="nav-link" data-scroll-target="#join">4. Join</a></li>
+  <li><a href="#concat" id="toc-concat" class="nav-link" data-scroll-target="#concat">Concat</a></li>
+  <li><a href="#group-by" id="toc-group-by" class="nav-link" data-scroll-target="#group-by">5. Group By</a></li>
+  <li><a href="#aggregate" id="toc-aggregate" class="nav-link" data-scroll-target="#aggregate">6. Aggregate</a></li>
+  <li><a href="#sort" id="toc-sort" class="nav-link" data-scroll-target="#sort">7. Sort</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Polars API are</p>
+<ol type="1">
+<li>Simple</li>
+<li>Consistent</li>
+<li>Grammar</li>
+</ol>
+<p>Most of the feature engineering task based on below 7 verbs</p>
+<table class="table">
+<caption>7 Verbs Get Most Jobs done</caption>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>verb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>select/slice columns</td>
+<td>select</td>
+</tr>
+<tr class="even">
+<td>create/transform/assign columns</td>
+<td>with_columns</td>
+</tr>
+<tr class="odd">
+<td>filter/slice/query rows</td>
+<td>filter</td>
+</tr>
+<tr class="even">
+<td>join/merge other dataframes</td>
+<td>join &amp; concat</td>
+</tr>
+<tr class="odd">
+<td>group dataframe rows</td>
+<td>group_by</td>
+</tr>
+<tr class="even">
+<td>aggregate groups</td>
+<td>agg</td>
+</tr>
+<tr class="odd">
+<td>sort dataframe</td>
+<td>sort</td>
+</tr>
+</tbody>
+</table>
+<div id="cell-2" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.read_csv(<span class="st">"StudentsPerformance.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>"male"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="select-columns" class="level2">
+<h2 class="anchored" data-anchor-id="select-columns">1. Select Columns</h2>
+<ul>
+<li>Selecting 1 column</li>
+</ul>
+<div id="cell-4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col(<span class="st">'gender'</span>)).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 1)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">gender</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"female"</td>
+</tr>
+<tr class="even">
+<td>"female"</td>
+</tr>
+<tr class="odd">
+<td>"female"</td>
+</tr>
+<tr class="even">
+<td>"male"</td>
+</tr>
+<tr class="odd">
+<td>"male"</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>Selecting two or more columns</li>
+</ul>
+<div id="cell-6" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col([<span class="st">'gender'</span>, <span class="st">'math score'</span>])).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 2)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">math score</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"female"</td>
+<td>72</td>
+</tr>
+<tr class="even">
+<td>"female"</td>
+<td>69</td>
+</tr>
+<tr class="odd">
+<td>"female"</td>
+<td>90</td>
+</tr>
+<tr class="even">
+<td>"male"</td>
+<td>47</td>
+</tr>
+<tr class="odd">
+<td>"male"</td>
+<td>76</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li>Selecting all the columns</li>
+</ul>
+<div id="cell-8" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col(<span class="st">'*'</span>)).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>"male"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="create-columns" class="level2">
+<h2 class="anchored" data-anchor-id="create-columns">2. Create Columns</h2>
+<ul>
+<li>Creating a new column “sum” by summing <code>math score</code> and <code>reading score</code></li>
+</ul>
+<div id="cell-10" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.with_columns(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'math score'</span>) <span class="op">+</span> pl.col(<span class="st">'reading score'</span>)).alias(<span class="st">'sum'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 10)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+<th data-quarto-table-cell-role="th">sum</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+<td>144</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+<td>159</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+<td>185</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+<td>104</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>"male"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+<td>154</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="filter" class="level2">
+<h2 class="anchored" data-anchor-id="filter">3. Filter</h2>
+<ul>
+<li><p>Simple filtering</p>
+<p>selecting <code>female</code> students</p></li>
+</ul>
+<div id="cell-12" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(pl.col(<span class="st">'gender'</span>)<span class="op">==</span><span class="st">'female'</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"associate's de…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>71</td>
+<td>83</td>
+<td>78</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>88</td>
+<td>95</td>
+<td>92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Multiple filtering</p>
+<p>selecting <code>female</code> students those belong to <code>group B</code></p></li>
+</ul>
+<div id="cell-14" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'gender'</span>)<span class="op">==</span><span class="st">'female'</span>) <span class="op">&amp;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'race/ethnicity'</span>)<span class="op">==</span><span class="st">'group B'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+</tr>
+<tr class="odd">
+<td>6</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"associate's de…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>71</td>
+<td>83</td>
+<td>78</td>
+</tr>
+<tr class="even">
+<td>7</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>88</td>
+<td>95</td>
+<td>92</td>
+</tr>
+<tr class="odd">
+<td>10</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"high school"</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>38</td>
+<td>60</td>
+<td>50</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="join" class="level2">
+<h2 class="anchored" data-anchor-id="join">4. Join</h2>
+<div id="cell-16" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pl.read_csv(<span class="st">'LanguageScore.csv'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.join(df2, on<span class="op">=</span><span class="st">"id"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 10)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+<th data-quarto-table-cell-role="th">language score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+<td>67</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+<td>34</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+<td>33</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>"male"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="concat" class="level2">
+<h2 class="anchored" data-anchor-id="concat">Concat</h2>
+<div id="cell-18" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop(<span class="st">"id"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pl.concat([df, df2], how<span class="op">=</span><span class="st">"horizontal"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 10)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+<th data-quarto-table-cell-role="th">language score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>72</td>
+<td>72</td>
+<td>74</td>
+<td>74</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>"female"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>69</td>
+<td>90</td>
+<td>88</td>
+<td>67</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>"female"</td>
+<td>"group B"</td>
+<td>"master's degre…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>90</td>
+<td>95</td>
+<td>93</td>
+<td>34</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"none"</td>
+<td>47</td>
+<td>57</td>
+<td>44</td>
+<td>33</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>"male"</td>
+<td>"group C"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>76</td>
+<td>78</td>
+<td>75</td>
+<td>75</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="group-by" class="level2">
+<h2 class="anchored" data-anchor-id="group-by">5. Group By</h2>
+<p>Count total elements for each <code>race/ethnicity</code></p>
+<div id="cell-20" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.group_by(<span class="st">'race/ethnicity'</span>).count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 2)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">count</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>u32</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"group B"</td>
+<td>190</td>
+</tr>
+<tr class="even">
+<td>"group A"</td>
+<td>89</td>
+</tr>
+<tr class="odd">
+<td>"group D"</td>
+<td>262</td>
+</tr>
+<tr class="even">
+<td>"group C"</td>
+<td>319</td>
+</tr>
+<tr class="odd">
+<td>"group E"</td>
+<td>140</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="aggregate" class="level2">
+<h2 class="anchored" data-anchor-id="aggregate">6. Aggregate</h2>
+<p>average <code>math score</code> for females and males</p>
+<div id="cell-22" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.group_by(<span class="st">'gender'</span>).agg(pl.col(<span class="st">'math score'</span>).mean().alias(<span class="st">'mean_score'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 2)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">mean_score</th>
+</tr>
+<tr class="odd">
+<th>str</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"male"</td>
+<td>68.728216</td>
+</tr>
+<tr class="even">
+<td>"female"</td>
+<td>63.633205</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="sort" class="level2">
+<h2 class="anchored" data-anchor-id="sort">7. Sort</h2>
+<p>sort the dataframe by <code>math score</code></p>
+<div id="cell-24" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.sort(<span class="st">'math score'</span>,descending<span class="op">=</span><span class="va">True</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 9)</small>
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">id</th>
+<th data-quarto-table-cell-role="th">gender</th>
+<th data-quarto-table-cell-role="th">race/ethnicity</th>
+<th data-quarto-table-cell-role="th">parental level of education</th>
+<th data-quarto-table-cell-role="th">lunch</th>
+<th data-quarto-table-cell-role="th">test preparation course</th>
+<th data-quarto-table-cell-role="th">math score</th>
+<th data-quarto-table-cell-role="th">reading score</th>
+<th data-quarto-table-cell-role="th">writing score</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>str</th>
+<th>i64</th>
+<th>i64</th>
+<th>i64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>150</td>
+<td>"male"</td>
+<td>"group E"</td>
+<td>"associate's de…</td>
+<td>"free/reduced"</td>
+<td>"completed"</td>
+<td>100</td>
+<td>100</td>
+<td>93</td>
+</tr>
+<tr class="even">
+<td>452</td>
+<td>"female"</td>
+<td>"group E"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>100</td>
+<td>92</td>
+<td>97</td>
+</tr>
+<tr class="odd">
+<td>459</td>
+<td>"female"</td>
+<td>"group E"</td>
+<td>"bachelor's deg…</td>
+<td>"standard"</td>
+<td>"none"</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr class="even">
+<td>624</td>
+<td>"male"</td>
+<td>"group A"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>100</td>
+<td>96</td>
+<td>86</td>
+</tr>
+<tr class="odd">
+<td>626</td>
+<td>"male"</td>
+<td>"group D"</td>
+<td>"some college"</td>
+<td>"standard"</td>
+<td>"completed"</td>
+<td>100</td>
+<td>97</td>
+<td>99</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="vidyasagarbhargava/vidyasagarbhargava.github.io" issue-term="title" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
