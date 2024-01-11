@@ -23,5 +23,9 @@
       "/research/posts/alexnet/index.html",
       "/research/posts/lenet/index.html"
     ]
+  },
+  {
+    "listing": "/blog.html",
+    "items": []
   }
 ]

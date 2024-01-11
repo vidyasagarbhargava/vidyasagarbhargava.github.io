@@ -2,13 +2,16 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  freeze: auto
+
 website:
   back-to-top-navigation: true
   comments: 
     utterances:
       repo: vidyasagarbhargava/vidyasagarbhargava.github.io
       issue-term: title
-  favicon: logo.svg
+  favicon: images/logo.svg
   navbar:
     right:
       - href: index.qmd
@@ -19,11 +22,15 @@ website:
         text: Research Papers
       - href: london.qmd
         text: London 
+      - icon: rss
+        href: index.xml
 format:
   html:
     mainfont: system-ui
     fontsize: 95%
-    theme: [cosmo, theme.scss]
-    backgroundcolor: "#ffffff"
+    theme: 
+      light: [light.scss, cosmo]
+      dark:  [dark.scss, darkly]
     css: styles.css
     toc: true
+

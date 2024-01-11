@@ -551,5 +551,19 @@
     "title": "Polars for Feature Engineering",
     "section": "7. Sort",
     "text": "7. Sort\nsort the dataframe by math score\n\ndf.sort('math score',descending=True).head()\n\n\nshape: (5, 9)\n\n\n\nid\ngender\nrace/ethnicity\nparental level of education\nlunch\ntest preparation course\nmath score\nreading score\nwriting score\n\n\ni64\nstr\nstr\nstr\nstr\nstr\ni64\ni64\ni64\n\n\n\n\n150\n\"male\"\n\"group E\"\n\"associate's de…\n\"free/reduced\"\n\"completed\"\n100\n100\n93\n\n\n452\n\"female\"\n\"group E\"\n\"some college\"\n\"standard\"\n\"none\"\n100\n92\n97\n\n\n459\n\"female\"\n\"group E\"\n\"bachelor's deg…\n\"standard\"\n\"none\"\n100\n100\n100\n\n\n624\n\"male\"\n\"group A\"\n\"some college\"\n\"standard\"\n\"completed\"\n100\n96\n86\n\n\n626\n\"male\"\n\"group D\"\n\"some college\"\n\"standard\"\n\"completed\"\n100\n97\n99"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n\n\n Back to top"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "No matching items\n\n Back to top"
   }
 ]

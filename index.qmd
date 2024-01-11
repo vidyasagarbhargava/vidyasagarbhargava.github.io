@@ -10,15 +10,15 @@ about:
     - icon: github
       text: Github
       href: https://github.com/vidyasagarbhargava
-    - icon: quora
-      text: Quora
-      href: https://www.quora.com/profile/Vidyasagar-Bhargava
-    - icon: bi-layers-fill
-      text: Speaker Deck
-      href: https://speakerdeck.com/vidyasagarbhargava
+    - icon: medium
+      text: Medium
+      href: https://medium.com/vidyasagarbhargava
     - text: Mastodon
       icon: mastodon
       url: "https://sigmoid.social/@vidyasagar"
+    - text: Substack
+      icon: substack
+      url: "https://substack.com/@vidyasagarbhargava"
 comments: false
 ---
 ::: {.column-page}
