@@ -12,7 +12,7 @@ about:
       href: https://github.com/vidyasagarbhargava
     - icon: medium
       text: Medium
-      href: https://medium.com/vidyasagarbhargava
+      href: https://medium.com/@vidyasagarbhargava
     - text: Mastodon
       icon: mastodon
       url: "https://sigmoid.social/@vidyasagar"
