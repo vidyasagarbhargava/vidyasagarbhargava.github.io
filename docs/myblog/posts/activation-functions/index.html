@@ -312,12 +312,12 @@ f(x) = \begin{cases}
    \end{cases}
 \]</span></p>
 <p>code for binary step function</p>
-<div id="28031614" class="cell" data-execution_count="1">
+<div id="1243e555" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> binary_step_function(x):</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.where(x <span class="op">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>plot for binary step function</p>
-<div id="578b5b26" class="cell" data-execution_count="2">
+<div id="7bf9bfc1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -364,12 +364,12 @@ Warning
 f(x)= x
 \]</span></p>
 <p>code for linear activation function</p>
-<div id="7ccbd03d" class="cell" data-execution_count="3">
+<div id="91dd1629" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> linear_activation(x):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>plot for linear activation function</p>
-<div id="e60fe852" class="cell" data-execution_count="4">
+<div id="28cd8d35" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -415,14 +415,14 @@ Warning
 f(x) = \frac{1}{1+e^{-x}}
 \]</span></p>
 <p>code for sigmoid activation function</p>
-<div id="8ad58a03" class="cell" data-execution_count="5">
+<div id="fc503e51" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sigmoid(x):</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span> np.exp(<span class="op">-</span>x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot</p>
-<div id="f18d57b3" class="cell" data-execution_count="6">
+<p>plot for sigmoid activation function</p>
+<div id="9c2e3c79" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -470,14 +470,14 @@ f(x) = \frac{e^x-e^{-x}}{e^x+e^{-x}}
 f(x) = \frac{e^{2x}-1}{e^{2x}+1}
 \]</span></p>
 <p>code for Tanh activation function</p>
-<div id="b8953ed5" class="cell" data-execution_count="7">
+<div id="f9562e92" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tanh(x):</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (np.exp(<span class="dv">2</span><span class="op">*</span>x) <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> (np.exp(<span class="dv">2</span><span class="op">*</span>x) <span class="op">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot</p>
-<div id="f7c4b7bd" class="cell" data-execution_count="8">
+<p>plot for Tanh activation function</p>
+<div id="807d9c55" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>x_values <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
@@ -520,14 +520,14 @@ Warning
 f(x) = max(0,x)
 \]</span></p>
 <p>code for ReLU activation function</p>
-<div id="1d2ed676" class="cell" data-execution_count="9">
+<div id="281e84d5" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> relu(x):</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.maximum(<span class="dv">0</span>, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot</p>
-<div id="4be06259" class="cell" data-execution_count="10">
+<p>plot for ReLU activation function</p>
+<div id="48869fa7" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -580,15 +580,15 @@ f'(x) = \begin{cases}
 <p><span class="math display">\[
 f(x) = max(0.01x, x)
 \]</span></p>
-<p>code:</p>
-<div id="73a19494" class="cell" data-execution_count="11">
+<p>code for Leaky ReLU activation function</p>
+<div id="5446eff9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> leaky_relu(x):</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.maximum(<span class="fl">0.01</span><span class="op">*</span>x, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot</p>
-<div id="df08d4b7" class="cell" data-execution_count="12">
+<p>plot for Leaky ReLU activation function</p>
+<div id="4e0c5c5b" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -614,7 +614,7 @@ f(x) = max(0.01x, x)
 </section>
 <section id="parametric-relu" class="level4">
 <h4 class="anchored" data-anchor-id="parametric-relu">Parametric ReLU</h4>
-<p>Parametric ReLU or PReLU is another variant of ReLU that aims to solve the problem of dying ReLU and Leaky ReLU (inconsistent predictions for negative input values). So the authors of the paper behind PReLU thought why not let the <strong>a in ax for x&lt;0 (in LeakyReLU)</strong> get learned</p>
+<p>Parametric ReLU or PReLU is another variant of ReLU that aims to solve the problem of dying ReLU and Leaky ReLU (inconsistent predictions for negative input values). So the authors of the paper behind PReLU thought why not let the <strong>a in ax for x&lt;0 (in LeakyReLU)</strong> get learned.</p>
 <p>And here is the catch: if all the channels share the same <strong>a</strong> that gets learned, it is called channel-shared PReLU. But if each channel learn their own <strong>a</strong>, it is called channel-wise PReLU.</p>
 <p>So what if ReLU or LeakyReLU was better for that problem? That is upto the model to learn:</p>
 <ul>
@@ -625,8 +625,8 @@ f(x) = max(0.01x, x)
 <p><span class="math display">\[
 f(x) = max(ax, x)
 \]</span>Where <em>“a”</em> is the slope parameter for negative values.</p>
-<p>code:</p>
-<div id="e31cb2df" class="cell" data-execution_count="13">
+<p>code for Parametric ReLU activation function</p>
+<div id="c9a083ea" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> PReLU:</span>
@@ -636,8 +636,8 @@ f(x) = max(ax, x)
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__call__</span>(<span class="va">self</span>, x):</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.maximum(<span class="va">self</span>.alpha <span class="op">*</span> x, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div id="efee7104" class="cell" data-execution_count="14">
+<p>plot for Parametric ReLU activation function</p>
+<div id="3b88d4d9" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>x_values <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a PReLU instance with an initial slope (alpha)</span></span>
@@ -677,15 +677,15 @@ f(x) = \begin{cases}
       \alpha(e^x-1) &amp; for \ x\lt 0
    \end{cases}
 \]</span></p>
-<p>code:</p>
-<div id="23513863" class="cell" data-execution_count="15">
+<p>code for ELU activation function</p>
+<div id="1f5e8137" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> elu(x, alpha<span class="op">=</span><span class="fl">1.0</span>):</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.where(x <span class="op">&gt;=</span> <span class="dv">0</span>, x, alpha <span class="op">*</span> (np.exp(x) <span class="op">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div id="3a273139" class="cell" data-execution_count="16">
+<p>plot for ELU activation function</p>
+<div id="d595f760" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -723,15 +723,15 @@ f(x) = x\Phi(x)
 f(x) = 0.5x \left(1 + \tanh\left(\sqrt{\frac{2}{\pi}} \left(x + 0.044715x^3\right)\right)\right)
 \]</span></p>
 <p>where <span class="math inline">\(\Phi(x)\)</span> is the cumulative distribution function of Gaussian distribution.</p>
-<p>code:</p>
-<div id="5f9a672b" class="cell" data-execution_count="17">
+<p>code for GELU activation function</p>
+<div id="14e48b99" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gelu(x):</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">0.5</span> <span class="op">*</span> x <span class="op">*</span> (<span class="dv">1</span> <span class="op">+</span> np.tanh(np.sqrt(<span class="dv">2</span> <span class="op">/</span> np.pi) <span class="op">*</span> (x <span class="op">+</span> <span class="fl">0.044715</span> <span class="op">*</span> x<span class="op">**</span><span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div id="c62dd930" class="cell" data-execution_count="18">
+<p>plot for GELU activation function</p>
+<div id="75daaad2" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -774,15 +774,15 @@ f(x) = x*sigmoid(\beta x)
 <p><span class="math display">\[
 f(x) = \frac{x}{1+ e^{-x}}
 \]</span></p>
-<p>code:</p>
-<div id="d87d45a7" class="cell" data-execution_count="19">
+<p>code for Swish activation function</p>
+<div id="7d55f121" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> swish(x,beta <span class="op">=</span> <span class="fl">1.0</span>):</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>np.exp(<span class="op">-</span>beta<span class="op">*</span>x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div id="9f590ff2" class="cell" data-execution_count="20">
+<p>plot for Swish activation function</p>
+<div id="8980e992" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -816,15 +816,15 @@ f(x) = \frac{x}{1+ e^{-x}}
 x, &amp; \text{otherwise} \\ \end{cases} \end{equation}
 \]</span></p>
 <p>SELU has values of α and λ predefined.</p>
-<p>code:</p>
-<div id="38ba5876" class="cell" data-execution_count="21">
+<p>code for SELU activation function</p>
+<div id="993525d8" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> selu(x, alpha<span class="op">=</span><span class="fl">1.67326</span>, lambda_<span class="op">=</span><span class="fl">1.0507</span>):</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lambda_ <span class="op">*</span> np.where(x <span class="op">&gt;</span> <span class="dv">0</span>, x, alpha <span class="op">*</span> (np.exp(x) <span class="op">-</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>plot:</p>
-<div id="40d71c21" class="cell" data-execution_count="22">
+<p>plot for SELU activation function</p>
+<div id="87140334" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -860,8 +860,8 @@ x, &amp; \text{otherwise} \\ \end{cases} \end{equation}
 <p><span class="math display">\[
 f(z_i) = \frac{e^{z_{i}}}{\sum_{j=1}^K e^{z_{j}}} \ \ \ for\ i=1,2,\dots,K
 \]</span></p>
-<p>code for softmax activation function</p>
-<div id="bede09e0" class="cell" data-execution_count="23">
+<p>code for Softmax activation function</p>
+<div id="4402e517" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> softmax(z):</span>
