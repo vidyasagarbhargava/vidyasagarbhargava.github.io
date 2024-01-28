@@ -228,7 +228,7 @@
     "href": "myblog/blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Polars for Feature Engineering\n\n\n\n\n\nPolars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.\n\n\n\n\n\nJan 3, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Apple’s Machine learning Framework- MLX\n\n\n\n\n\nApple’s machine learning research team recently released a Machine Learning framework called MLX, a NumPy-like array framework designed for efficient and flexible machine learning on Apple silicon.\n\n\n\n\n\nDec 24, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nChoosing Activation Functions\n\n\n\n\n\nAn activation function decides whether a neuron should be activated or not which helps neural network to use important information while suppressing the irrelevant data points.\n\n\n\n\n\nJun 8, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nThe Best Data Science Books\n\n\n\n\n\nListing the best books available in the market right now for data science. \n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nSuccessful delivering of Machine Learning Projects\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\nSep 7, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nHypothesis Testing\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\nApr 4, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nMost Popular programming languages 2004-2021\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\nFeb 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nLinear regression using gradient descent\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\nDec 10, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nFbeta-Measure\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\nMar 12, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nNearest Neighbour Classifier\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\nMar 6, 2020\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Polars for Feature Engineering\n\n\n\n\n\nPolars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.\n\n\n\n\n\nJan 3, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Apple’s Machine learning Framework- MLX\n\n\n\n\n\nApple’s machine learning research team recently released a Machine Learning framework called MLX, a NumPy-like array framework designed for efficient and flexible machine learning on Apple silicon.\n\n\n\n\n\nDec 24, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nChoosing Activation Functions\n\n\n\n\n\nAn activation function decides whether a neuron should be activated or not which helps neural network to use important information while suppressing the irrelevant data points.\n\n\n\n\n\nJun 8, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nThe Best Data Science Books\n\n\n\n\n\nListing the best books available in the market right now for data science. \n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Confidence Interval\n\n\n\n\n\nConfidence Intervals are useful tool for expressing the uncertainity around an estimate.\n\n\n\n\n\nDec 5, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nSuccessful delivering of Machine Learning Projects\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\nSep 7, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nHypothesis Testing\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\nApr 4, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nMost Popular programming languages 2004-2021\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\nFeb 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nLinear regression using gradient descent\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\nDec 10, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nFbeta-Measure\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\nMar 12, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nNearest Neighbour Classifier\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\nMar 6, 2020\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "myblog/posts/gradient-descent/index.html#gradient-descent-algorithm",
@@ -628,5 +628,47 @@
     "title": "Choosing Activation Functions",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nhttps://arxiv.org/pdf/1710.05941.pdf?ref=blog.paperspace.com↩︎"
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html",
+    "href": "myblog/posts/confidence-interval/index.html",
+    "title": "Understanding Confidence Interval",
+    "section": "",
+    "text": "Imagine you want to estimate the average height of all the adults. It’s very impractical to measure average height of all adults. So you take a sample of 100 adults and measure their average height to be 5’7 inches. Now you know that this is just a estimate and if you took another sample, you might get different average. So how can you express the uncertainty around your estimate?"
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html#confidence-intervals",
+    "href": "myblog/posts/confidence-interval/index.html#confidence-intervals",
+    "title": "Understanding Confidence Interval",
+    "section": "Confidence Intervals",
+    "text": "Confidence Intervals\nA confidence interval is a range of values, derived from the sample data, that is likely to contain the true value of an unknown population parameter. For example you can say you are 95% confident that the average height of all adults is between 5’5 and 5’9 inches. This is 95% confidence interval."
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html#how-to-calculate",
+    "href": "myblog/posts/confidence-interval/index.html#how-to-calculate",
+    "title": "Understanding Confidence Interval",
+    "section": "How to calculate",
+    "text": "How to calculate\n\\[\n\\bar{x} \\pm z\\cdot \\frac{s}{\\sqrt{n}}\n\\]\nwhere \\(\\bar{x}\\) = sample mean, \\(s\\) = sample standard deviation, \\(z\\) = confidence level value and \\(n\\) =sample size\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.stats import norm\n\n# Example data\ndata = np.random.normal(loc=5.8, scale=0.5, size=100) \n\n# Calculate mean and standard deviation of the sample\nmean_value = np.mean(data)\nstd_dev = np.std(data)\n\n# Calculate the standard error of the mean (SEM)\nsem = std_dev / np.sqrt(len(data))\n\n# Calculate the margin of error for a 95% confidence interval\nmargin_of_error = norm.ppf(0.975) * sem\n\n# Calculate the confidence interval\nconfidence_interval = (mean_value - margin_of_error, mean_value + margin_of_error)\n\n# Plotting the data\nplt.hist(data, bins=20, alpha=0.7, color='#39729E', edgecolor='black', label='Sample Data')\n\n# Plotting the confidence interval\nplt.axvline(x=confidence_interval[0], color='grey', linestyle='--', label='95% Confidence Interval')\nplt.axvline(x=confidence_interval[1], color='grey', linestyle='--')\n\n# Adding labels and title\nplt.xlabel('Height')\nplt.ylabel('Frequency')\nplt.title('95% Confidence Interval for Adult Height')\n\n# Adding legend\nplt.legend()\n\n# Show the plot\nplt.show()"
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html#interpretation",
+    "href": "myblog/posts/confidence-interval/index.html#interpretation",
+    "title": "Understanding Confidence Interval",
+    "section": "Interpretation",
+    "text": "Interpretation\nSaying “I am 95% confident that the average height is between 5’5 and 5’9 inches” doesn’t mean that there is 95% chance that the true average falls in this range. Instead it means that if you were to take many samples and compute a 95% confidence interval for each one, about 95% of these intervals would contain the true average height."
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html#choosing-ci",
+    "href": "myblog/posts/confidence-interval/index.html#choosing-ci",
+    "title": "Understanding Confidence Interval",
+    "section": "Choosing CI",
+    "text": "Choosing CI\nIn order to choose confidence interval you should look into consequences of being wrong, if consequences are severe you might choose 99% CI else 95% is very common.\n\nHigher CI level results in wider intervals and vice versa. So there is always a trade off between precision and confidence."
+  },
+  {
+    "objectID": "myblog/posts/confidence-interval/index.html#limitations",
+    "href": "myblog/posts/confidence-interval/index.html#limitations",
+    "title": "Understanding Confidence Interval",
+    "section": "Limitations",
+    "text": "Limitations\nCI assumes that your data is normally distributed but which may not always be the case."
   }
 ]
