@@ -1,0 +1,333 @@
+---
+title: "Statistical Learning Theory"
+
+description: A framework for analysing the inside of blackbox of machine learning algorithms.
+
+author: "Vidyasagar Bhargava"
+date: "02/01/2023"
+categories:
+  - machine learning
+  - statistics
+---
+
+# Decision Theory - High Level Overview
+
+In data science problems , we usually need to :
+
+-   Make a decision
+-   Take an action
+-   Produce some output
+
+Also we have some evaluation criterion
+
+## Actions
+
+An action is the generic term for what is produced by our system.
+
+Examples of Actions
+
+-   Produce a 0/1 classification
+-   Reject hypothesis
+
+> Taking machine translation example the input could be an entire paragraph text in French and output could be corresponding translation in English is the action we will take producing the translation.
+
+## Evaluation Criterion
+
+We need to evaluate the action in some way and the goal of decision theory is about finding "Optimal" actions under various definitions of optimality.
+
+Examples of Evaluation criteria
+
+-   Is classification correct?
+-   Does text transcription exactly match the spoken words?
+
+## Formalizing a Business Problem
+
+First two steps to formalizing a problem :
+
+-   Define the action space
+-   specify the evaluation criterion
+
+> Formalization may evolve gradually, as you understand the problem better.
+
+## Input
+
+Most of problems have an extra piece which goes by various names :
+
+-   Inputs in Machine Learning
+-   Covariates in Statistics
+
+Examples of inputs:
+
+-   A picture we get to determine whether its a cat or not.
+-   User past history and profile whether he/she is going to churn or not.
+-   A search query
+
+## Output
+
+Also known by other name as Outcomes or Label. Its the right answer or what actually happens. Inputs are often paired with outputs or outcomes or labels.
+
+Examples of inputs:
+
+-   Whether or not the picture actually contains an animal.
+-   User churned or not
+
+> In case of self driving car outcomes is not literally the right or wrong answer... its just an action you want to take for example you press the accelerator and steer the steering wheel and outcomes is how it moved or where is the position of the car in the world.
+
+## Typical sequence of events
+
+Many problems domain can be formalized as follows :
+
+-   Observe an input x
+-   Take an action a
+-   Observe the outcome y
+-   Evaluate action in relation to the outcome : l(a,y)
+
+::: callout-note
+Outcome y is often independent of action a but this is not always the case. For example in case of self driving the action you take affects the outcomes but in case of churn the outcome won't change based on input. Basically you just predict and keep it to yourself and don't act on it.
+:::
+
+## Formalization:
+
+### The Spaces
+
+The three spaces :
+
+-   Input space $X$
+-   Action space $A$
+-   Output space $Y$
+
+::: callout-tip
+## Concept Check
+
+Whats are the spaces for linear regression?
+
+Input space : $R^d$ , Action space : $R$ , Output space : $R$
+
+What are the spaces for logistic regression ?
+
+Input space: $R^d$ , Action space: Probability between 0 & 1, Output space: \[0,1\]
+:::
+
+### Decision Function
+
+A decision function (or prediction function) gets input x $\in X$ and produces an action a $\in A$ :
+
+$$
+f: X \rightarrow A
+$$
+
+### Loss Function
+
+A loss function evaluates an action in the context of the outcome $y$.
+
+$$
+l: A \times Y \rightarrow R \\
+(a, y) \rightarrowtail l(a, y)
+$$
+
+### Real Life : Formalizing a "Data Science" Problem
+
+First two steps to formalizing the problem:
+
+-   Defining the action space (i.e. set of all possible actions)
+-   specifying the evaluation criterion
+
+For example when a stakeholder ask the data scientist to solve a problem then she/he :
+
+-   may have an opinion on what the action space should be, and
+-   hopefully has an opinion on the evaluation criterion, but
+-   he/she really cares about your **producing a good decision function**
+
+### Evaluating a Decision Function
+
+-   Loss function $l$ evaluates a single action
+-   How to evaluate the decision function as whole?
+
+In order to deploy a decision function stake holder needs to know the score or assessment of how well its going to perform. So the standard framework called **Statistical Learning Theory** gives the recipe for that.
+
+## Statistical Learning Theory
+
+SLT helps in providing the average performance that your decision function will get.
+
+### Setup for Statistical Learning Theory
+
+-   Assumption in SLT: Action has no effect on the output.
+
+-   Assume there is a data generating distribution $P_{X \times Y}$.
+
+-   All input/output pairs $(x,y)$ are generated i.i.d from $P_{X \times Y}$.
+
+-   i.i.d means "independent and identically distributed" practically it means
+
+    -   no covariate shift
+    -   no concept drift
+
+-   Want decision function $f(x)$ that generally "does well on average":
+
+    -   $l(f(x),y)$ is usually small
+
+How do we are going to formalize this ?
+
+## The Risk Functional
+
+The risk is just a fancy name for expected loss on a new sample $(x,y)$ drawn randomly from $P_{x \times y}$.
+
+Definition:
+
+The risk of a decision function $f : X \rightarrow A$ is
+
+$$
+R(f) = E[l(f(x),y)]
+$$
+
+> Risk function cannot be computed since we don't know $P_{x \times y}$, we cannot compute the expectation. But we can estimate it...
+
+## The Bayes Decision Function
+
+There is notion of Bayes Decision Function which is the decision function which minimizes the risk. So its the best possible decision function when evaluated in terms of expected loss on randomly chosen data point.
+
+Definition :
+
+A Bayes decision function $f^* : X \rightarrow A$ is a function that achieves the minimal risk among all possible functions:
+
+$$
+f^* = argmin R(f)
+$$
+
+where the minimum is taken over all functions from $X$ to $A$.
+
+::: callout-note
+## Bayes Risk
+
+The risk of a Bayes decision function is called the Bayes Risk.
+:::
+
+A Bayes decision function is often called the **target function**, since it is the best decision function we can possibly produce.
+
+## Examples
+
+### Least Squares Regression
+
+-   spaces : $A = Y = R$
+
+-   square loss:
+
+$$
+l(a,y) = (a-y)^2
+$$
+
+-   Risk : (which is expected value of loss on some sample)
+
+$$
+R(f) = E[(f(x),y)^2]
+$$
+
+-   target function:
+
+$$
+f^*(x) = E[y|x]
+$$
+
+### Multiclass Classification
+
+-   spaces : \$A = Y = {0, 1,....,K-1}
+
+-   0-1 loss
+
+$$
+l(a,y) = 1(a \neq y):=  \begin{cases}
+  1 \ if \ a \neq y \\
+  0 \ otherwise
+\end{cases}
+$$
+
+-   risk is misclassification error rate
+
+$$
+R(f) = E[1(f(x) \neq y] = 0.P(f(x) = y) + 1.P(f(x) \neq y)
+= P(f(x) \neq y) 
+$$
+
+> 1 in parentheis is indicator function that evaluates to 1 if thing inside parenthesis is true and 0 otherwise.
+
+The risk of decision function is probability of error.
+
+-   target function is the assignment to the most likely class
+
+$$
+f^*(x) = argmax P(y = k |x)
+$$
+
+k is the prediction and y is the output and predict the class that has maximum probability.
+
+::: callout-caution
+## But we can't compute the risk !
+
+-   Can't compute $R(f) = El(f(x),y)$ because we don't know $P_{x \times y}$ because no one tells us the probability of distribution describing the real world.
+
+-   One thing we can do in data science is assume we have some sample data.
+
+Let $D_n = ((x_1, y_1),....,(x_n, y_n))$ be drawn i.i.d from $P_{x \times y}$
+
+-   Let's draw some inspiration from the Strong law of large numbers:
+
+    if $z, z_1,...Z_n$ are i.i.d with expected value $Ez$ then
+
+$$
+\lim_{n\to\infty} \frac{1}{n} \sum_{i=1}^{n} Z_{i} = Ez
+$$
+
+with probability 1.
+
+Basically with enough data we can converge to property of distribution as whole.
+:::
+
+## The Empirical Risk Functional
+
+So risk is expected loss, empirical risk is approximation of risk.
+
+Let $D_n = ((x_1, y_1),...,(x_n, y_n))$ be drawn i.i.d from $P_{x \times y}$
+
+Definition: The empirical risk of $f: X \rightarrow A$ with respect to $D_n$ is
+
+$$
+\hat{R}_{n}(f) = \frac{1}{n} \sum_{i=1}^{n} l(f(x_i), y_i)
+$$
+
+> The loss are random because data points on which is calculated is random.
+
+By Strong law of large numbers, the empirical risk converges to actual risk of the function.
+
+$$
+\lim_{n\to\infty} \hat{R}_{n}(f) = R(f)
+$$ almost surely.
+
+### Empirical Risk Minimizer
+
+We want risk minimizer, is empirical risj minimizer close enough?
+
+Definition:
+
+A function $\hat{f}$ is an empirical risk minimizer if
+
+$$
+\hat{f} = argmin \hat{R}_{n}(f),
+$$
+
+where the minimum is take over all functions
+
+#### Constrained ERM
+
+ERM led to a function $f$ that just memorized the data. Then how can we spread information or **generalize** from training inputs to new inputs? We need to smooth things out somehow. So the one approach is Constrained ERM. In constrained ERM instead of minimizing empirical risk over all decision functions, constrain to particular subset called a **Hypothesis Space**.
+
+## Hypothesis Spaces
+
+A hypothesis space $F$ is a set of functions mapping $X \rightarrow A$. It is the collection of decision function we are considering.
+
+## Constrained Empirical Risk Minimization
+
+Empirical Risk Minimization (ERM) in $F$ is
+
+$$
+\hat{f}_{n} = argmin \frac{1}{n} \sum_{i=1}^{n} l(f(x_i), y_i)
+$$
