@@ -348,9 +348,9 @@ Concept Check
 </div>
 <div class="callout-body-container callout-body">
 <p>Whats are the spaces for linear regression?</p>
-<p>Input space : <span class="math inline">\(R^d\)</span> , Action space : <span class="math inline">\(R\)</span> , Output space : <span class="math inline">\(R\)</span></p>
+<p>Input space : <span class="math inline">\(\mathbb{R}^d\)</span> , Action space : <span class="math inline">\(\mathbb{R}\)</span> , Output space : <span class="math inline">\(\mathbb{R}\)</span></p>
 <p>What are the spaces for logistic regression ?</p>
-<p>Input space: <span class="math inline">\(R^d\)</span> , Action space: Probability between 0 &amp; 1, Output space: [0,1]</p>
+<p>Input space: <span class="math inline">\(\mathbb{R}^d\)</span> , Action space: Probability between 0 &amp; 1, Output space: [0,1]</p>
 </div>
 </div>
 </section>
@@ -365,8 +365,8 @@ f: X \rightarrow A
 <h3 class="anchored" data-anchor-id="loss-function">Loss Function</h3>
 <p>A loss function evaluates an action in the context of the outcome <span class="math inline">\(y\)</span>.</p>
 <p><span class="math display">\[
-l: A \times Y \rightarrow R \\
-(a, y) \rightarrowtail l(a, y)
+l: A \times Y \rightarrow R
+(a, y) \rightarrow l(a, y)
 \]</span></p>
 </section>
 <section id="real-life-formalizing-a-data-science-problem" class="level3">
@@ -420,7 +420,7 @@ l: A \times Y \rightarrow R \\
 <p>Definition:</p>
 <p>The risk of a decision function <span class="math inline">\(f : X \rightarrow A\)</span> is</p>
 <p><span class="math display">\[
-R(f) = E[l(f(x),y)]
+R(f) = \mathbb{E}[l(f(x),y)]
 \]</span></p>
 <blockquote class="blockquote">
 <p>Risk function cannot be computed since we don’t know <span class="math inline">\(P_{x \times y}\)</span>, we cannot compute the expectation. But we can estimate it…</p>
@@ -465,13 +465,13 @@ l(a,y) = (a-y)^2
 <li>Risk : (which is expected value of loss on some sample)</li>
 </ul>
 <p><span class="math display">\[
-R(f) = E[(f(x),y)^2]
+R(f) = \mathbb{E}[(f(x),y)^2]
 \]</span></p>
 <ul>
 <li>target function:</li>
 </ul>
 <p><span class="math display">\[
-f^*(x) = E[y|x]
+f^*(x) = \mathbb{E}[y|x]
 \]</span></p>
 </section>
 <section id="multiclass-classification" class="level3">
@@ -490,7 +490,7 @@ l(a,y) = 1(a \neq y):=  \begin{cases}
 <li>risk is misclassification error rate</li>
 </ul>
 <p><span class="math display">\[
-R(f) = E[1(f(x) \neq y] = 0.P(f(x) = y) + 1.P(f(x) \neq y)
+R(f) = \mathbb{E}[1(f(x) \neq y] = 0.P(f(x) = y) + 1.P(f(x) \neq y)
 = P(f(x) \neq y)
 \]</span></p>
 <blockquote class="blockquote">
@@ -515,7 +515,7 @@ But we can’t compute the risk !
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><p>Can’t compute <span class="math inline">\(R(f) = El(f(x),y)\)</span> because we don’t know <span class="math inline">\(P_{x \times y}\)</span> because no one tells us the probability of distribution describing the real world.</p></li>
+<li><p>Can’t compute <span class="math inline">\(R(f) = \mathbb{E}l(f(x),y)\)</span> because we don’t know <span class="math inline">\(P_{x \times y}\)</span> because no one tells us the probability of distribution describing the real world.</p></li>
 <li><p>One thing we can do in data science is assume we have some sample data.</p></li>
 </ul>
 <p>Let <span class="math inline">\(D_n = ((x_1, y_1),....,(x_n, y_n))\)</span> be drawn i.i.d from <span class="math inline">\(P_{x \times y}\)</span></p>
@@ -524,7 +524,7 @@ But we can’t compute the risk !
 <p>if <span class="math inline">\(z, z_1,...Z_n\)</span> are i.i.d with expected value <span class="math inline">\(Ez\)</span> then</p></li>
 </ul>
 <p><span class="math display">\[
-\lim_{n\to\infty} \frac{1}{n} \sum_{i=1}^{n} Z_{i} = Ez
+\lim_{n\to\infty} \frac{1}{n} \sum_{i=1}^{n} Z_{i} = \mathbb{E}z
 \]</span></p>
 <p>with probability 1.</p>
 <p>Basically with enough data we can converge to property of distribution as whole.</p>

@@ -101,11 +101,11 @@ The three spaces :
 
 Whats are the spaces for linear regression?
 
-Input space : $R^d$ , Action space : $R$ , Output space : $R$
+Input space : $\mathbb{R}^d$ , Action space : $\mathbb{R}$ , Output space : $\mathbb{R}$
 
 What are the spaces for logistic regression ?
 
-Input space: $R^d$ , Action space: Probability between 0 & 1, Output space: \[0,1\]
+Input space: $\mathbb{R}^d$ , Action space: Probability between 0 & 1, Output space: \[0,1\]
 :::
 
 ### Decision Function
@@ -121,8 +121,8 @@ $$
 A loss function evaluates an action in the context of the outcome $y$.
 
 $$
-l: A \times Y \rightarrow R \\
-(a, y) \rightarrowtail l(a, y)
+l: A \times Y \rightarrow R
+(a, y) \rightarrow l(a, y)
 $$
 
 ### Real Life : Formalizing a "Data Science" Problem
@@ -177,7 +177,7 @@ Definition:
 The risk of a decision function $f : X \rightarrow A$ is
 
 $$
-R(f) = E[l(f(x),y)]
+R(f) = \mathbb{E}[l(f(x),y)]
 $$
 
 > Risk function cannot be computed since we don't know $P_{x \times y}$, we cannot compute the expectation. But we can estimate it...
@@ -219,13 +219,13 @@ $$
 -   Risk : (which is expected value of loss on some sample)
 
 $$
-R(f) = E[(f(x),y)^2]
+R(f) = \mathbb{E}[(f(x),y)^2]
 $$
 
 -   target function:
 
 $$
-f^*(x) = E[y|x]
+f^*(x) = \mathbb{E}[y|x]
 $$
 
 ### Multiclass Classification
@@ -244,7 +244,7 @@ $$
 -   risk is misclassification error rate
 
 $$
-R(f) = E[1(f(x) \neq y] = 0.P(f(x) = y) + 1.P(f(x) \neq y)
+R(f) = \mathbb{E}[1(f(x) \neq y] = 0.P(f(x) = y) + 1.P(f(x) \neq y)
 = P(f(x) \neq y) 
 $$
 
@@ -263,7 +263,7 @@ k is the prediction and y is the output and predict the class that has maximum p
 ::: callout-caution
 ## But we can't compute the risk !
 
--   Can't compute $R(f) = El(f(x),y)$ because we don't know $P_{x \times y}$ because no one tells us the probability of distribution describing the real world.
+-   Can't compute $R(f) = \mathbb{E}l(f(x),y)$ because we don't know $P_{x \times y}$ because no one tells us the probability of distribution describing the real world.
 
 -   One thing we can do in data science is assume we have some sample data.
 
@@ -274,7 +274,7 @@ Let $D_n = ((x_1, y_1),....,(x_n, y_n))$ be drawn i.i.d from $P_{x \times y}$
     if $z, z_1,...Z_n$ are i.i.d with expected value $Ez$ then
 
 $$
-\lim_{n\to\infty} \frac{1}{n} \sum_{i=1}^{n} Z_{i} = Ez
+\lim_{n\to\infty} \frac{1}{n} \sum_{i=1}^{n} Z_{i} = \mathbb{E}z
 $$
 
 with probability 1.
