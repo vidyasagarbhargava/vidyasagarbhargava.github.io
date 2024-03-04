@@ -775,5 +775,19 @@
     "title": "Statistical Learning Theory",
     "section": "",
     "text": "Empirical Risk Minimization (ERM) in \\(F\\) is\n\\[\n\\hat{f}_{n} = argmin \\frac{1}{n} \\sum_{i=1}^{n} l(f(x_i), y_i)\n\\]"
+  },
+  {
+    "objectID": "myblog/posts/survival-analysis/index.html",
+    "href": "myblog/posts/survival-analysis/index.html",
+    "title": "Survival Analysis",
+    "section": "",
+    "text": "Contents : -"
+  },
+  {
+    "objectID": "myblog/posts/survival-analysis/index.html#definition",
+    "href": "myblog/posts/survival-analysis/index.html#definition",
+    "title": "Survival Analysis",
+    "section": "Definition",
+    "text": "Definition"
   }
 ]
