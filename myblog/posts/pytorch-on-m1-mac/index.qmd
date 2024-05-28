@@ -2,7 +2,7 @@
 title: "Accelerate computation on Mac using PyTorch and gpu support"
 description: Running a experiment using pytorch tensors on cpu vs leveraging gpu support on M1 mac and see how much gain we get in terms of speed.
 author: "Vidyasagar Bhargava"
-date: "8/1/2024"
+date: "5/1/2024"
 categories:
   - pytorch
 ---

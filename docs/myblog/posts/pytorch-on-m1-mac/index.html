@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Vidyasagar Bhargava">
-<meta name="dcterms.date" content="2024-08-01">
+<meta name="dcterms.date" content="2024-05-01">
 <meta name="description" content="Running a experiment using pytorch tensors on cpu vs leveraging gpu support on M1 mac and see how much gain we get in terms of speed.">
 
 <title>Accelerate computation on Mac using PyTorch and gpu support</title>
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 1, 2024</p>
+        <p class="date">May 1, 2024</p>
       </div>
     </div>
     
@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Experiment</h1>
 <p>Once libraries are installed we can start experiment. In the experiment we will create simple PyTorch tensors and send on device <code>cpu</code> and <code>mps</code> one by one and measure the time taken to run multiplication operation.</p>
 <p>Lets start with creating some tensors</p>
-<div id="ce636145" class="cell" data-execution_count="1">
+<div id="34e40377" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -236,29 +236,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>moving tensor to cpu</p>
-<div id="3f4c62cf" class="cell" data-execution_count="2">
+<div id="aa9fd412" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"cpu"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> create_torch_tensors(device)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Multiplying the tensors on <code>cpu</code> device.</p>
-<div id="2d00f93d" class="cell" data-execution_count="3">
+<div id="e538923e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">*</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>23.7 ms ± 153 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
+<pre><code>23.2 ms ± 325 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)</code></pre>
 </div>
 </div>
 <p>Now run the same operation using gpu of mac and see how much is improve.</p>
-<div id="c6ad966b" class="cell" data-execution_count="4">
+<div id="c5c7f502" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> torch.device(<span class="st">"mps"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> create_torch_tensors(device)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Multiplying the tensors on <code>mps</code> device.</p>
-<div id="457f9b0b" class="cell" data-execution_count="5">
+<div id="254a2c57" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="op">%%</span>timeit</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">*</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>7.56 ms ± 18.1 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
+<pre><code>6.78 ms ± 60.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)</code></pre>
 </div>
 </div>
 <p>We can see there is significant improvement in speed when doing tensor operation using gpu.</p>
