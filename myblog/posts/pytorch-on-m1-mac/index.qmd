@@ -1,0 +1,69 @@
+---
+title: "Accelerate computation on Mac using PyTorch and gpu support"
+description: Running a experiment using pytorch tensors on cpu vs leveraging gpu support on M1 mac and see how much gain we get in terms of speed.
+author: "Vidyasagar Bhargava"
+date: "8/1/2024"
+categories:
+  - pytorch
+---
+
+## Introduction
+In year 2022 PyTorch and Metal engineering team at apple collaborated and announced support for GPU-accelerated pytorch operations on mac. Before that PyTorch operations on mac only leveraged CPU. But with PyTorch v1.12 release, developers and researchers can take advantage of Apple silicon GPUs for significantly faster model training as well.
+Here we will perform simple experiment to see the difference in doing tensor operations on CPU vs leveraging gpu support on M1 Mac.
+
+
+## Initial Setup
+In order to run the experiment we need to install below libraries.
+
+```bash
+!pip install torch torchvision torchaudio
+```
+
+# Experiment
+Once libraries are installed we can start experiment. In the experiment we will create simple PyTorch tensors and send on device `cpu` and `mps` one by one and measure the time taken to run multiplication operation.
+
+Lets start with creating some tensors
+```{python}
+import torch
+
+
+def create_torch_tensors(device):
+    x = torch.rand((10000, 10000), dtype=torch.float32)
+    y = torch.rand((10000, 10000), dtype=torch.float32)
+    x = x.to(device)
+    y = y.to(device)
+
+    return x, y
+
+```
+
+moving tensor to cpu
+
+```{python}
+device = torch.device("cpu")
+x, y = create_torch_tensors(device)
+```
+
+Multiplying the tensors on `cpu` device.
+
+```{python}
+%%timeit
+x * y
+```
+
+
+Now run the same operation using gpu of mac and see how much is improve.
+
+```{python}
+device = torch.device("mps")
+x, y = create_torch_tensors(device)
+```
+
+Multiplying the tensors on `mps` device.
+```{python}
+%%timeit
+x * y
+```
+
+
+We can see there is significant improvement in speed when doing tensor operation using gpu.
