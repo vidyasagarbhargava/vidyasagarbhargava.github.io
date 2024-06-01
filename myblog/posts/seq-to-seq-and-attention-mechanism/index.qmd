@@ -39,8 +39,7 @@ The decoder also maintains a hidden state which it passes from one time stamp to
 
 In the above image we can see a german sentence passed through the embedding layer(yellow) and then input into the encoder(green). We also append a start of sequence <sos> and end of sequence <eos> token at the start and end of sentence respectively. At each time step we have an input to the encoder both the embedding $e$ of the current word $e(x_{t})$ as well as the hidden state from the previous time step, $h_{t-1}$, and encoder RNN outputs next hidden state $h_{t}$. Think of hidden state as a vector representation of the sentence till that time step.
 
-Now this encoder rnn can be represented as : 
-$$
+Now this encoder rnn can be represented as : $$
 h_{t} = EncoderRNN(e(x_{t}), h_{t-1  })
 $$
 
@@ -74,9 +73,9 @@ When training/testing our model, we always know how many words are in our target
 
 Once we have our predicted target sentence, $\hat{Y} = \{\hat{y}_{1},\hat{y}_{2}....\hat{y}_{T}   \}$ , we compare it against our actual target sentence, $Y = \{y_{1},y_{2}....y_{T}   \}$, to calculate our loss. We then use this loss to update all of the parameters in our model.
 
-## Let's Code Neural Machine Translation
+## Code sequence to sequence model
 
-In the below colab notebook we will code neural machine translation and leverage the free gpu from google. Click on colab logo.
+In the below colab notebook we will code seq2seq model and leverage the free gpu from google for faster computing. Click on colab logo.
 
 <table align="rights">
   <td align="center"><a target="_blank" href="https://colab.research.google.com/drive/1h1Tp4swRd3Vmnfx5I4WeakSrIReZsUax#scrollTo=-Or0LmaZMh91">
@@ -84,33 +83,9 @@ In the below colab notebook we will code neural machine translation and leverage
 </table>
 
 
+The model we created in above colab notebook faces challenge with long sentences and this context vector becomes a bottleneck. To solve this problem **attention** mechanism was introduced which we will see next post.
 
+## References
 
-
-## Challenge with encoder decoder
-
-Here challenge come along with the long sentences where the context vector turn out to be bottleneck for these types of models.Then a paper was introduced and refined a technique called **Attention**, which highly improved the quality of machine translation systems.
-
-> Attention allows the model to focus on the relevant part of the input sequences as needed.
-
-An attention model differs from classic seq-to-seq model in two ways :
-
--   The encoder passes alot more data to decoder. Instead of passing the last hidden state, now it passes all the hidden states to the decoder.
-
--   Second, an attention decoder does an extra step before producing its output. In order to focus on the parts of the input that are relevant to this decoding time step, the decoder does the following:
-
-    1.  Look at the set of encoder hidden states it received – each encoder hidden state is most associated with a certain word in the input sentence.\
-    2.  Give each hidden state a score (let’s ignore how the scoring is done for now)\
-    3.  Multiply each hidden state by its softmaxed score, thus amplifying hidden states with high scores, and drowning out hidden states with low scores.
-
-The scoring excercise is done at each time step on the decoder side.
-
-Let us now bring the whole thing together in the following visualization and look at how the attention process works:
-
-1.  The attention decoder RNN takes in the embedding of the <END> token, and an initial decoder hidden state.\
-2.  The RNN processes its inputs, producing an output and a new hidden state vector (h4). The output is discarded.\
-3.  Attention Step: We use the encoder hidden states and the h4 vector to calculate a context vector (C4) for this time step.\
-4.  We concatenate h4 and C4 into one vector.\
-5.  We pass this vector through a feedforward neural network (one trained jointly with the model).\
-6.  The output of the feedforward neural networks indicates the output word of this time step.\
-7.  Repeat for the next time steps
+<https://github.com/bentrevett/pytorch-seq2seq>  
+<https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/>

@@ -879,13 +879,34 @@
     "href": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#lets-code-neural-machine-translation",
     "title": "Sequence to sequence learning with Neural Networks",
     "section": "Let’s Code Neural Machine Translation",
-    "text": "Let’s Code Neural Machine Translation\nIn the below colab notebook we will code neural machine translation and leverage the free gpu from google. Click on colab logo."
+    "text": "Let’s Code Neural Machine Translation\nIn the below colab notebook we will code seq2seq model and leverage the free gpu from google for faster computing. Click on colab logo.\n\n\n \n\n\nThe model we created in above colab notebook faces challenge with long sentences and this context vector becomes a bottleneck. To solve this problem attention mechanism was introduced which we will see next post."
   },
   {
     "objectID": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#challenge-with-encoder-decoder",
     "href": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#challenge-with-encoder-decoder",
     "title": "Sequence to sequence learning with Neural Networks",
     "section": "Challenge with encoder decoder",
-    "text": "Challenge with encoder decoder\nHere challenge come along with the long sentences where the context vector turn out to be bottleneck for these types of models.Then a paper was introduced and refined a technique called Attention, which highly improved the quality of machine translation systems.\n\nAttention allows the model to focus on the relevant part of the input sequences as needed.\n\nAn attention model differs from classic seq-to-seq model in two ways :\n\nThe encoder passes alot more data to decoder. Instead of passing the last hidden state, now it passes all the hidden states to the decoder.\nSecond, an attention decoder does an extra step before producing its output. In order to focus on the parts of the input that are relevant to this decoding time step, the decoder does the following:\n\nLook at the set of encoder hidden states it received – each encoder hidden state is most associated with a certain word in the input sentence.\n\nGive each hidden state a score (let’s ignore how the scoring is done for now)\n\nMultiply each hidden state by its softmaxed score, thus amplifying hidden states with high scores, and drowning out hidden states with low scores.\n\n\nThe scoring excercise is done at each time step on the decoder side.\nLet us now bring the whole thing together in the following visualization and look at how the attention process works:\n\nThe attention decoder RNN takes in the embedding of the  token, and an initial decoder hidden state.\n\nThe RNN processes its inputs, producing an output and a new hidden state vector (h4). The output is discarded.\n\nAttention Step: We use the encoder hidden states and the h4 vector to calculate a context vector (C4) for this time step.\n\nWe concatenate h4 and C4 into one vector.\n\nWe pass this vector through a feedforward neural network (one trained jointly with the model).\n\nThe output of the feedforward neural networks indicates the output word of this time step.\n\nRepeat for the next time steps"
+    "text": "Challenge with encoder decoder\nHere challenge come along with the long sentences where the context vector turn out to be bottleneck for these types of models.To solve this paper Neural Machine Translation by Jointly Learning to Align and Translate was introduced and refined a technique called Attention, which highly improved the quality of machine translation systems.\n\nAttention allows the model to focus on the relevant part of the input sequences as needed.\n\nAn attention model differs from classic seq-to-seq model in two ways :\n\nThe encoder passes alot more data to decoder. Instead of passing the last hidden state, now it passes all the hidden states to the decoder.\nSecond, an attention decoder does an extra step before producing its output. In order to focus on the parts of the input that are relevant to this decoding time step, the decoder does the following:\n\nLook at the set of encoder hidden states it received – each encoder hidden state is most associated with a certain word in the input sentence.\n\nGive each hidden state a score (let’s ignore how the scoring is done for now)\n\nMultiply each hidden state by its softmaxed score, thus amplifying hidden states with high scores, and drowning out hidden states with low scores.\n\n\nThe scoring excercise is done at each time step on the decoder side.\nLet us now bring the whole thing together in the following visualization and look at how the attention process works:\n\nThe attention decoder RNN takes in the embedding of the  token, and an initial decoder hidden state.\n\nThe RNN processes its inputs, producing an output and a new hidden state vector (h4). The output is discarded.\n\nAttention Step: We use the encoder hidden states and the h4 vector to calculate a context vector (C4) for this time step.\n\nWe concatenate h4 and C4 into one vector.\n\nWe pass this vector through a feedforward neural network (one trained jointly with the model).\n\nThe output of the feedforward neural networks indicates the output word of this time step.\n\nRepeat for the next time steps"
+  },
+  {
+    "objectID": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#code-sequence-to-sequence-model",
+    "href": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#code-sequence-to-sequence-model",
+    "title": "Sequence to sequence learning with Neural Networks",
+    "section": "Code sequence to sequence model",
+    "text": "Code sequence to sequence model\nIn the below colab notebook we will code seq2seq model and leverage the free gpu from google for faster computing. Click on colab logo.\n\n\n \n\n\nThe model we created in above colab notebook faces challenge with long sentences and this context vector becomes a bottleneck. To solve this problem attention mechanism was introduced which we will see next post."
+  },
+  {
+    "objectID": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#footnotes",
+    "href": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#footnotes",
+    "title": "Sequence to sequence learning with Neural Networks",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nhttps://github.com/bentrevett/pytorch-seq2seq↩︎"
+  },
+  {
+    "objectID": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#references",
+    "href": "myblog/posts/seq-to-seq-and-attention-mechanism/index.html#references",
+    "title": "Sequence to sequence learning with Neural Networks",
+    "section": "References",
+    "text": "References\nhttps://github.com/bentrevett/pytorch-seq2seq\nhttps://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/"
   }
 ]
