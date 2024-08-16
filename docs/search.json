@@ -228,7 +228,7 @@
     "href": "myblog/blog.html",
     "title": "Blog",
     "section": "",
-    "text": "Sequence to sequence learning with Neural Networks\n\n\n\n\n\nA sequence-to-sequence model is a type of model that takes input sequence of items like letter, words, images etc. and outputs another sequence of items. These types of models achieved lot of success in tasks like language translation, text summarization and image captioning.\n\n\n\n\n\nMay 4, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nAccelerate computation on Mac using PyTorch and gpu support\n\n\n\n\n\nRunning a experiment using pytorch tensors on cpu vs leveraging gpu support on M1 mac and see how much gain we get in terms of speed.\n\n\n\n\n\nMay 1, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nPolars for Feature Engineering\n\n\n\n\n\nPolars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.\n\n\n\n\n\nJan 3, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Apple’s Machine learning Framework- MLX\n\n\n\n\n\nApple’s machine learning research team recently released a Machine Learning framework called MLX, a NumPy-like array framework designed for efficient and flexible machine learning on Apple silicon.\n\n\n\n\n\nDec 24, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nChoosing Activation Functions\n\n\n\n\n\nAn activation function decides whether a neuron should be activated or not which helps neural network to use important information while suppressing the irrelevant data points.\n\n\n\n\n\nJun 8, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nStatistical Learning Theory\n\n\n\n\n\nA framework for analysing the inside of blackbox of machine learning algorithms.\n\n\n\n\n\nFeb 1, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nThe Best Data Science Books\n\n\n\n\n\nListing the best books available in the market right now for data science. \n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Confidence Interval\n\n\n\n\n\nConfidence Intervals are useful tool for expressing the uncertainity around an estimate.\n\n\n\n\n\nDec 5, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nSuccessful delivering of Machine Learning Projects\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\nSep 7, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nHypothesis Testing\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\nApr 4, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nMost Popular programming languages 2004-2021\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\nFeb 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nLinear regression using gradient descent\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\nDec 10, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nFbeta-Measure\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\nMar 12, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nNearest Neighbour Classifier\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\nMar 6, 2020\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items\n\n Back to top"
+    "text": "Introduction to Graph Neural Networks\n\n\n\n\n\nA Graph is the type of data structure that contains nodes and edges. A node can be a person, place, or thing, and the edges define the relationship between nodes. The edges can be directed and undirected based on directional dependencies.\n\n\n\n\n\nAug 6, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nSequence to sequence learning with Neural Networks\n\n\n\n\n\nA sequence-to-sequence model is a type of model that takes input sequence of items like letter, words, images etc. and outputs another sequence of items. These types of models achieved lot of success in tasks like language translation, text summarization and image captioning.\n\n\n\n\n\nMay 4, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nAccelerate computation on Mac using PyTorch and gpu support\n\n\n\n\n\nRunning a experiment using pytorch tensors on cpu vs leveraging gpu support on M1 mac and see how much gain we get in terms of speed.\n\n\n\n\n\nMay 1, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nPolars for Feature Engineering\n\n\n\n\n\nPolars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.\n\n\n\n\n\nJan 3, 2024\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to Apple’s Machine learning Framework- MLX\n\n\n\n\n\nApple’s machine learning research team recently released a Machine Learning framework called MLX, a NumPy-like array framework designed for efficient and flexible machine learning on Apple silicon.\n\n\n\n\n\nDec 24, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nChoosing Activation Functions\n\n\n\n\n\nAn activation function decides whether a neuron should be activated or not which helps neural network to use important information while suppressing the irrelevant data points.\n\n\n\n\n\nJun 8, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nStatistical Learning Theory\n\n\n\n\n\nA framework for analysing the inside of blackbox of machine learning algorithms.\n\n\n\n\n\nFeb 1, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nThe Best Data Science Books\n\n\n\n\n\nListing the best books available in the market right now for data science. \n\n\n\n\n\nJan 16, 2023\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nUnderstanding Confidence Interval\n\n\n\n\n\nConfidence Intervals are useful tool for expressing the uncertainity around an estimate.\n\n\n\n\n\nDec 5, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nSuccessful delivering of Machine Learning Projects\n\n\n\n\n\nPrinciples and process for democratizing ML projects\n\n\n\n\n\nSep 7, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nHypothesis Testing\n\n\n\n\n\nA hypothesis testing is a way to test an assumption about a population parameter.\n\n\n\n\n\nApr 4, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nMost Popular programming languages 2004-2021\n\n\n\n\n\nUsing animation lets see how different programmming language rise in last couple of decades.\n\n\n\n\n\nFeb 10, 2022\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nLinear regression using gradient descent\n\n\n\n\n\nIn this post we will implement gradient descent algorithm from scratch using numpy for linear regression.\n\n\n\n\n\nDec 10, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nFbeta-Measure\n\n\n\n\n\nA generalization of the F-measure that adds a configuration parameter called beta\n\n\n\n\n\nMar 12, 2021\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\n\n\n\n\n\n\nNearest Neighbour Classifier\n\n\n\n\n\nNearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n\n\n\n\n\nMar 6, 2020\n\n\nVidyasagar Bhargava\n\n\n\n\n\n\nNo matching items\n\n Back to top"
   },
   {
     "objectID": "myblog/posts/gradient-descent/index.html#gradient-descent-algorithm",
@@ -908,5 +908,75 @@
     "title": "Sequence to sequence learning with Neural Networks",
     "section": "References",
     "text": "References\nhttps://github.com/bentrevett/pytorch-seq2seq\nhttps://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "",
+    "text": "A Graph consists of edges and nodes. These nodes are also known as vertices. Now these nodes are the information centers of the graph and edges are the channels through which this information flows from one node to its neighbouring node.\n\\[\nG = (V, E)\n\\]\n\n\n\n\n\n\n\n\n\nWe represent a graph using Adjancency Matrix. An Adjancey matrix is square matrix \\(v*v\\) where \\(v\\) is number of nodes in graph\n\\[\nAdjancey Matrix = \\begin{array}{c|ccc}\n    & \\text{0} & \\text{1} & \\text{2} & \\text{3}\\\\ \\hline\n\\text{0} & 0 & 1 & 0 & 0\\\\\n\\text{1} & 1 & 0 & 1 & 1\\\\\n\\text{2} & 0 & 0 & 0 & 1\\\\\n\\text{3} & 1 & 0 & 0 & 0\n\\end{array}\n\\]\n\nTo understand how to build an adjancey matrix we have to understand the types of graphs."
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#graph-data-structure",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#graph-data-structure",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "",
+    "text": "A Graph consists of edges and nodes. These nodes are also known as vertices. Now these nodes are the information centers of the graph and edges are the channels through which this information flows from one node to its neighbouring node.\n\\[\nG = (V, E)\n\\]\n\n\n\n\n\n\n\n\n\nWe represent a graph using Adjancency Matrix. An Adjancey matrix is square matrix \\(v*v\\) where \\(v\\) is number of nodes in graph\n\\[\nAdjancey Matrix = \\begin{array}{c|ccc}\n    & \\text{0} & \\text{1} & \\text{2} & \\text{3}\\\\ \\hline\n\\text{0} & 0 & 1 & 0 & 0\\\\\n\\text{1} & 1 & 0 & 1 & 1\\\\\n\\text{2} & 0 & 0 & 0 & 1\\\\\n\\text{3} & 1 & 0 & 0 & 0\n\\end{array}\n\\]\n\nTo understand how to build an adjancey matrix we have to understand the types of graphs."
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#types-of-graphs",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#types-of-graphs",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Types of Graphs",
+    "text": "Types of Graphs\nBased on directions\n\nDirected\n\nUndirected\n\nIn directed graph information flows in a particular direction whereas in Undirected graph there is no particular direction for flow of direction.\n\n\n\n\n\n\n\n\n\nThis directed graph is similar to earlier graph and we will get same adjancey matrix for it.\nNow let’s create adjancey matrix for an undirected graph\n\\[\nAdjancey Matrix  = \\begin{array}{c|ccc}\n    & \\text{0} & \\text{1} & \\text{2} & \\text{3}\\\\ \\hline\n\\text{0} & 0 & 1 & 0 & 1\\\\\n\\text{1} & 1 & 0 & 1 & 1\\\\\n\\text{2} & 0 & 1 & 0 & 1\\\\\n\\text{3} & 1 & 1 & 1 & 0\n\\end{array}\n\\]\nA undirected graphs produces symmetric adjancey matrix.\nBased of weight\n\nWeighted\n\nUnweighted\n\nIn weighted graph the values at edges determines that how important that edge is between two nodes whereas in unweighted graph all weights are equal and their value is 1.\n\n\n\n\n\n\n\n\n\nLet’s create adjancey matrix for a weighted graph\n\\[\nAdjancey Matrix = \\begin{array}{c|ccc}\n    & \\text{0} & \\text{1} & \\text{2} & \\text{3}\\\\ \\hline\n\\text{0} & 0 & 6 & 0 & 3\\\\\n\\text{1} & 6 & 0 & 1 & 4\\\\\n\\text{2} & 0 & 1 & 0 & 5\\\\\n\\text{3} & 3 & 4 & 5 & 0\n\\end{array}\n\\]"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#why-do-we-need-gnn",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#why-do-we-need-gnn",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Why do we need GNN?",
+    "text": "Why do we need GNN?\nTraditional neural networks can deal with data like images, text which belongs to data called as euclidean data. But many real world problems cannot be considered as eculidean data and so these non-euclidean data can be modeled as a graph. Also we can train these graphs to do many interesting tasks.\nExamples of non-euclidean data :-\n\nSocial Networks\n\nMolecules\n\nAmino acids in protein\n\nAll these non-eculidean structres can be modeled as graphs."
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#where-is-graph-data-used",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#where-is-graph-data-used",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Where is Graph Data used?",
+    "text": "Where is Graph Data used?\n\nAnalyse social relationship, interaction and recommend content\n\nModel user-item interactions and make personalized recommendations\nUse knowledge graphs to organize and connect structure data"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#tasks-with-gnn",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#tasks-with-gnn",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Tasks with GNN",
+    "text": "Tasks with GNN\n\nNode level\nEdge level\nGraph level"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#what-happens-in-gnn",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#what-happens-in-gnn",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "What happens in GNN ?",
+    "text": "What happens in GNN ?\nStep 1 - GNN convert all the features vectors into nodes\nStep 2 - Message Passing\nStep 3 - Message Aggregation\nStep 4 - Node updation\nThis happens in 1 hidden layer of graph neural networks and likewise there are multiple hidden layers are present in GNN and this process iterates over multiple layers. The output of it can be\n\nnode embedding\nedge embedding\ngraph embedding"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#message-passing-mechanism",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#message-passing-mechanism",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Message Passing Mechanism",
+    "text": "Message Passing Mechanism\nProcess by which nodes in a graph exchange information with neighbouring nodes inorder to update their own information.Let’s understand this with an example.\nSuppose there are 4 colleagues A, B, C, D who planned to go for trip and but didn’t finalized their destination yet.So they are going to finalize their destination.\nFirst A takes a paper and writes its preferred destination on a paper and pass it to friend B. Now B reads location written by A and based on location written by A, the colleague B updates its location on the paper and passes paper to C and then C reads the location written by A and B, then he further updates the location again and pass it D. Now D gets to know all these locations written by A , B and C and based on that he writes its preferred location and he summarize at end.\nIn above anology 4 colleagues are 4 nodes and paper these colleagues passed is message function and destination written on these paper are features of the graph."
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#types-of-gnn",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#types-of-gnn",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Types of GNN",
+    "text": "Types of GNN\n\nGraph Convolutional Networks (GCN)\n\nGraph Auto-Encoder Networks\n\nRecurrent Graph Neural Networks (RGNN)\n\nGated Graph Neural Networks (GGNN)"
+  },
+  {
+    "objectID": "myblog/posts/introduction-to-graph-neural-networks/index.html#disadvantages-of-graphs-neural-networks",
+    "href": "myblog/posts/introduction-to-graph-neural-networks/index.html#disadvantages-of-graphs-neural-networks",
+    "title": "Introduction to Graph Neural Networks",
+    "section": "Disadvantages of Graphs Neural Networks",
+    "text": "Disadvantages of Graphs Neural Networks\nThere are few drawbacks of using GNNs. Understanding them help us to determine when to use them and how to optimize the performance of our machine learning model.\n\nNeural Networks can have multiple layers and can go deep to obtain better performance however GNNs are shallow networks mostly with 3 layers. This limit us from achieving SOTA performance on large datasets.\nThe graph structures are constantly changing, making it harder to train a model on it.\nDeploying the model to production faces scalability issues as these networks are computationally expensive."
   }
 ]

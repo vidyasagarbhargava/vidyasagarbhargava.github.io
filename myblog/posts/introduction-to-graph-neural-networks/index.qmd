@@ -1,0 +1,393 @@
+---
+title: "Introduction to Graph Neural Networks"
+description: A Graph is the type of data structure that contains nodes and edges. A node can be a person, place, or thing, and the edges define the relationship between nodes. The edges can be directed and undirected based on directional dependencies. 
+author: "Vidyasagar Bhargava"
+date: "8/6/2024"
+categories:
+  - graphs
+  - neural networks
+---
+
+
+## Graph Data Structure
+
+A Graph consists of edges and nodes. These nodes are also known as vertices. Now these nodes are the information centers of the graph and edges are the channels through which this information flows from one node to its neighbouring node.
+
+
+
+$$
+G = (V, E)
+$$
+
+
+
+
+```{python}
+
+# | echo: false
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create the directed graph
+H = nx.DiGraph()
+
+# Adding nodes
+H.add_nodes_from(
+    [
+        (0, {"color": "blue", "size": 250}),
+        (1, {"color": "yellow", "size": 400}),
+        (2, {"color": "orange", "size": 150}),
+        (3, {"color": "red", "size": 600}),
+    ]
+)
+
+# Adding edges
+H.add_edges_from([(0, 1), (1, 2), (1, 0), (1, 3), (2, 3), (3, 0)])
+
+# Getting node attributes
+node_colors = nx.get_node_attributes(H, "color").values()
+colors = list(node_colors)
+node_sizes = nx.get_node_attributes(H, "size").values()
+sizes = list(node_sizes)
+
+# Plotting the graph
+plt.figure(figsize=(8, 6))  # Set the figure size
+ax = plt.gca()  # Get current axis
+
+# Set both the figure and axis background to transparent
+plt.gcf().patch.set_alpha(0.0)  # Transparent figure background
+ax.set_facecolor("none")  # Transparent axis background
+
+nx.draw(H, with_labels=True, node_color=colors, node_size=sizes)
+
+# Save the figure with a transparent background
+plt.savefig("graph.png", format="png", transparent=True)
+
+# Display the plot
+plt.show()
+```
+
+
+We represent a graph using Adjancency Matrix. An Adjancey matrix is square matrix $v*v$ where $v$ is number of nodes in graph
+
+
+$$
+Adjancey Matrix = \begin{array}{c|ccc}
+    & \text{0} & \text{1} & \text{2} & \text{3}\\ \hline
+\text{0} & 0 & 1 & 0 & 0\\
+\text{1} & 1 & 0 & 1 & 1\\
+\text{2} & 0 & 0 & 0 & 1\\
+\text{3} & 1 & 0 & 0 & 0
+\end{array}
+$$
+
+
+> To understand how to build an adjancey matrix we have to understand the types of graphs.
+
+## Types of Graphs
+
+**Based on directions**  
+
+- Directed  
+- Undirected  
+
+
+In directed graph information flows in a particular direction whereas in Undirected graph there is no particular direction for flow of direction.
+
+
+
+```{python}
+
+# | echo: false
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+
+# Create the directed graph
+H = nx.DiGraph()
+
+# Adding nodes
+H.add_nodes_from(
+    [
+        (0, {"color": "blue", "size": 250}),
+        (1, {"color": "yellow", "size": 400}),
+        (2, {"color": "orange", "size": 150}),
+        (3, {"color": "red", "size": 600}),
+    ]
+)
+
+# Adding edges
+H.add_edges_from([(0, 1), (1, 2), (1, 0), (1, 3), (2, 3), (3, 0)])
+
+# Getting node attributes
+node_colors = nx.get_node_attributes(H, "color").values()
+colors = list(node_colors)
+node_sizes = nx.get_node_attributes(H, "size").values()
+sizes = list(node_sizes)
+
+# Create the undirected graph using the same nodes and edges
+G = nx.Graph()
+G.add_nodes_from(H.nodes(data=True))
+G.add_edges_from(H.edges())
+
+# Set up the figure with two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6))  # 1 row, 2 columns
+
+# Plot the directed graph on the first subplot
+ax1.set_title("Directed Graph")
+ax1.set_facecolor("none")  # Transparent axis background
+nx.draw(H, ax=ax1, with_labels=True, node_color=colors, node_size=sizes)
+
+# Plot the undirected graph on the second subplot
+ax2.set_title("Undirected Graph")
+ax2.set_facecolor("none")  # Transparent axis background
+nx.draw(G, ax=ax2, with_labels=True, node_color=colors, node_size=sizes)
+
+# Set the figure background to transparent
+plt.gcf().patch.set_alpha(0.0)
+
+# Save the figure with a transparent background (optional)
+plt.savefig("side_by_side_graphs.png", format="png", transparent=True)
+
+# Display the plot
+plt.show()
+```
+
+
+
+
+This directed graph is similar to earlier graph and we will get same adjancey matrix for it.
+
+Now let's create adjancey matrix for an undirected graph
+
+$$
+Adjancey Matrix  = \begin{array}{c|ccc}
+    & \text{0} & \text{1} & \text{2} & \text{3}\\ \hline
+\text{0} & 0 & 1 & 0 & 1\\
+\text{1} & 1 & 0 & 1 & 1\\
+\text{2} & 0 & 1 & 0 & 1\\
+\text{3} & 1 & 1 & 1 & 0
+\end{array}
+$$
+
+A undirected graphs produces symmetric adjancey matrix. 
+
+**Based of weight**  
+
+- Weighted   
+- Unweighted  
+
+In weighted graph the values at edges determines that how important that edge is between two nodes whereas in unweighted graph all weights are equal and their value is 1.
+
+```{python}
+
+# | echo: false
+
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Create the unweighted graph
+G_unweighted = nx.Graph()
+
+# Adding nodes
+G_unweighted.add_nodes_from(
+    [
+        (0, {"color": "blue", "size": 250}),
+        (1, {"color": "yellow", "size": 400}),
+        (2, {"color": "orange", "size": 150}),
+        (3, {"color": "red", "size": 600}),
+    ]
+)
+
+# Adding edges without weights
+G_unweighted.add_edges_from([(0, 1), (1, 2), (1, 0), (1, 3), (2, 3), (3, 0)])
+
+# Create the weighted graph using the same nodes but with weights on the edges
+G_weighted = nx.Graph()
+G_weighted.add_nodes_from(G_unweighted.nodes(data=True))
+
+# Adding edges with weights
+G_weighted.add_edges_from(
+    [
+        (0, 1, {"weight": 2}),
+        (1, 2, {"weight": 5}),
+        (1, 0, {"weight": 3}),
+        (1, 3, {"weight": 4}),
+        (2, 3, {"weight": 1}),
+        (3, 0, {"weight": 6}),
+    ]
+)
+
+# Getting node attributes
+node_colors = nx.get_node_attributes(G_unweighted, "color").values()
+colors = list(node_colors)
+node_sizes = nx.get_node_attributes(G_unweighted, "size").values()
+sizes = list(node_sizes)
+
+# Define edge weights for the weighted graph
+edge_weights = nx.get_edge_attributes(G_weighted, "weight")
+
+# Set up the figure with two subplots side by side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 6))  # 1 row, 2 columns
+
+# Plot the unweighted graph on the first subplot
+ax1.set_title("Unweighted Graph")
+ax1.set_facecolor("none")  # Transparent axis background
+nx.draw(G_unweighted, ax=ax1, with_labels=True, node_color=colors, node_size=sizes)
+
+# Plot the weighted graph on the second subplot
+ax2.set_title("Weighted Graph")
+ax2.set_facecolor("none")  # Transparent axis background
+
+# Draw the weighted graph with labels
+pos = nx.spring_layout(G_weighted)  # Positioning for nodes
+
+nx.draw(
+    G_weighted,
+    ax=ax2,
+    with_labels=True,
+    node_color=colors,
+    node_size=sizes,
+    edge_color="black",
+    width=1.0,
+)  # Keep edge width the same
+
+# Draw edge labels
+nx.draw_networkx_edge_labels(
+    G_weighted,
+    pos,
+    edge_labels=edge_weights,
+    ax=ax2,
+    label_pos=0.5,
+    font_size=10,
+    bbox=dict(facecolor="white", edgecolor="none"),
+)
+
+# Set the figure background to transparent
+plt.gcf().patch.set_alpha(0.0)
+
+# Save the figure with a transparent background (optional)
+plt.savefig(
+    "side_by_side_weighted_unweighted_graphs_with_centered_labels.png",
+    format="png",
+    transparent=True,
+)
+
+# Display the plot
+plt.show()
+```
+
+
+Let's create adjancey matrix for a weighted graph  
+
+$$
+Adjancey Matrix = \begin{array}{c|ccc}
+    & \text{0} & \text{1} & \text{2} & \text{3}\\ \hline
+\text{0} & 0 & 6 & 0 & 3\\
+\text{1} & 6 & 0 & 1 & 4\\
+\text{2} & 0 & 1 & 0 & 5\\
+\text{3} & 3 & 4 & 5 & 0
+\end{array}
+$$
+
+
+## Why do we need GNN?
+
+Traditional neural networks can deal with data like images, text which belongs to data called as euclidean data. But many real world problems cannot be considered as eculidean data and so these non-euclidean data can be modeled as a graph. Also we can train these graphs to do many interesting tasks.
+
+Examples of non-euclidean data :- 
+
+- Social Networks  
+- Molecules  
+- Amino acids in protein  
+
+All these non-eculidean structres can be modeled as graphs.
+
+
+## Where is Graph Data used?  
+
+- Analyse social relationship, interaction and recommend content  
+- Model user-item interactions and make personalized recommendations 
+- Use knowledge graphs to organize and connect structure data
+
+
+## Tasks with GNN  
+
+- Node level
+- Edge level
+- Graph level
+
+
+
+## Message Passing Mechanism   
+Process by which nodes in a graph exchange information with neighbouring nodes inorder to update their own information.Let's understand this with an example.
+
+Suppose there are 4 colleagues A, B, C, D who planned to go for trip and but didn't finalized their destination yet.So they are going to finalize their destination.
+
+First A takes a paper and writes its preferred destination on a paper  and pass it to friend B. Now  B reads location written by A and based on location written by A, the colleague B updates its location on the paper and passes paper to C and then C reads the location written by A and B, then he further updates the location again and pass it D. Now D gets to know all these locations written by A , B and C and based on that he writes its preferred location and he summarize at end.
+
+
+In above anology 4 colleagues are 4 nodes and paper these colleagues passed is message function and destination written on these paper are features of the graph.
+
+
+## What happens in GNN ?
+
+Step 1 - GNN convert all the features vectors into nodes  
+Step 2 - Message Passing   
+Step 3 - Message Aggregation    
+Step 4 - Node updation  
+
+
+This happens in 1 hidden layer of graph neural networks and likewise there are multiple hidden layers are present in GNN and this process iterates over multiple layers.  The output of it can be 
+
+-  node embedding
+-  edge embedding
+-  graph embedding 
+
+
+
+## Types of GNN
+
+- Graph Convolutional Networks (GCN)  
+- Graph Auto-Encoder Networks  
+- Recurrent Graph Neural Networks (RGNN)  
+- Gated Graph Neural Networks (GGNN)  
+
+
+
+
+## Disadvantages of Graphs Neural Networks 
+There are few drawbacks of using GNNs. Understanding them help us to determine when to use them and how to optimize the performance of our machine learning model.  
+
+1. Neural Networks can have multiple layers and can go deep to obtain better performance however **GNNs are shallow networks** mostly with 3 layers.  This limit us from achieving SOTA performance on large datasets.  
+
+2. The **graph structures are constantly changing**, making it harder to train a model on it.  
+
+3. Deploying the model to production faces **scalability issues** as these networks are computationally expensive.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@
   {
     "listing": "/myblog/blog.html",
     "items": [
+      "/myblog/posts/introduction-to-graph-neural-networks/index.html",
       "/myblog/posts/seq-to-seq-and-attention-mechanism/index.html",
       "/myblog/posts/pytorch-on-m1-mac/index.html",
       "/myblog/posts/polars-for-featureengineering/index.html",
