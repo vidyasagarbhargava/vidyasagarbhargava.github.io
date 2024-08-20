@@ -1,0 +1,70 @@
+---
+title: "AI Research Scientist/Engineer Program"
+description: Guide to become AI Research Scientist/Engineer focusing on NLP and LLMs in companies like OpenAI, Meta, Anthropic etc.
+author: "Vidyasagar Bhargava"
+date: "8/16/2024"
+categories:
+  - research engineer
+  - research scientist
+  - career
+---
+
+## 
+
+This post is inspired by Harshit Tyagi's amazing github repo [AI Research Program](https://github.com/dswh/ai-research-program) where he created an awesome independent AI research program for those who are interested to apply for research engineer / research scientist roles in companies like Meta, OpenAI , Anthropic etc. I will be focusing on pillar 5 i.e. NLP / LLM Research.
+
+![Advice to learners by Andrej Karpathy](images/paste-1.png){fig-align="center"}
+
+## Key Projects in NLP and LLM Research
+
+In order to gain deep understanding of topics will use karpathy's advice and start with a project and learn things around that project "on demand". Following are the list of projects and topics that I will be focusing on while building the projects in next few posts.
+
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| Project                                                                         | Learning Objectives                      | Evaluation Criteria                                        |
++=================================================================================+==========================================+============================================================+
+| \- Implement word2vec from scratch\                                             | \- Word Vectors/Embeddings\              | \- Accuracy of word embeddings on analogy tasks\           |
+| - Build a custom tokenizer for a specific language or domain\                   | - Tokenization\                          | - Efficiency and coverage of tokenization\                 |
+| - Create a data preprocessing pipeline for a large text corpus                  | - Preprocessing\                         | - Quality and cleanliness of preprocessed data             |
+|                                                                                 | - Data Sampling                          |                                                            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Implement a part-of-speech tagger using HMMs\                                | \- Hidden Markov Models\                 | \- Accuracy on standard POS tagging datasets\              |
+| - Build a spam classifier using Naive Bayes\                                    | - Naive Bayes\                           | - Precision, recall, and F1 score for spam classification\ |
+| - Develop a named entity recognition system using CRFs                          | - Maximum Entropy Markov Models\         | - F1 score on CoNLL 2003 NER dataset                       |
+|                                                                                 | - Conditional Random Fields              |                                                            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Implement a sentiment analysis model using CNNs\                             | \- Feed-forward Neural Networks\         | \- Accuracy on sentiment analysis benchmarks (e.g., IMDb)\ |
+| - Build a language model using LSTMs\                                           | - Recurrent Neural Networks\             | - Perplexity of language model on test set\                |
+| - Create a machine translation system using Transformers                        | - Convolutional Neural Networks\         | - BLEU score for machine translation                       |
+|                                                                                 | - Attention Mechanisms\                  |                                                            |
+|                                                                                 | - Transformers                           |                                                            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Fine-tune GPT-2 for text generation\                                         | \- N-gram Models\                        | \- Perplexity and cross-entropy loss\                      |
+| - Implement a BERT-based question answering system\                             | - Neural Language Models\                | - F1 and Exact Match scores for QA\                        |
+| - Create a multimodal model for image captioning                                | - Autoregressive vs. Autoencoder Models\ | - BLEU, METEOR, and CIDEr scores for image captioning      |
+|                                                                                 | - Large Language Models (LLMs)\          |                                                            |
+|                                                                                 | - Vision-Language Models (VLMs)          |                                                            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Implement different decoding strategies (greedy, beam search, top-k, top-p)\ | \- LLM Alignment\                        | \- Human evaluation of model alignment\                    |
+| - Develop a method to extend context length of a pre-trained LLM\               | - Token Sampling Methods\                | - Quality and diversity of generated text\                 |
+| - Create a personalized language model using adapters                           | - Context Length Extension\              | - Perplexity on long-context tasks\                        |
+|                                                                                 | - Personalization                        | - Personalization accuracy on user-specific tasks          |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Build an end-to-end neural machine translation system\                       | \- Machine Translation\                  | \- BLEU, METEOR scores for MT\                             |
+| - Develop a RAG system for question answering\                                  | - Named Entity Recognition\              | - F1 score for NER\                                        |
+| - Create a document understanding system for invoice processing                 | - Textual Entailment\                    | - Accuracy on textual entailment datasets (e.g., SNLI)\    |
+|                                                                                 | - Retrieval Augmented Generation (RAG)\  | - Relevance and accuracy of RAG responses                  |
+|                                                                                 | - Document Intelligence                  |                                                            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Construct a knowledge graph from a text corpus\                              | \- Knowledge Graphs\                     | \- Coverage and accuracy of extracted knowledge\           |
+| - Develop a question answering system using a knowledge graph                   | - Semantic Networks                      | - Precision and recall of graph-based QA system            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Develop a fact-checking system for LLM outputs\                              | \- Hallucination Mitigation\             | \- Reduction in hallucination rate\                        |
+| - Create an AI text detector\                                                   | - AI Text Detection\                     | - Accuracy of AI text detection\                           |
+| - Implement bias mitigation techniques in word embeddings                       | - Bias Detection and Mitigation          | - Reduction in bias measures (e.g., WEAT score)            |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Evaluate an LLM on multiple NLP tasks using GLUE benchmark\                  | \- LLM/VLM Benchmarks\                   | \- Performance across multiple benchmarks\                 |
+| - Implement and compare different evaluation metrics for a specific NLP task    | - Task-specific Metrics                  | - Inter-annotator agreement for human evaluation           |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
+| \- Design and implement an LLMOps pipeline\                                     | \- Large Language Model Ops (LLMOps)\    | \- Efficiency and reliability of deployment pipeline\      |
+| - Conduct an ethical audit of an NLP system                                     | - Ethical Considerations                 | - Compliance with ethical AI principles                    |
++---------------------------------------------------------------------------------+------------------------------------------+------------------------------------------------------------+
