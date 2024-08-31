@@ -6,6 +6,7 @@
   {
     "listing": "/myblog/blog.html",
     "items": [
+      "/myblog/posts/polars_vs_pandas_vs_pyspark/index.html",
       "/myblog/posts/ai-research-scientist/index.html",
       "/myblog/posts/introduction-to-graph-neural-networks/index.html",
       "/myblog/posts/seq-to-seq-and-attention-mechanism/index.html",
