@@ -475,6 +475,10 @@ plt.show()
 
 GELU non linearity is better than ReLU and ELU activations and finds performance improvements across all tasks in domains of computer vision, natural language processing, and speech recognition.
 
+::: callout-note
+GELU activation function was implemented in GPT-2 models
+:::
+
 #### Swish
 
 In 2018 the paper [[Searching for activation functions]{.underline}](https://arxiv.org/pdf/1710.05941.pdf?ref=blog.paperspace.com) by researchers at Google Brain team proposes a novel activation function called Swish, which was discovered using a Neural Architecture Search (NAS) approach and showed significant improvement in performance compared to standard activation functions like ReLU or Leaky ReLU.
