@@ -38,7 +38,7 @@ I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, workin
 * Root Cause Analysis for Low Range Trips in EVs  
 * Predictive Maintenance of Brakes in two wheelers  
 * Range Prediction and Analysis for EVs
-* Cell Imbalance issues in battries 
+* Cell Imbalance issues in batteries 
 * Time to charge for EV Battery
 * Voice Assistant using RAG and LLMs
 * Churn Prediction in Telecom Industry
