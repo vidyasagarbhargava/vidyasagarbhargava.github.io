@@ -26,7 +26,7 @@
         "G = (V, E)\n",
         "$$\n"
       ],
-      "id": "3af124f4"
+      "id": "d06b5a91"
     },
     {
       "cell_type": "code",
@@ -75,7 +75,7 @@
         "# Display the plot\n",
         "plt.show()"
       ],
-      "id": "9aea8c69",
+      "id": "2d291613",
       "execution_count": null,
       "outputs": []
     },
@@ -109,7 +109,7 @@
         "\n",
         "In directed graph information flows in a particular direction whereas in Undirected graph there is no particular direction for flow of direction.\n"
       ],
-      "id": "c0849030"
+      "id": "30175257"
     },
     {
       "cell_type": "code",
@@ -170,7 +170,7 @@
         "# Display the plot\n",
         "plt.show()"
       ],
-      "id": "44da19a1",
+      "id": "85147126",
       "execution_count": null,
       "outputs": []
     },
@@ -201,7 +201,7 @@
         "\n",
         "In weighted graph the values at edges determines that how important that edge is between two nodes whereas in unweighted graph all weights are equal and their value is 1.\n"
       ],
-      "id": "802f87fc"
+      "id": "f66a50ae"
     },
     {
       "cell_type": "code",
@@ -302,7 +302,7 @@
         "# Display the plot\n",
         "plt.show()"
       ],
-      "id": "3e013ee7",
+      "id": "aedc7f72",
       "execution_count": null,
       "outputs": []
     },
@@ -397,7 +397,7 @@
         "\n",
         "3. Deploying the model to production faces **scalability issues** as these networks are computationally expensive.  \n"
       ],
-      "id": "f86a4f76"
+      "id": "e4301860"
     }
   ],
   "metadata": {

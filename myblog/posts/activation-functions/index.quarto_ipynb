@@ -78,7 +78,7 @@
         "\n",
         "code for binary step function\n"
       ],
-      "id": "3ddaa294"
+      "id": "97baa375"
     },
     {
       "cell_type": "code",
@@ -87,7 +87,7 @@
         "def binary_step_function(x):\n",
         "    return np.where(x < 0, 0, 1)"
       ],
-      "id": "c35515b0",
+      "id": "6d9d19de",
       "execution_count": null,
       "outputs": []
     },
@@ -97,7 +97,7 @@
       "source": [
         "plot for binary step function\n"
       ],
-      "id": "1823d11f"
+      "id": "85ff8d76"
     },
     {
       "cell_type": "code",
@@ -120,7 +120,7 @@
         "plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)\n",
         "plt.show()"
       ],
-      "id": "500efb59",
+      "id": "097dbff2",
       "execution_count": null,
       "outputs": []
     },
@@ -144,7 +144,7 @@
         "\n",
         "code for linear activation function\n"
       ],
-      "id": "8ade6594"
+      "id": "c4c278c4"
     },
     {
       "cell_type": "code",
@@ -153,7 +153,7 @@
         "def linear_activation(x):\n",
         "    return x"
       ],
-      "id": "6fb38bfb",
+      "id": "b7ba40d2",
       "execution_count": null,
       "outputs": []
     },
@@ -163,7 +163,7 @@
       "source": [
         "plot for linear activation function\n"
       ],
-      "id": "999ba410"
+      "id": "67f40592"
     },
     {
       "cell_type": "code",
@@ -183,7 +183,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "3c87344b",
+      "id": "d5802c67",
       "execution_count": null,
       "outputs": []
     },
@@ -209,7 +209,7 @@
         "\n",
         "code for sigmoid activation function\n"
       ],
-      "id": "b3c8c9c9"
+      "id": "1c4e36aa"
     },
     {
       "cell_type": "code",
@@ -220,7 +220,7 @@
         "def sigmoid(x):\n",
         "    return 1/(1+ np.exp(-x))"
       ],
-      "id": "679b6364",
+      "id": "4188b5b1",
       "execution_count": null,
       "outputs": []
     },
@@ -230,7 +230,7 @@
       "source": [
         "plot for sigmoid activation function\n"
       ],
-      "id": "fc768078"
+      "id": "49f8020b"
     },
     {
       "cell_type": "code",
@@ -249,7 +249,7 @@
         "plt.grid(color = 'gray', linestyle = '--', linewidth = 0.5)  \n",
         "plt.show() "
       ],
-      "id": "306aea99",
+      "id": "37f51036",
       "execution_count": null,
       "outputs": []
     },
@@ -281,7 +281,7 @@
         "\n",
         "code for Tanh activation function\n"
       ],
-      "id": "1926a44b"
+      "id": "5e5d65d9"
     },
     {
       "cell_type": "code",
@@ -292,7 +292,7 @@
         "def tanh(x):\n",
         "    return (np.exp(2*x) - 1) / (np.exp(2*x) + 1)"
       ],
-      "id": "6bc395c8",
+      "id": "276456e2",
       "execution_count": null,
       "outputs": []
     },
@@ -302,7 +302,7 @@
       "source": [
         "plot for Tanh activation function\n"
       ],
-      "id": "76bc002e"
+      "id": "8f3c544d"
     },
     {
       "cell_type": "code",
@@ -320,7 +320,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "da1f2b94",
+      "id": "5eafb046",
       "execution_count": null,
       "outputs": []
     },
@@ -346,7 +346,7 @@
         "\n",
         "code for ReLU activation function\n"
       ],
-      "id": "d8196169"
+      "id": "e2273788"
     },
     {
       "cell_type": "code",
@@ -357,7 +357,7 @@
         "def relu(x):\n",
         "    return np.maximum(0, x)"
       ],
-      "id": "6b55469d",
+      "id": "588df785",
       "execution_count": null,
       "outputs": []
     },
@@ -367,7 +367,7 @@
       "source": [
         "plot for ReLU activation function\n"
       ],
-      "id": "666bae74"
+      "id": "76b67132"
     },
     {
       "cell_type": "code",
@@ -387,7 +387,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "da860034",
+      "id": "ce9466c7",
       "execution_count": null,
       "outputs": []
     },
@@ -426,7 +426,7 @@
         "\n",
         "code for Leaky ReLU activation function\n"
       ],
-      "id": "39f0b270"
+      "id": "0a0aee52"
     },
     {
       "cell_type": "code",
@@ -437,7 +437,7 @@
         "def leaky_relu(x):\n",
         "    return np.maximum(0.01*x, x)"
       ],
-      "id": "9af6f4e4",
+      "id": "1173d31e",
       "execution_count": null,
       "outputs": []
     },
@@ -447,7 +447,7 @@
       "source": [
         "plot for Leaky ReLU activation function\n"
       ],
-      "id": "9c95a7f8"
+      "id": "eaaf6aec"
     },
     {
       "cell_type": "code",
@@ -467,7 +467,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "a936183b",
+      "id": "52e0e66a",
       "execution_count": null,
       "outputs": []
     },
@@ -497,7 +497,7 @@
         "\n",
         "code for Parametric ReLU activation function\n"
       ],
-      "id": "8ff74a1c"
+      "id": "6ae2f6ab"
     },
     {
       "cell_type": "code",
@@ -512,7 +512,7 @@
         "    def __call__(self, x):\n",
         "        return np.maximum(self.alpha * x, x)\n"
       ],
-      "id": "4ab34060",
+      "id": "d392c6a5",
       "execution_count": null,
       "outputs": []
     },
@@ -522,7 +522,7 @@
       "source": [
         "plot for Parametric ReLU activation function\n"
       ],
-      "id": "ed78d3cd"
+      "id": "b738a656"
     },
     {
       "cell_type": "code",
@@ -546,7 +546,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "a022bfd2",
+      "id": "8c44ad44",
       "execution_count": null,
       "outputs": []
     },
@@ -571,7 +571,7 @@
         "\n",
         "code for ELU activation function\n"
       ],
-      "id": "f7016ccc"
+      "id": "dd109891"
     },
     {
       "cell_type": "code",
@@ -582,7 +582,7 @@
         "def elu(x, alpha=1.0):\n",
         "    return np.where(x >= 0, x, alpha * (np.exp(x) - 1))"
       ],
-      "id": "41afb651",
+      "id": "a29dc079",
       "execution_count": null,
       "outputs": []
     },
@@ -592,7 +592,7 @@
       "source": [
         "plot for ELU activation function\n"
       ],
-      "id": "dee8f22c"
+      "id": "5748e054"
     },
     {
       "cell_type": "code",
@@ -614,7 +614,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "a81dd630",
+      "id": "b01d4632",
       "execution_count": null,
       "outputs": []
     },
@@ -644,7 +644,7 @@
         "\n",
         "code for GELU activation function\n"
       ],
-      "id": "78539d7b"
+      "id": "6079eb7c"
     },
     {
       "cell_type": "code",
@@ -655,7 +655,7 @@
         "def gelu(x):\n",
         "    return 0.5 * x * (1 + np.tanh(np.sqrt(2 / np.pi) * (x + 0.044715 * x**3)))"
       ],
-      "id": "e03fb97e",
+      "id": "e1a8004e",
       "execution_count": null,
       "outputs": []
     },
@@ -665,7 +665,7 @@
       "source": [
         "plot for GELU activation function\n"
       ],
-      "id": "ce3c3668"
+      "id": "5f365d9a"
     },
     {
       "cell_type": "code",
@@ -687,7 +687,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "44f6a0b1",
+      "id": "bfed62a4",
       "execution_count": null,
       "outputs": []
     },
@@ -729,7 +729,7 @@
         "\n",
         "code for Swish activation function\n"
       ],
-      "id": "16b29111"
+      "id": "5ea2e574"
     },
     {
       "cell_type": "code",
@@ -740,7 +740,7 @@
         "def swish(x,beta = 1.0):\n",
         "    return x*(1/(1+np.exp(-beta*x)))"
       ],
-      "id": "2f10d48d",
+      "id": "bc7b0021",
       "execution_count": null,
       "outputs": []
     },
@@ -750,7 +750,7 @@
       "source": [
         "plot for Swish activation function\n"
       ],
-      "id": "69fe06f0"
+      "id": "ac6e6329"
     },
     {
       "cell_type": "code",
@@ -772,7 +772,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "7876900f",
+      "id": "2b8bd3c8",
       "execution_count": null,
       "outputs": []
     },
@@ -795,7 +795,7 @@
         "\n",
         "code for SELU activation function\n"
       ],
-      "id": "f3b286ce"
+      "id": "37aab02c"
     },
     {
       "cell_type": "code",
@@ -806,7 +806,7 @@
         "def selu(x, alpha=1.67326, lambda_=1.0507):\n",
         "    return lambda_ * np.where(x > 0, x, alpha * (np.exp(x) - 1))"
       ],
-      "id": "c2d5c7ba",
+      "id": "fe7a61ed",
       "execution_count": null,
       "outputs": []
     },
@@ -816,7 +816,7 @@
       "source": [
         "plot for SELU activation function\n"
       ],
-      "id": "c9914898"
+      "id": "1c257096"
     },
     {
       "cell_type": "code",
@@ -838,7 +838,7 @@
         "plt.grid(color='gray', linestyle='--', linewidth=0.5)\n",
         "plt.show()"
       ],
-      "id": "dff75590",
+      "id": "4db0365a",
       "execution_count": null,
       "outputs": []
     },
@@ -862,7 +862,7 @@
         "\n",
         "code for Softmax activation function\n"
       ],
-      "id": "ddb6141a"
+      "id": "9933f176"
     },
     {
       "cell_type": "code",
@@ -874,7 +874,7 @@
         "    exp_z = np.exp(z)\n",
         "    return exp_z / np.sum(exp_z)"
       ],
-      "id": "3120644d",
+      "id": "ce151eb4",
       "execution_count": null,
       "outputs": []
     },
@@ -899,7 +899,7 @@
         "    -   Don't use sigmoid and Tanh activation functions in hidden layer as they can cause vanishing gradient problem.\n",
         "    -   Swish function is used in neural networks having a depth greater than 40 layers."
       ],
-      "id": "12c27b51"
+      "id": "7a521fc7"
     }
   ],
   "metadata": {

@@ -31,7 +31,7 @@
         "\n",
         "where $\\bar{x}$ = sample mean, $s$ = sample standard deviation, $z$ = confidence level value and $n$ =sample size\n"
       ],
-      "id": "a6e3eae1"
+      "id": "9fd5d616"
     },
     {
       "cell_type": "code",
@@ -75,7 +75,7 @@
         "# Show the plot\n",
         "plt.show()"
       ],
-      "id": "a1412444",
+      "id": "9f8c3da8",
       "execution_count": null,
       "outputs": []
     },
@@ -97,7 +97,7 @@
         "\n",
         "CI assumes that your data is normally distributed but which may not always be the case."
       ],
-      "id": "01ae8c88"
+      "id": "4a4edd34"
     }
   ],
   "metadata": {

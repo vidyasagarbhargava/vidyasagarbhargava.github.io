@@ -31,7 +31,7 @@
         "\n",
         "Lets start with creating some tensors"
       ],
-      "id": "b0ddbcf7"
+      "id": "323d9ee5"
     },
     {
       "cell_type": "code",
@@ -48,7 +48,7 @@
         "\n",
         "    return x, y"
       ],
-      "id": "8e6f1704",
+      "id": "864493fe",
       "execution_count": null,
       "outputs": []
     },
@@ -58,7 +58,7 @@
       "source": [
         "moving tensor to cpu\n"
       ],
-      "id": "f84ea597"
+      "id": "26ae7110"
     },
     {
       "cell_type": "code",
@@ -67,7 +67,7 @@
         "device = torch.device(\"cpu\")\n",
         "x, y = create_torch_tensors(device)"
       ],
-      "id": "2d1d57e5",
+      "id": "1d12cf7d",
       "execution_count": null,
       "outputs": []
     },
@@ -77,7 +77,7 @@
       "source": [
         "Multiplying the tensors on `cpu` device.\n"
       ],
-      "id": "3d262fca"
+      "id": "81288207"
     },
     {
       "cell_type": "code",
@@ -86,7 +86,7 @@
         "%%timeit\n",
         "x * y"
       ],
-      "id": "a55eade9",
+      "id": "26e5be17",
       "execution_count": null,
       "outputs": []
     },
@@ -96,7 +96,7 @@
       "source": [
         "Now run the same operation using gpu of mac and see how much is improve.\n"
       ],
-      "id": "d314b476"
+      "id": "a0478013"
     },
     {
       "cell_type": "code",
@@ -105,7 +105,7 @@
         "device = torch.device(\"mps\")\n",
         "x, y = create_torch_tensors(device)"
       ],
-      "id": "ab35fe22",
+      "id": "c0faf281",
       "execution_count": null,
       "outputs": []
     },
@@ -115,7 +115,7 @@
       "source": [
         "Multiplying the tensors on `mps` device."
       ],
-      "id": "7e2f7e30"
+      "id": "badc47f6"
     },
     {
       "cell_type": "code",
@@ -124,7 +124,7 @@
         "%%timeit\n",
         "x * y"
       ],
-      "id": "d9823beb",
+      "id": "ff325a51",
       "execution_count": null,
       "outputs": []
     },
@@ -134,7 +134,7 @@
       "source": [
         "We can see there is significant improvement in speed when doing tensor operation using gpu."
       ],
-      "id": "3af2b1dd"
+      "id": "8093e286"
     }
   ],
   "metadata": {
