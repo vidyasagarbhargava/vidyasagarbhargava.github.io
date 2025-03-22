@@ -135,10 +135,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Blog</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../research/research.html"> 
-<span class="menu-text">Research Papers</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../../../london.html"> 
 <span class="menu-text">London</span></a>
   </li>  
@@ -265,7 +261,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<div id="cell-2" class="cell" data-execution_count="1">
+<div id="9b7e1915" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.read_csv(<span class="st">"StudentsPerformance.csv"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -308,7 +304,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -330,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -341,7 +337,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>4</td>
 <td>"male"</td>
 <td>"group A"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"none"</td>
 <td>47</td>
@@ -369,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Selecting 1 column</li>
 </ul>
-<div id="cell-4" class="cell" data-execution_count="2">
+<div id="572c60c2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col(<span class="st">'gender'</span>)).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div><style>
@@ -413,7 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Selecting two or more columns</li>
 </ul>
-<div id="cell-6" class="cell" data-execution_count="3">
+<div id="0e316250" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col([<span class="st">'gender'</span>, <span class="st">'math score'</span>])).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div><style>
@@ -464,7 +460,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Selecting all the columns</li>
 </ul>
-<div id="cell-8" class="cell" data-execution_count="4">
+<div id="a36350aa" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df.select(pl.col(<span class="st">'*'</span>)).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div><style>
@@ -505,7 +501,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -527,7 +523,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -538,7 +534,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>4</td>
 <td>"male"</td>
 <td>"group A"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"none"</td>
 <td>47</td>
@@ -567,7 +563,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Creating a new column “sum” by summing <code>math score</code> and <code>reading score</code></li>
 </ul>
-<div id="cell-10" class="cell" data-execution_count="5">
+<div id="c931df00" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df.with_columns(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'math score'</span>) <span class="op">+</span> pl.col(<span class="st">'reading score'</span>)).alias(<span class="st">'sum'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -612,7 +608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -636,7 +632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -648,7 +644,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>4</td>
 <td>"male"</td>
 <td>"group A"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"none"</td>
 <td>47</td>
@@ -680,7 +676,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Simple filtering</p>
 <p>selecting <code>female</code> students</p></li>
 </ul>
-<div id="cell-12" class="cell" data-execution_count="6">
+<div id="1632248f" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(pl.col(<span class="st">'gender'</span>)<span class="op">==</span><span class="st">'female'</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div><style>
@@ -721,7 +717,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -743,7 +739,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -754,7 +750,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>6</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>71</td>
@@ -781,7 +777,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Multiple filtering</p>
 <p>selecting <code>female</code> students those belong to <code>group B</code></p></li>
 </ul>
-<div id="cell-14" class="cell" data-execution_count="7">
+<div id="1f6289f9" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">filter</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'gender'</span>)<span class="op">==</span><span class="st">'female'</span>) <span class="op">&amp;</span> </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'race/ethnicity'</span>)<span class="op">==</span><span class="st">'group B'</span>)</span>
@@ -825,7 +821,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -836,7 +832,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -847,7 +843,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>6</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>71</td>
@@ -884,7 +880,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="join" class="level2">
 <h2 class="anchored" data-anchor-id="join">4. Join</h2>
-<div id="cell-16" class="cell" data-execution_count="8">
+<div id="fd323b73" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pl.read_csv(<span class="st">'LanguageScore.csv'</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.join(df2, on<span class="op">=</span><span class="st">"id"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -928,7 +924,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -952,7 +948,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -964,7 +960,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>4</td>
 <td>"male"</td>
 <td>"group A"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"none"</td>
 <td>47</td>
@@ -992,7 +988,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="concat" class="level2">
 <h2 class="anchored" data-anchor-id="concat">Concat</h2>
-<div id="cell-18" class="cell" data-execution_count="9">
+<div id="e8b3c55c" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df2.drop(<span class="st">"id"</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pl.concat([df, df2], how<span class="op">=</span><span class="st">"horizontal"</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -1036,7 +1032,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>1</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>72</td>
@@ -1060,7 +1056,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>3</td>
 <td>"female"</td>
 <td>"group B"</td>
-<td>"master's degre…</td>
+<td>"master's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>90</td>
@@ -1072,7 +1068,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>4</td>
 <td>"male"</td>
 <td>"group A"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"none"</td>
 <td>47</td>
@@ -1101,8 +1097,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="group-by" class="level2">
 <h2 class="anchored" data-anchor-id="group-by">5. Group By</h2>
 <p>Count total elements for each <code>race/ethnicity</code></p>
-<div id="cell-20" class="cell" data-execution_count="10">
+<div id="706d0c51" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df.group_by(<span class="st">'race/ethnicity'</span>).count()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/var/folders/qd/nnwwkgqd7m11zrq6syq4q8c80000gn/T/ipykernel_26980/1267365750.py:1: DeprecationWarning: `GroupBy.count` is deprecated. It has been renamed to `len`.
+  df.group_by('race/ethnicity').count()</code></pre>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div><style>
 .dataframe > thead > tr,
@@ -1125,20 +1125,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>"group B"</td>
-<td>190</td>
+<td>"group D"</td>
+<td>262</td>
 </tr>
 <tr class="even">
 <td>"group A"</td>
 <td>89</td>
 </tr>
 <tr class="odd">
-<td>"group D"</td>
-<td>262</td>
-</tr>
-<tr class="even">
 <td>"group C"</td>
 <td>319</td>
+</tr>
+<tr class="even">
+<td>"group B"</td>
+<td>190</td>
 </tr>
 <tr class="odd">
 <td>"group E"</td>
@@ -1153,8 +1153,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="aggregate" class="level2">
 <h2 class="anchored" data-anchor-id="aggregate">6. Aggregate</h2>
 <p>average <code>math score</code> for females and males</p>
-<div id="cell-22" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.group_by(<span class="st">'gender'</span>).agg(pl.col(<span class="st">'math score'</span>).mean().alias(<span class="st">'mean_score'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="adbf96f1" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.group_by(<span class="st">'gender'</span>).agg(pl.col(<span class="st">'math score'</span>).mean().alias(<span class="st">'mean_score'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div><style>
 .dataframe > thead > tr,
@@ -1177,12 +1177,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td>"male"</td>
-<td>68.728216</td>
-</tr>
-<tr class="even">
 <td>"female"</td>
 <td>63.633205</td>
+</tr>
+<tr class="even">
+<td>"male"</td>
+<td>68.728216</td>
 </tr>
 </tbody>
 </table>
@@ -1193,8 +1193,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sort" class="level2">
 <h2 class="anchored" data-anchor-id="sort">7. Sort</h2>
 <p>sort the dataframe by <code>math score</code></p>
-<div id="cell-24" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.sort(<span class="st">'math score'</span>,descending<span class="op">=</span><span class="va">True</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="265554eb" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df.sort(<span class="st">'math score'</span>,descending<span class="op">=</span><span class="va">True</span>).head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div><style>
 .dataframe > thead > tr,
@@ -1234,7 +1234,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>150</td>
 <td>"male"</td>
 <td>"group E"</td>
-<td>"associate's de…</td>
+<td>"associate's degree"</td>
 <td>"free/reduced"</td>
 <td>"completed"</td>
 <td>100</td>
@@ -1256,7 +1256,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>459</td>
 <td>"female"</td>
 <td>"group E"</td>
-<td>"bachelor's deg…</td>
+<td>"bachelor's degree"</td>
 <td>"standard"</td>
 <td>"none"</td>
 <td>100</td>

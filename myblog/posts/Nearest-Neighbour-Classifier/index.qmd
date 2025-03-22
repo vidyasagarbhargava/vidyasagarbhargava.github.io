@@ -1,0 +1,221 @@
+---
+title: "Nearest Neighbour Classifier"
+description: "Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples."
+author: "Vidyasagar Bhargava"
+date: "03/06/2020"
+draft: true
+categories:
+  - machine learning
+  - supervised learning
+  - algorithm
+  - classifier
+title-block-banner: true
+---
+
+![](https://i.imgur.com/bpU9JuI.gif)
+
+
+# Introduction
+Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.
+
+Nearest Neighbors works well for classification task where the relationships among the features and target classes are numerous and extremely difficult to understand but the items of similar class tend to be homogeneous.
+
+Nearest Neighbor classifier struggles most when there is no clear distinction exists among the groups.
+
+
+
+# k-NN algorithm
+k-Nearest Neighbor algorithm is an example of nearest neighbor classifier.
+
+## Strength
+* Simple and effective
+* Makes no assumption about data
+* Fast Training Process
+
+
+## Weakness
+* Doesn’t produce model, limiting the ability to understand how features are related to class
+* Requires selection of k
+* Slow classification phase
+* Categorical features and missing data require pre processing
+
+
+The k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.
+
+For finding the distance k-NN algorithm uses **Euclidean distance**.
+
+
+
+# Choosing an appropriate k
+Choosing the value of k determines how well the model will generalize to future data. Choosing a large k reduces the impact or variance caused by noisy data but can bias the learner so that it runs the risk of ignoring small, but important pattern.
+
+In Practice choosing k depends on the difficulty of the concept to be learned and the number of records in training data.
+
+* Start with k value equal to the square root of the number of training examples.
+* Using cross validation to determine the best k value.
+* Weighted voting is one of interesting way to solve this problem. By giving higher weight to close neighbors.
+
+
+# k-NN from scratch
+* Compute distances between x and all examples in the training set
+* Sort by distance and return indexes of the first k neighbors
+* Extract the labels of the k nearest neighbor training samples
+* Return the most common class label
+
+
+```{python}
+import numpy as np
+from collections import Counter
+def euclidean_distance(x1, x2):
+        return np.sqrt(np.sum((x1 - x2)**2))
+```
+
+We used euclidean distance for calculating the nearest neighbors.
+
+Now we will define our KNN Class
+
+
+```{python}
+class KNN:
+    def __init__(self, k=3):
+        self.k = k
+
+    def fit(self, X, y):
+        self.X_train = X
+        self.y_train = y
+
+    def predict(self, X):
+        y_pred = [self._predict(x) for x in X]
+        return np.array(y_pred)
+
+    def _predict(self, x):
+        # Compute distances between x and all examples in the training set
+        distances = [euclidean_distance(x, x_train) for x_train in self.X_train]
+        # Sort by distance and return indexes of the first k neighbors
+        k_idx = np.argsort(distances)[:self.k]
+        # Extract the labels of the k nearest neighbor training samples
+        k_neighbor_labels = [self.y_train[i] for i in k_idx]  
+        # return the most common class label
+        most_common = Counter(k_neighbor_labels).most_common(1)
+        return most_common[0][0]
+```
+
+We are going to use iris dataset to test our KNN model that we created !!!
+
+
+
+
+```{python}
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+
+iris = datasets.load_iris()
+
+X, y = iris.data, iris.target
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1234)
+
+
+clf = KNN()
+clf.fit(X_train, y_train)
+
+
+def accuracy(y_true, y_pred):
+    accuracy = np.sum(y_true == y_pred) / len(y_true)
+    return accuracy
+
+
+predictions = clf.predict(X_test)
+print("custom KNN classification accuracy", accuracy(y_test, predictions))
+```
+
+# k-NN Classifier
+
+## Defining the dataset
+
+
+```{python}
+# First Feature
+weather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',
+'Rainy','Sunny','Overcast','Overcast','Rainy']
+# Second Feature
+temp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']
+
+# Label or target varible
+play=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']
+```
+
+
+We have two features weather and temperature and one label play.
+
+## Encoding data columns
+
+
+```{python}
+from sklearn import preprocessing
+
+#creating labelEncoder
+le = preprocessing.LabelEncoder()
+
+# Converting string labels into numbers.
+weather_encoded=le.fit_transform(weather)
+```
+
+
+Similarly, you can encode temperature and label into numeric columns.
+
+
+
+```{python}
+# converting string labels into numbers
+temp_encoded=le.fit_transform(temp)
+label=le.fit_transform(play)
+```
+
+## Combining Features
+
+
+```{python}
+#combinig weather and temp into single listof tuples
+features=list(zip(weather_encoded,temp_encoded))
+```
+
+
+## Generating Models
+
+
+```{python}
+from sklearn.neighbors import KNeighborsClassifier
+model = KNeighborsClassifier(n_neighbors=3)
+
+# Train the model using the training sets
+model.fit(features,label)
+
+```
+
+
+## Predict Output
+
+
+```{python}
+predicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild
+print(predicted)
+
+```
+
+# k-NN Regressor
+
+
+```{python}
+# from sklearn.datasets import load_boston
+# from sklearn.neighbors import KNeighborsRegressor
+# X,y = load_boston(return_X_y=True)
+# mod = KNeighborsRegressor()
+# mod.fit(X,y)
+```
+
+
+making prediction
+```{python}
+# mod.predict(X)
+```

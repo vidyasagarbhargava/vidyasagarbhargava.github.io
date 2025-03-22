@@ -1,0 +1,66 @@
+---
+title: "Best Data Science Books"
+description: Listing the best books available in the market right now for data science.
+author: "Vidyasagar Bhargava"
+date: "01/16/2023"
+categories:
+  - data science
+  - books
+  - career
+
+---
+
+I have seen many aspiring data scientists who wants to start their career in the field of data science but they are confused about the path and resources (because there are so many). Every individual has their own way of learning any topic. Some prefer books, some youtube video tutorial for understanding and some wants to learn from university or online certificate courses platform like coursera, Edx udemy etc..
+
+So I decided to write this post to those aspirants who are interested in learning data science through books. I have listed the best books for different categories. 
+
+
+### The Best books for learning data science are divided below categories  
+1. Python  
+2. Statistics and Mathematics  
+3. Machine Learning  
+4. Competitive Data Science  
+5. Productionize models  
+
+## 1. Python
+
+![](https://rukminim1.flixcart.com/image/416/416/kz5vwy80/book/v/i/3/fluent-python-original-imagb8dhcwh7pcqe.jpeg?q=70)  
+
+[Fluent Python](https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/)
+
+
+![](https://jakevdp.github.io/PythonDataScienceHandbook/figures/PDSH-cover.png) 
+
+[Python Data Science Handbook](https://www.oreilly.com/library/view/python-data-science/9781098121211/)
+
+## 2. Statistics and Mathematics
+
+![](https://www.abe.pl/cv/blarge/9/4/2/9781492072942.jpeg)  
+
+[Practical Statistics for Data Scientists](https://www.oreilly.com/library/view/practical-statistics-for/9781492072935/) 
+
+![](https://m.media-amazon.com/images/I/51m41zdnpGL.jpg)   
+
+[Mathematics for Machine Learning](https://mml-book.github.io/book/mml-book.pdf)
+
+
+
+## 3. Machine Learning 
+
+![](https://m.media-amazon.com/images/I/51zXCjSbo8L._SX260_.jpg) 
+
+[Machine Learning with PyTorch and Scikit-Learn](https://www.oreilly.com/library/view/machine-learning-with/9781801819312/)
+
+
+## 4. Competitive Data Science  
+
+![](https://m.media-amazon.com/images/I/41w7uhlxSDL._SY445_SX342_QL70_ML2_.jpg)
+
+[The Kaggle Book](https://www.oreilly.com/library/view/the-kaggle-book/9781801817479/)
+
+
+## 5. Productionize models
+
+![](https://m.media-amazon.com/images/I/416C6effXYL._SX386_BO1,204,203,200_.jpg)
+
+[Designing Machine Learning Systems](https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/)

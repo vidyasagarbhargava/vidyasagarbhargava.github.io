@@ -1,0 +1,263 @@
+---
+title: "Linear regression using gradient descent"
+
+description: In this post we will implement gradient descent algorithm from scratch using numpy for linear regression.
+
+author: "Vidyasagar Bhargava"
+date: "12/10/2021"
+categories:
+  - gradient descent
+  - machine learning 
+---
+
+
+## Simple Linear Regression
+
+A simple linear regression equation with one feature is defined as  :  
+
+$$y = b + w * x + \epsilon$$
+
+Here w is coefficient and b is intercept term and $\epsilon$  is the noise.
+
+
+## Gradient Descent
+
+Gradient descent is an optimization algorithm used to minimize some function by iteratively moving in the direction of steepest descent as defined by the negative of the gradient. In machine learning, we use gradient descent to update the parameters of our model. Parameters refer to coefficients in Linear Regression and weights in neural networks.  
+
+**Steps to implement gradient descent**  
+Step 1 - Compute the loss   
+Step 2 - Compute the gradient   
+Step 3 - Update the parameters   
+Step 4 - Repeat Step 1 to 3  
+
+
+### Step 1 :-  Compute the loss 
+
+For regression problem loss is given by mean squared error (MSE).  
+
+$$ MSE  = \frac{1}{N} \sum\limits_{i=1}^{N} (y-\hat{y_i})^2 $$
+
+$$ MSE  = \frac{1}{N} \sum\limits_{i=1}^{N} (y-b-wx_i)^2 $$
+
+### Step 2 :- Compute the gradient  
+
+Gradient is a vector with function's partial derivatives for components. 
+
+$$ \Delta (MSE)  = [\frac{\partial MSE}{\partial w}, \frac{\partial MSE}{\partial b}] $$
+
+It also tell the direction of steepest ascent which means in which direction one should step to increase the function most quickly.
+
+
+:::{.callout-note}
+A derivative tells us how much a given quantity changes when we change slightly some other quantity.
+:::
+
+In our case we are interested how much our MSE loss change when we vary one of our two parameters. 
+
+$$ \frac{\partial MSE}{\partial w} = \frac{\partial MSE}{\partial \hat{y}}.\frac{\partial \hat{y}}{\partial w} = \frac{1}{N} \sum\limits_{i=1}^{N} 2(y-b-wx_i).(-x_i) = -2\frac{1}{N} \sum\limits_{i=1}^{N}(x_i)(y-\hat{y_i}) $$
+
+
+$$ \frac{\partial MSE}{\partial b} = \frac{\partial MSE}{\partial \hat{y}}.\frac{\partial \hat{y}}{\partial b} = \frac{1}{N} \sum\limits_{i=1}^{N} 2(y-b-wx_i).(-1) = -2\frac{1}{N} \sum\limits_{i=1}^{N}(y-\hat{y_i}) $$
+
+
+### Step 3 :- Update the Parameters
+
+Now we will update the parameters by using gradients to minimize the loss. But gradient tells the direction of steepest ascent so we will multiply by -1.
+
+
+$$ w  = w - \eta\frac{\partial MSE}{\partial w} $$  
+$$ b  = b - \eta\frac{\partial MSE}{\partial b} $$  
+
+
+
+### Step 4:- Repeat
+
+Now we will use updated parameters and start with step 1 again. We will repeat this process for multiple epochs. This is also known as training the model. 
+
+
+::: {.column-margin}
+An epoch is completed when all the data points has been used for calculating the loss. 
+
+:::
+
+---------------------------------------------------------------
+
+
+Click below to add some new points and see how algorithm adjust the slope of line over time to meet best fit.
+
+
+```{ojs}
+//| echo: false
+
+p5(sketch => {
+  let system;
+  
+  //set up some default points
+  
+  /*    
+  */
+  
+  let data = [
+    sketch.createVector(.105, .423333),
+    sketch.createVector(.58, .526666),
+    sketch.createVector(.75, .82666),
+    sketch.createVector(.3475, .183333),
+    sketch.createVector(.3195, .543353),
+  ];
+  
+  let m = 1;
+  let b = 0;
+  
+  sketch.setup = function() {
+    sketch.createCanvas(800, 350);
+    sketch.background(51);
+  };
+  
+  const gradientDescent = () => {
+    var learning_rate = 0.05;
+    
+    for(var i = 0; i < data.length; i++) {
+      var x = data[i].x;
+      var y = data[i].y;
+      
+      var guess = m * x + b;
+      var error = y - guess;
+      
+      m = m + (error * x) * learning_rate;
+      b = b + (error) * learning_rate;
+    }
+  }
+  
+  const drawLine = () => {
+    var x1 = 0;
+    var y1 = m * x1 + b;
+    var x2 = 1;
+    var y2 = m * x2 + b;
+    
+    x1 = sketch.map(x1, 0, 1, 0, sketch.width);
+    y1 = sketch.map(y1, 0, 1, sketch.height, 0);
+    x2 = sketch.map(x2, 0, 1, 0, sketch.width);
+    y2 = sketch.map(y2, 0, 1, sketch.height, 0);
+    
+    sketch.stroke(0, 0, 0);
+    sketch.strokeWeight(2);
+    sketch.line(x1, y1, x2, y2);
+  }
+ 
+  sketch.mousePressed = () => {
+    var x = sketch.map(sketch.mouseX, 0, sketch.width, 0 , 1);
+    var y = sketch.map(sketch.mouseY, 0, sketch.height, 1, 0);
+    var point = sketch.createVector(x, y);
+    data.push(point);
+  }
+  
+  sketch.draw = () => {
+    sketch.background(255, 255, 255)
+    for (var i = 0; i < data.length; i++) {
+      var x = sketch.map(data[i].x, 0, 1, 0, sketch.width);
+      var y = sketch.map(data[i].y, 0, 1, sketch.height, 0);
+      sketch.fill(32, 178, 170);
+      sketch.stroke(32, 178, 170);
+      sketch.ellipse(x, y, 8, 8);
+    }
+    
+    if(data.length > 1) {
+      gradientDescent();
+      drawLine();
+    }
+  }
+})
+
+import {p5} from "@tmcw/p5"
+
+```
+
+
+## Gradient Descent Variants  
+
+* Batch Gradient Descent
+* Stochastic Gradient Descent
+* Mini Batch Gradient Descent
+
+
+If we use all the points in the training set to compute loss then it is **batch gradient descent**. If we use single data point and update our parameters it **stochastic gradient descent**. Anything between 1 and N is **mini batch gradient descent**.
+
+
+## Implementing Linear Regression using batch gradient descent 
+
+Now its time to implement our linear regression model using batch gradient descent.
+
+
+### Generate Synthetic data
+Using the above equation we will generate some synthetic data with w = 2 and b = 1 and some random noise.
+
+
+```{python}
+import numpy as np
+np.random.seed(42)
+
+x = np.random.randn(100,1)
+y = 1 + 2*x + np.random.randn(100,1)
+```
+
+Our goal will be to accurately predict the value of w (i.e. 2) and b (i.e. 1). 
+
+### Initialize parameters (w and b) and hyperparameter (learning_rate)
+
+So we will initialize the learnable parameters w and b with some random values and try to find right value by minimizing the loss function. The value of the hyperparameter i.e. learning rate is fixed.  
+
+
+
+```{python}
+w = np.random.randn(1)
+b = np.random.randn(1)
+lr = 0.001
+```
+
+
+### Gradient Descent algorithm  
+
+
+
+```{python}
+def gradient_descent(x, y, w, b, lr):
+    
+    #compute the loss
+    yhat =  b + w*x
+    error = (y-yhat)
+    loss  = (error*2).mean()
+    
+    #compute the gradients
+    b_grad = -2*error.mean()
+    w_grad = -2*(x*error).mean()
+    
+    #update the parameters
+    b = b - lr * b_grad
+    w = w - lr * w_grad
+    return w,b
+```
+
+
+
+```{python}
+# implementing multiple epochs 
+
+for epoch in range(5000):
+    w,b = gradient_descent(x, y, w, b, lr)
+print(b,w)
+```
+
+
+Let's compare our output with scikit-learn's Linear Regression
+
+
+
+```{python}
+from sklearn.linear_model import LinearRegression
+lr = LinearRegression()
+lr.fit(x, y)
+print(lr.intercept_, lr.coef_[0])
+```
+
+
+Our result matches upto few decimal places that means we have correctly implemented our batch gradient descent algorithm.

@@ -1,0 +1,34 @@
+---
+title: "Most Popular programming languages 2004-2021"
+
+description: Using animation lets see how different programmming language rise in last couple of decades.  
+author: "Vidyasagar Bhargava"
+date: "02/10/2022"
+categories:
+  - data visualization
+  - animation 
+image: "https://i.imgur.com/gCcob0I.png"
+---
+
+
+
+```{ojs}
+//| echo: false
+
+chart
+
+data = FileAttachment("pypl.csv").csv({typed: true})
+
+formatNumber = d3.format(".1%")
+
+
+formatDate = d3.utcFormat("%b %Y")
+
+tickFormat = "%"
+
+k = 2
+
+import {chart, viewof replay, d3} with {k, data, formatNumber, formatDate, tickFormat} from "@d3/bar-chart-race"
+
+```
+

@@ -1,0 +1,152 @@
+---
+title: "Polars for Feature Engineering"
+description: "Polars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory."
+author: "Vidyasagar Bhargava"
+date: "01/03/2024"
+categories:
+  - polars
+  - feature engineering
+title-block-banner: true
+image: "https://cdn.icon-icons.com/icons2/3914/PNG/512/polars_logo_icon_248809.png"
+---
+
+
+Polars API are
+
+1.  Simple
+2.  Consistent
+3.  Grammar
+
+Most of the feature engineering task based on below 7 verbs
+
+| Task                            | verb          |
+|---------------------------------|---------------|
+| select/slice columns            | select        |
+| create/transform/assign columns | with_columns  |
+| filter/slice/query rows         | filter        |
+| join/merge other dataframes     | join & concat |
+| group dataframe rows            | group_by      |
+| aggregate groups                | agg           |
+| sort dataframe                  | sort          |
+
+: 7 Verbs Get Most Jobs done
+
+
+
+```{python}
+import polars as pl
+df = pl.read_csv("StudentsPerformance.csv")
+df.head()
+
+```
+
+
+
+## 1. Select Columns
+-   Selecting 1 column
+
+
+```{python}
+df.select(pl.col('gender')).head()
+```
+
+
+-   Selecting two or more columns
+
+
+```{python}
+df.select(pl.col(['gender', 'math score'])).head()
+```
+
+-   Selecting all the columns
+
+```{python}
+df.select(pl.col('*')).head()
+```
+
+
+## 2. Create Columns
+
+-   Creating a new column "sum" by summing `math score` and `reading score`
+
+
+
+```{python}
+df.with_columns(
+    (pl.col('math score') + pl.col('reading score')).alias('sum')
+).head()
+```
+
+## 3. Filter
+
+-   Simple filtering
+
+    selecting `female` students
+
+
+
+```{python}
+df.filter(pl.col('gender')=='female').head()
+```
+
+
+-   Multiple filtering
+
+    selecting `female` students those belong to `group B`
+
+
+
+```{python}
+df.filter(
+    (pl.col('gender')=='female') & 
+    (pl.col('race/ethnicity')=='group B')
+).head()
+```
+
+
+## 4. Join
+
+
+```{python}
+df2 = pl.read_csv('LanguageScore.csv')
+df.join(df2, on="id").head()
+```
+
+
+## Concat
+
+
+
+```{python}
+df2 = df2.drop("id")
+pl.concat([df, df2], how="horizontal").head()
+```
+
+## 5. Group By
+
+Count total elements for each `race/ethnicity`
+
+
+
+```{python}
+df.group_by('race/ethnicity').count()
+```
+
+## 6. Aggregate
+
+average `math score` for females and males
+
+
+```{python}
+df.group_by('gender').agg(pl.col('math score').mean().alias('mean_score'))
+```
+
+## 7. Sort
+
+sort the dataframe by `math score`
+
+
+
+```{python}
+df.sort('math score',descending=True).head()
+```

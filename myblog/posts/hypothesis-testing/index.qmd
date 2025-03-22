@@ -1,0 +1,138 @@
+---
+title: "Hypothesis Testing"
+
+description: A hypothesis testing is a way to test an assumption about a population parameter.
+
+author: "Vidyasagar Bhargava"
+date: "16/04/2021"
+categories:
+  - hypothesis testing
+  - inferential statistics
+image: foo.png
+---
+
+
+During hypothesis testing we confirm whether results we got is by chance ? If yes then experiment won't be repeatable and so has little use.  
+
+Two ways of doing hypothesis testing are :-
+
+1. Using P-Value
+2. Using Critical Values
+
+
+
+Let's start with business case problem.
+
+*Q :- Suppose that a PM claims that users on average spend about Rs. 50 per month on Amazon. However, you doubt this claim, and you believe that the average should be higher. So you sample 100 users and learn that the sample mean is Rs. 85. Would you reject the PM's claim?
+Assume population standard deviation is 20*.
+
+## P-Value approach
+
+1. Hypothesis 
+2. Significance level 
+3. Test Statistics  
+4. Probability of observing test statistics
+5. Statistical Decision
+
+
+**1. Hypothesis**  
+Ho : the average spend per user is Rs. 50  
+Ha : the average spend per user is greater than Rs. 50
+
+
+**2. Significance level**
+
+$\alpha = 0.05$  
+
+  
+**3. Test Statistics**
+
+$$
+Z-statistics  = \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+$$
+
+$$
+= \frac{85-50}{20/\sqrt{100}} =\frac{35}{2} = 17.5
+$$
+
+**4. Probability of observing test statistics**  
+Looking into [standard normal distribution table](https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf). 
+
+  
+$P-value < 0.0001 < \alpha = 0.05$  
+
+**5. Statistical Decision**
+
+*At alpha = 0.05 there is statistical significance to reject PM's claim and conclude that the average spend per user is greater than Rs. 50.*
+
+
+
+Business Case problem   
+
+*Q :- A Principal claims that the student in his school are above average intelligence. A random sample of 30 IQ scores have a mean of 112.5. Is there sufficient evidence to support the principal's claim? The mean population IQ is 100 with standard deviation is 15.*
+ 
+
+
+
+## Critical Value Approach
+
+1. Hypothesis 
+2. Significance level 
+3. Test Statistics  
+4. Critical Value
+5. Statistical Decision
+
+
+
+```{python}
+#| echo: false
+
+#sns.set(rc={'axes.facecolor':'#F0F5F9', 'figure.facecolor':'#F0F5F9'})
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+import statistics
+import seaborn as sns
+np.random.seed(0)
+
+fig, ax = plt.subplots(figsize=(12, 4))
+x = np.random.normal(100 ,15 ,size=1000)
+
+#fig =sns.displot(x, kind='kde',color='#753742', ax=ax)
+sns.kdeplot(data=x, color='#333333', ax=ax)
+plt.savefig('foo.png')
+```
+
+
+**1. Hypothesis**  
+Ho : the average IQ score is 100  
+Ha : the average IQ score is greater than 100
+
+
+**2. Significance level**
+
+$\alpha = 0.05$  
+
+  
+**3. Test Statistics**
+
+$$
+Z-statistics  = \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+$$
+
+$$
+= \frac{112.5-100}{15/\sqrt{30}} = 4.56
+$$
+
+**4. Z Critical Value**  
+Looking into [standard normal distribution table](https://www.math.arizona.edu/~rsims/ma464/standardnormaltable.pdf). 
+
+  
+$Z Critical-value = 1.645$  
+
+**5. Statistical Decision**
+
+*At alpha = 0.05 test statistics is greater than Z Critical value hence we can reject null hypothesis.*
+
+
+
