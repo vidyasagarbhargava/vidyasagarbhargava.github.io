@@ -1,40 +1,10 @@
 [
   {
-    "listing": "/projects.html",
-    "items": []
-  },
-  {
-    "listing": "/myblog/blog.html",
-    "items": [
-      "/myblog/posts/llm-part-1.html",
-      "/myblog/posts/ai-research-scientist/index.html",
-      "/myblog/posts/introduction-to-graph-neural-networks/index.html",
-      "/myblog/posts/seq-to-seq-and-attention-mechanism/index.html",
-      "/myblog/posts/pytorch-on-m1-mac/index.html",
-      "/myblog/posts/polars-for-featureengineering/index.html",
-      "/myblog/posts/introduction-to-apple-machine-learning-framework-mlx/index.html",
-      "/myblog/posts/activation-functions/index.html",
-      "/myblog/posts/statistical-learning-theory/index.html",
-      "/myblog/posts/best-datascience-books/index.html",
-      "/myblog/posts/confidence-interval/index.html",
-      "/myblog/posts/Successful-delivering-of-machine-learning-models/index.html",
-      "/myblog/posts/hypothesis-testing/index.html",
-      "/myblog/posts/top-languages/index.html",
-      "/myblog/posts/gradient-descent/index.html",
-      "/myblog/posts/Fbeta-Measure/index.html",
-      "/myblog/posts/Nearest-Neighbour-Classifier/index.html"
-    ]
-  },
-  {
     "listing": "/research/research.html",
     "items": [
       "/research/posts/alexnet/index.html",
       "/research/posts/lenet/index.html"
     ]
-  },
-  {
-    "listing": "/blog.html",
-    "items": []
   },
   {
     "listing": "/index.html",

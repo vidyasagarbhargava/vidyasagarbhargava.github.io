@@ -6,6 +6,7 @@ execute:
   freeze: auto
 
 website:
+  title: " "
   back-to-top-navigation: true
   comments: 
     utterances:
