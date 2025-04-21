@@ -12,11 +12,13 @@ website:
       repo: vidyasagarbhargava/vidyasagarbhargava.github.io
       issue-term: title
   favicon: images/logo.svg
+  site-url: https://vidyasagarbhargava.github.io
+  description: "Data Science & Machine Learning blog"
   navbar:
     right:
+      - href: about.qmd
+        text: About
       - href: index.qmd
-        text: Home
-      - href: myblog/blog.qmd
         text: Blog
       - href: london.qmd
         text: London 

@@ -1,0 +1,74 @@
+---
+title: Vidyasagar Bhargava
+image: images/profile4.png
+about:
+  template: trestles
+  image-shape: round
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/vidyasagarbhargava
+    - icon: github
+      text: Github
+      href: https://github.com/vidyasagarbhargava
+    - icon: medium
+      text: Medium
+      href: https://medium.com/@vidyasagarbhargava
+    - text: Mastodon
+      icon: mastodon
+      url: "https://sigmoid.social/@vidyasagar"
+    - text: Substack
+      icon: substack
+      url: "https://substack.com/@vidyasagarbhargava"
+comments: false
+---
+::: {.column-page}
+
+## Bio
+
+I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, working for connected mobility solutions department. My interests include **Machine Learning**, **Natural Language Processing**, and **Generative AI**. I have 12+ years of experience in the field of Machine learning and Data Science where I worked with various clients in developing prescriptive as well as predictive solutions to address core business problems. 
+
+
+
+<p></p>
+
+### Major Projects 
+
+-------------------------------------------------------
+* Root Cause Analysis for Low Range Trips in EVs  
+* Charge Time Estimation
+* Predictive Maintenance of Brakes in two wheelers  
+* Range Prediction and Analysis for EVs
+* Cell Imbalance issues in batteries 
+* Voice Assistant using RAG and LLMs
+* Churn Prediction in Telecom Industry
+* Price optimization Engine for Scientific Pricing of Fashion Products
+* NPS Improvement using explainable AI
+* Retail store segmentation
+* Anomaly Detection for machine parts failure
+
+### Education 
+
+* B.Tech in Computer Science and Engineering
+* XII in Computer Science
+
+### Courses
+* [Neural Networks and Deep Learning](https://coursera.org/share/df47600c32654a6020f4ec27cbc1f121)
+* [Improving Deep Neural Networks: Hyperparameter Tuning, Regularization and Optimization](https://www.coursera.org/account/accomplishments/verify/ZZLZ3U6GTBUL)
+* [Big Data Foundation](https://www.credly.com/badges/39dba64e-03a2-47ae-816f-c5064cb88d93/linked_in_profile)
+* [Introduction to Python](https://www.kaggle.com/learn/certification/vidyasagarbhargava/python)
+
+## Honors & Awards  
+* Thinking Hat at Wipro Limited | 2018
+* Bull's Eye Award at Snapdeal | 2015
+
+## Talks & Webinars
+
+* Introduction to Deep learning at Wipro Technologies on June 2017. [[PPT]](https://speakerdeck.com/vidyasagarbhargava/introduction-to-deep-learning)
+
+
+
+
+:::
+
+<link rel="me" href="https://sigmoid.social/@vidyasagar">

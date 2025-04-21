@@ -1,0 +1,256 @@
+---
+title: "LLM From Scratch Part 1 - Data Preparation "
+
+description: In the part 1 of LLM series we will understand about data preparation which inludes tokenization, sampling and embeddings.
+
+author: "Vidyasagar Bhargava"
+date: "03/01/2025"
+categories:
+  - sampling
+  - embedding
+  - llm
+  - tokenization
+---
+
+# Data Preparation
+
+Training large language models such as GPT or LLaMA requires input data, typically in the form of raw text. Since neural networks cannot process text directly, the text is first tokenized into discrete units—usually subword tokens—using a tokenizer. These tokens are then mapped to corresponding embeddings, i.e., high-dimensional vector representations, which serve as the actual inputs to the model.
+
+Next we will convert token into vector representation aka embeddings for llm training.  
+
+Step 1 :- Input Text --> Tokenized Text   
+Step 2 :- Tokenized Text --> Token IDs   
+Step 3 :- Token IDs --> Embeddings Vectors  
+
+## Tokenization
+The Tokenization process cover step 1 and step 2 mentioned above i.e. converting input text into individual words (Tokenized Text) then into tokens (Token IDs). 
+
+Alright Let's first we develop a simple tokenizer which converts words into tokens, but later on we will use more sophisticated tokenizers like Byte-Pair Encoding (BPE) from tiktoken library.
+
+
+#### Input Text to Tokenized Text
+
+Let's say we have some text like `Hi, I am new to the machine learning`. 
+
+
+```{python}
+text = "Hi, I am new to deep learning and machine learning."
+print(text)
+```
+
+
+now we create a simple tokenizer using regular expression. 
+
+```{python}
+import re
+def simple_tokenizer(text):
+    result = re.split(r'([,.:;?_!"()\']|--|\s)', text)
+    result = [item.strip() for item in result if item.strip()]
+    return result
+
+```
+
+ 
+> Remembering this expression is not required as in future we will going to use more sophisticated tokenizer 
+
+lets see how it works on our text.
+
+
+```{python}
+preprocessed = simple_tokenizer(text)
+print(preprocessed)
+```
+
+It works well. Next we can also check total tokenized texts using `len()` function. 
+
+
+```{python}
+print(f" The total number of characters are : {len(preprocessed)}")
+```
+
+
+#### Tokenized Text to Token IDs
+
+In this step we will convert tokenized text into integer for that first we need to build a vocabulary by removing duplicate tokenized text and alphabetically sorting them.  These unique tokenized text are then aggregated in a vocabulary where they are mapped with unique integer value. 
+
+
+```{python}
+
+all_words = sorted(set(preprocessed))
+vocab_size = len(all_words)
+print(vocab_size)
+```
+
+After determine the vocab size we will create the vocabulary
+
+```{python}
+vocab = {token:integer for integer,token in enumerate(all_words)}
+print(vocab)
+```
+
+Now our vocab is prepared what we need next is how can we use this vocab to convert text into token IDs and vice versa. 
+
+> We need inverse version of token IDs as well when we convert output of LLM from token ID back to tokenized text and then concatenates the them to natural text.
+
+
+In order to have these conversion functionalities lets create class `SimpleTokenizer` which has two methods `encode` for converting text to token IDs and `decode` to convert token IDs back to text.  
+
+
+```{python}
+class SimpleTokenizer:
+    def __init__(self,vocab) -> None:
+        self.str_to_int = vocab
+        self.int_to_str = {i:s for s,i in vocab.items()}
+
+    def encode(self,text):
+        result = re.split(r'([,.:;?_!"()\']|--|\s)', text)
+        preprocessed = [item.strip() for item in result if item.strip()]
+        ids = [self.str_to_int[s] for s in preprocessed]
+        return ids
+
+    def decode(self,ids):
+        text = " ".join([self.int_to_str[i] for i in ids]) 
+        text = re.sub(r'\s+([,.?!"()\'])', r'\1', text)  
+        return text
+```
+
+
+Let's use our new class for our next new example
+
+```{python}
+tokenizer = SimpleTokenizer(vocab)
+text = """I am learning deep learning"""
+ids = tokenizer.encode(text)
+print(ids)
+```
+
+
+Let's decode as well
+```{python}
+print(tokenizer.decode(ids))
+```
+
+Now what if there is some text which is not part of our vocab. Then our `SimpleTokenizer` class may get in trouble. 
+For example
+
+```{python}
+#| error: true
+
+text = "Hello, I am learning deep learning"
+print(tokenizer.encode(text))
+```
+
+
+The word "Hello" is not contained in the vocabulary. So we need to have some mechanism to handle unknown words.
+
+Now we will implement a improved version of our previous SimpleTokenizer class which will consider unknown words or words not part of training data with |unk| token and using |endoftext| token we can separate two unrelated text sources.
+
+lets modify our vocab
+
+
+```{python}
+# let's modify the vocab
+all_words.extend(["<|endoftext|>","<|unk|>"])
+
+vocab = {token:integer for integer,token in enumerate(all_words)}
+print(len(vocab.items()))
+```
+
+
+lets create new class
+
+
+```{python}
+class SimpleTokenizerV2:
+    def __init__(self,vocab) -> None:
+        self.str_to_int = vocab
+        self.int_to_str = {i:s for s,i in vocab.items()}
+
+    def encode(self,text):
+        result = re.split(r'([,.:;?_!"()\']|--|\s)', text)
+        preprocessed = [item.strip() for item in result if item.strip()]
+        preprocessed = [item if item in self.str_to_int else "<|unk|>" for item in preprocessed]
+
+        ids = [self.str_to_int[s] for s in preprocessed]
+        return ids
+
+    def decode(self,ids):
+        text = " ".join([self.int_to_str[i] for i in ids]) 
+        text = re.sub(r'\s+([,.?!"()\'])', r'\1', text)  
+        return text
+```
+
+
+
+```{python}
+text1 = "Hello, I am learning deep learning"
+text2 = "I am learning machine learning"
+
+text = " <|endoftext|> ".join((text1, text2))
+print(text)
+```
+
+
+
+```{python}
+tokenizer = SimpleTokenizerV2(vocab)
+print(tokenizer.encode(text))
+```
+
+
+
+```{python}
+print(tokenizer.decode(tokenizer.encode(text)))
+```
+
+### Byte Pair Encoding
+
+BPE has 50256 vocab size
+
+- look for implementing BPE
+
+```{python}
+import tiktoken
+print(tiktoken.__version__)
+```
+
+
+Initiate a tokenizer
+
+
+```{python}
+tokenizer = tiktoken.get_encoding("gpt2")
+tokenizer.encode("Hello World")
+```
+
+
+
+```{python}
+tokenizer.decode(tokenizer.encode("Hello World"))
+```
+
+
+
+## Data Sampling with Sliding Window
+
+Goal is how to provide token ID in efficient manner in chunks to llms
+
+
+
+```{python}
+
+```
+
+
+
+## Embeddings
+Neural Networks are trained using mathematical operations so if we have text data we need to some how convert that text into numerical form. One such way is to represent text into some continuous-valued vectors.
+
+The concept of converting data into vector format is called embedding. Now there are ways to convert text to embedding.
+
+1. Using specific neural network layer
+2. another pretrained model
+
+
+
+### Rotary Position Embedding 
