@@ -12,7 +12,7 @@ website:
       repo: vidyasagarbhargava/vidyasagarbhargava.github.io
       issue-term: title
   favicon: images/logo.svg
-  site-url: https://vidyasagarbhargava.github.io
+  site-url: 'https://vidyasagarbhargava.github.io'
   description: "Data Science & Machine Learning blog"
   navbar:
     right:
