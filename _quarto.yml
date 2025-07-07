@@ -6,7 +6,7 @@ execute:
   freeze: auto
 
 website:
-  title: " "
+  title: "Vidyasagar Bhargava"
   back-to-top-navigation: true
   comments: 
     utterances:

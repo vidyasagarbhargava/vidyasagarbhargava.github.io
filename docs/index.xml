@@ -5,11 +5,11 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title> </title>
+<title>Vidyasagar Bhargava</title>
 <link>https://vidyasagarbhargava.github.io/</link>
 <atom:link href="https://vidyasagarbhargava.github.io/index.xml" rel="self" type="application/rss+xml"/>
 <description>Data Science &amp; Machine Learning blog</description>
-<generator>quarto-1.6.39</generator>
+<generator>quarto-1.7.32</generator>
 <lastBuildDate>Fri, 28 Feb 2025 18:30:00 GMT</lastBuildDate>
 <item>
   <title>LLM From Scratch Part 1 - Data Preparation</title>
@@ -2936,6 +2936,7 @@ font-style: inherit;"> (it/s)"</span></span>
   <dc:creator>Vidyasagar Bhargava</dc:creator>
   <link>https://vidyasagarbhargava.github.io/posts/activation-functions/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -8161,18 +8162,6 @@ font-style: inherit;">0</span>])</span></code></pre></div>
   <guid>https://vidyasagarbhargava.github.io/posts/Fbeta-Measure/</guid>
   <pubDate>Thu, 11 Mar 2021 18:30:00 GMT</pubDate>
   <media:content url="https://i.imgur.com/P1oyVRV.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title></title>
-  <dc:creator>Vidyasagar Bhargava</dc:creator>
-  <link>https://vidyasagarbhargava.github.io/posts/Nearest-Neighbour-Classifier/</link>
-  <description><![CDATA[ undefined ]]></description>
-  <category>machine learning</category>
-  <category>supervised learning</category>
-  <category>algorithm</category>
-  <category>classifier</category>
-  <guid>https://vidyasagarbhargava.github.io/posts/Nearest-Neighbour-Classifier/</guid>
-  <pubDate>Thu, 05 Mar 2020 18:30:00 GMT</pubDate>
 </item>
 </channel>
 </rss>

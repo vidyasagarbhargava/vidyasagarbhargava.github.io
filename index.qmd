@@ -1,5 +1,5 @@
 ---
-title: " "
+title: ""
 listing:
   contents: posts
   fields: [date, title, author, image, description]

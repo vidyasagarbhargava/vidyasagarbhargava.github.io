@@ -1,4 +1,7 @@
+.quarto/
+.venv/
+_freeze/
+
+
+# ignore .quarto files
 /.quarto/
-.venv
-/_freeze/
-/index.quarto_ipynb/

@@ -8,6 +8,8 @@ date: "18/08/2022"
 categories:
   - activation function
   - deeplearning
+format: html
+jupyter: python3
 ---
 
 ![Dubey Singh Chaudhary(2022). Activation Functions in Deep Learning : A Comprehensive Survey and Benchmark](images/paste-1.png)
