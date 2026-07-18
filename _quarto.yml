@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  render: 
+    - '*.ipynb'
+    - '!index.ipynb'
 
 execute:
   freeze: true
