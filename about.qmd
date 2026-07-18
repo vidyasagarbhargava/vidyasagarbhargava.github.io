@@ -26,7 +26,7 @@ comments: false
 
 ## Bio
 
-I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, working for connected mobility solutions department. My interests include **Machine Learning**, **Natural Language Processing**, and **Generative AI**. I have 12+ years of experience in the field of Machine learning and Data Science where I worked with various clients in developing prescriptive as well as predictive solutions to address core business problems. 
+I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, working for connected mobility solutions department. My interests include **AI Inference**, **Agentic Systems**, **RAG based Applications** and **Machine Learning**. I have 13+ years of experience in the field of AI & ML where I worked with various clients in developing generative, prescriptive as well as predictive solutions to address core business problems. 
 
 
 
@@ -35,6 +35,8 @@ I’m a Lead Data Scientist at **[TVS Motor](https://www.tvsmotor.com)**, workin
 ### Major Projects 
 
 -------------------------------------------------------
+* RAG based chatbot for service technicians for ICE vehicles
+* Agentic Vehicle Health Manager application for EVs
 * Root Cause Analysis for Low Range Trips in EVs  
 * Charge Time Estimation
 * Predictive Maintenance of Brakes in two wheelers  
