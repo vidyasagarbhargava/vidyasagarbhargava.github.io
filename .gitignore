@@ -5,3 +5,5 @@ _freeze/
 
 # ignore .quarto files
 /.quarto/
+
+**/*.quarto_ipynb

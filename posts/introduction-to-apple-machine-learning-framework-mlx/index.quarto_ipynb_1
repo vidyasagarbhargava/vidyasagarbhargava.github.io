@@ -1,0 +1,441 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Introduction to Apple's Machine learning Framework- MLX\"\n",
+        "description: \"Apple's machine learning research team recently released a Machine Learning framework called MLX, a NumPy-like array framework designed for efficient and flexible machine learning on Apple silicon.\"\n",
+        "author: \"Vidyasagar Bhargava\"\n",
+        "date: \"12/24/2023\"\n",
+        "categories:\n",
+        "  - machine learning framework\n",
+        "  - deep learning \n",
+        "jupyter: python3\n",
+        "title-block-banner: true\n",
+        "---\n",
+        "\n",
+        "### Installation \n",
+        "MLX is available on PyPI. You need an Apple silicon based computer.\n",
+        "\n",
+        "```\n",
+        "pip install mlx\n",
+        "```\n",
+        "\n",
+        "\n",
+        "### Key Features of MLX\n",
+        "\n",
+        "**1. Familiar APIs**\n",
+        "\n",
+        "MLX has a Python API that closely follows NumPy. MLX also has a fully featured C++ API, which closely mirrors the Python API. MLX has higher-level packages like mlx.nn and mlx.optimizers with APIs that closely follow PyTorch to simplify building more complex models.\n"
+      ],
+      "id": "3ac4259e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import mlx.core as mx\n",
+        "a = mx.array([1,2,3,4])\n",
+        "print(a)"
+      ],
+      "id": "1f638c34",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(a.dtype)"
+      ],
+      "id": "a7184631",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "b = mx.array([1.0, 2.0, 3.0, 4.0])\n",
+        "print(b.dtype)"
+      ],
+      "id": "2984fd05",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**2. Lazy computation** \n",
+        "\n",
+        "Computations in MLX are lazy. That means outputs of MLX operations are not computed untill they are needed.   \n"
+      ],
+      "id": "4ef50460"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "c = a + b   # c not yet evaluated\n",
+        "mx.eval(c)  # evaluates c\n",
+        "c = a + b\n",
+        "print(c)    # also evaluates c"
+      ],
+      "id": "738349ef",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**3. Composable function transformations & Dynamic graph construction**\n",
+        "\n",
+        "MLX supports composable function transformations for automatic differentiation, automatic vectorization, and computation graph optimization.  \n",
+        "\n",
+        "Computation graphs in MLX are constructed dynamically. Changing the shapes of function arguments does not trigger slow compilations, and debugging is simple and intuitive.  \n"
+      ],
+      "id": "eb05e3f8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# MLX has standard function transformations like grad() and vmap()\n",
+        "\n",
+        "x = mx.array(0.0)\n",
+        "mx.sin(x)"
+      ],
+      "id": "2616747b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mx.grad(mx.sin)(x)"
+      ],
+      "id": "7c134e9e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mx.grad(mx.grad(mx.sin))(x)"
+      ],
+      "id": "fbe83a56",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "**4. Unified memory Architecture** \n",
+        "\n",
+        "A notable difference from MLX and other frameworks is the unified memory model. Arrays in MLX live in shared memory. Operations on MLX arrays can be performed on any of the supported device types without transferring data.\n",
+        "\n",
+        "Let's see an example\n"
+      ],
+      "id": "5705669e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a = mx.random.normal((100,))\n",
+        "b = mx.random.normal((100,))"
+      ],
+      "id": "bf1828d3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "both `a` and `b` lives in unified memory.  \n",
+        "\n",
+        "In MLX, you don't need to move arrays between different memory locations for different devices (like CPU or GPU). Instead of moving data, you specify the device (like CPU or GPU) when you perform an operation on the arrays.\n"
+      ],
+      "id": "0aeb6795"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mx.add(a, b, stream=mx.cpu)"
+      ],
+      "id": "54e9ca62",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mx.add(a, b, stream=mx.gpu)"
+      ],
+      "id": "a5f9de58",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "If you perform operations that don't depend on each other (like adding 'a' and 'b' in example), MLX can run them in parallel.\n",
+        "So, the CPU and GPU can both work on the same task simultaneously because there are no dependencies between them.\n"
+      ],
+      "id": "54136178"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "c = mx.add(a, b, stream=mx.cpu)\n",
+        "d = mx.add(a, c, stream=mx.gpu)"
+      ],
+      "id": "a3f166db",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "If there are dependencies (meaning one operation depends on the result of another), MLX takes care of managing them.\n",
+        "For instance, if you add 'a' and 'b' on the CPU and then perform another addition on the GPU that depends on the result from the CPU, MLX ensures that the GPU operation waits for the CPU operation to finish before it starts.\n",
+        "\n",
+        "\n",
+        "Example\n"
+      ],
+      "id": "19d05887"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def fun(a, b, d1, d2):\n",
+        "  x = mx.matmul(a, b, stream=d1)\n",
+        "  for _ in range(500):\n",
+        "      b = mx.exp(b, stream=d2)\n",
+        "  return x, b"
+      ],
+      "id": "e0fdda59",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "a = mx.random.uniform(shape=(4096, 512))\n",
+        "b = mx.random.uniform(shape=(512, 4))"
+      ],
+      "id": "950fb493",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "The first matmul operation is good fit for the GPU since it is more compute dense. The second sequence of operations are better fit for the CPU, since they are very small and would be probably overhead bound on GPU.\n",
+        "\n",
+        "\n",
+        "**5. Multi-device** \n",
+        "\n",
+        "Operations can run on any of the supported devices (currently the CPU and the GPU).\n",
+        "The framework is intended to be user-friendly, but still efficient to train and deploy models. The design of the framework itself is also conceptually simple.\n"
+      ],
+      "id": "e60619f9"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "mx.default_stream(mx.default_device())"
+      ],
+      "id": "93a6acc8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Linear Regression implementation\n",
+        "\n",
+        "Let's implement simple linear regression example as starting point \n"
+      ],
+      "id": "90082b20"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import mlx.core as mx\n",
+        "\n",
+        "num_features = 100\n",
+        "num_examples = 1_000\n",
+        "num_iters = 10_000  # iterations of SGD\n",
+        "lr = 0.01  # learning rate for SGD"
+      ],
+      "id": "d4c77a28",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Initialize parameters (w and b) and hyperparameter (learning_rate)\n"
+      ],
+      "id": "b3d0e72f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# True parameters\n",
+        "w_star = mx.random.normal((num_features,))\n",
+        "\n",
+        "# Input examples (design matrix)\n",
+        "X = mx.random.normal((num_examples, num_features))\n",
+        "\n",
+        "# Noisy labels\n",
+        "eps = 1e-2 * mx.random.normal((num_examples,))\n",
+        "y = X @ w_star + eps"
+      ],
+      "id": "28af30f5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def loss_fn(w):\n",
+        "    return 0.5 * mx.mean(mx.square(X @ w - y))\n",
+        "\n",
+        "grad_fn = mx.grad(loss_fn)"
+      ],
+      "id": "e51e33e3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "w = 1e-2 * mx.random.normal((num_features,))\n",
+        "\n",
+        "for _ in range(num_iters):\n",
+        "    grad = grad_fn(w)\n",
+        "    w = w - lr * grad\n",
+        "    mx.eval(w)"
+      ],
+      "id": "8ff39a54",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "loss = loss_fn(w)\n",
+        "error_norm = mx.sum(mx.square(w - w_star)).item() ** 0.5\n",
+        "\n",
+        "print(\n",
+        "    f\"Loss {loss.item():.5f}, |w-w*| = {error_norm:.5f}, \"\n",
+        ")"
+      ],
+      "id": "f344bb7c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Logistic Regression\n",
+        "\n",
+        "Let's implement logistic regression now\n"
+      ],
+      "id": "051f097c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import time\n",
+        "\n",
+        "import mlx.core as mx\n",
+        "\n",
+        "num_features = 100\n",
+        "num_examples = 1_000\n",
+        "num_iters = 10_000\n",
+        "lr = 0.1\n",
+        "\n",
+        "# True parameters\n",
+        "w_star = mx.random.normal((num_features,))\n",
+        "\n",
+        "# Input examples\n",
+        "X = mx.random.normal((num_examples, num_features))\n",
+        "\n",
+        "# Labels\n",
+        "y = (X @ w_star) > 0\n",
+        "\n",
+        "\n",
+        "# Initialize random parameters\n",
+        "w = 1e-2 * mx.random.normal((num_features,))\n",
+        "\n",
+        "\n",
+        "def loss_fn(w):\n",
+        "    logits = X @ w\n",
+        "    return mx.mean(mx.logaddexp(0.0, logits) - y * logits)\n",
+        "\n",
+        "\n",
+        "grad_fn = mx.grad(loss_fn)\n",
+        "\n",
+        "tic = time.time()\n",
+        "for _ in range(num_iters):\n",
+        "    grad = grad_fn(w)\n",
+        "    w = w - lr * grad\n",
+        "    mx.eval(w)\n",
+        "\n",
+        "toc = time.time()\n",
+        "\n",
+        "loss = loss_fn(w)\n",
+        "final_preds = (X @ w) > 0\n",
+        "acc = mx.mean(final_preds == y)\n",
+        "\n",
+        "throughput = num_iters / (toc - tic)\n",
+        "print(\n",
+        "    f\"Loss {loss.item():.5f}, Accuracy {acc.item():.5f} \"\n",
+        "    f\"Throughput {throughput:.5f} (it/s)\"\n",
+        ")"
+      ],
+      "id": "2675a17f",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/vidyasagarbhargava/Documents/professional/web/vidyasagarbhargava.github.io/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

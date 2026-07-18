@@ -1,0 +1,285 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Polars for Feature Engineering\"\n",
+        "description: \"Polars is a high-performance DataFrame library, designed to provide fast and efficient data processing capabilities. Inspired by the reigning pandas library, Polars takes things to another level, offering a seamless experience for working with large datasets that might not fit into memory.\"\n",
+        "author: \"Vidyasagar Bhargava\"\n",
+        "date: \"01/03/2024\"\n",
+        "categories:\n",
+        "  - polars\n",
+        "  - feature engineering\n",
+        "title-block-banner: true\n",
+        "image: \"https://cdn.icon-icons.com/icons2/3914/PNG/512/polars_logo_icon_248809.png\"\n",
+        "---\n",
+        "\n",
+        "\n",
+        "Polars API are\n",
+        "\n",
+        "1.  Simple\n",
+        "2.  Consistent\n",
+        "3.  Grammar\n",
+        "\n",
+        "Most of the feature engineering task based on below 7 verbs\n",
+        "\n",
+        "| Task                            | verb          |\n",
+        "|---------------------------------|---------------|\n",
+        "| select/slice columns            | select        |\n",
+        "| create/transform/assign columns | with_columns  |\n",
+        "| filter/slice/query rows         | filter        |\n",
+        "| join/merge other dataframes     | join & concat |\n",
+        "| group dataframe rows            | group_by      |\n",
+        "| aggregate groups                | agg           |\n",
+        "| sort dataframe                  | sort          |\n",
+        "\n",
+        ": 7 Verbs Get Most Jobs done\n"
+      ],
+      "id": "e188b3f5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import polars as pl\n",
+        "df = pl.read_csv(\"StudentsPerformance.csv\")\n",
+        "df.head()"
+      ],
+      "id": "3a093ea3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 1. Select Columns\n",
+        "-   Selecting 1 column\n"
+      ],
+      "id": "fb283058"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.select(pl.col('gender')).head()"
+      ],
+      "id": "59659b21",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "-   Selecting two or more columns\n"
+      ],
+      "id": "f20ffeb3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.select(pl.col(['gender', 'math score'])).head()"
+      ],
+      "id": "0d2c0ec9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "-   Selecting all the columns"
+      ],
+      "id": "03838dfd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.select(pl.col('*')).head()"
+      ],
+      "id": "4cd554ea",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 2. Create Columns\n",
+        "\n",
+        "-   Creating a new column \"sum\" by summing `math score` and `reading score`\n"
+      ],
+      "id": "592b015c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.with_columns(\n",
+        "    (pl.col('math score') + pl.col('reading score')).alias('sum')\n",
+        ").head()"
+      ],
+      "id": "42637dce",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 3. Filter\n",
+        "\n",
+        "-   Simple filtering\n",
+        "\n",
+        "    selecting `female` students\n"
+      ],
+      "id": "326d23f7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.filter(pl.col('gender')=='female').head()"
+      ],
+      "id": "bca338f1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "-   Multiple filtering\n",
+        "\n",
+        "    selecting `female` students those belong to `group B`\n"
+      ],
+      "id": "2a331322"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.filter(\n",
+        "    (pl.col('gender')=='female') & \n",
+        "    (pl.col('race/ethnicity')=='group B')\n",
+        ").head()"
+      ],
+      "id": "3cdc9a75",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 4. Join\n"
+      ],
+      "id": "49102fd4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df2 = pl.read_csv('LanguageScore.csv')\n",
+        "df.join(df2, on=\"id\").head()"
+      ],
+      "id": "273b383c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Concat\n"
+      ],
+      "id": "b79c4c12"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df2 = df2.drop(\"id\")\n",
+        "pl.concat([df, df2], how=\"horizontal\").head()"
+      ],
+      "id": "0d5bce0e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 5. Group By\n",
+        "\n",
+        "Count total elements for each `race/ethnicity`\n"
+      ],
+      "id": "cb1cd890"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.group_by('race/ethnicity').count()"
+      ],
+      "id": "7baed863",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 6. Aggregate\n",
+        "\n",
+        "average `math score` for females and males\n"
+      ],
+      "id": "b8cc9880"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.group_by('gender').agg(pl.col('math score').mean().alias('mean_score'))"
+      ],
+      "id": "df57f695",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 7. Sort\n",
+        "\n",
+        "sort the dataframe by `math score`\n"
+      ],
+      "id": "5575a36b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df.sort('math score',descending=True).head()"
+      ],
+      "id": "2ac2de65",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/vidyasagarbhargava/Documents/professional/web/vidyasagarbhargava.github.io/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

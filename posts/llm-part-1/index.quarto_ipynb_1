@@ -1,0 +1,440 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"LLM From Scratch Part 1 - Data Preparation \"\n",
+        "\n",
+        "description: In the part 1 of LLM series we will understand about data preparation which inludes tokenization, sampling and embeddings.\n",
+        "\n",
+        "author: \"Vidyasagar Bhargava\"\n",
+        "date: \"03/01/2025\"\n",
+        "categories:\n",
+        "  - sampling\n",
+        "  - embedding\n",
+        "  - llm\n",
+        "  - tokenization\n",
+        "---\n",
+        "\n",
+        "# Data Preparation\n",
+        "\n",
+        "Training large language models such as GPT or LLaMA requires input data, typically in the form of raw text. Since neural networks cannot process text directly, the text is first tokenized into discrete units—usually subword tokens—using a tokenizer. These tokens are then mapped to corresponding embeddings, i.e., high-dimensional vector representations, which serve as the actual inputs to the model.\n",
+        "\n",
+        "Next we will convert token into vector representation aka embeddings for llm training.  \n",
+        "\n",
+        "Step 1 :- Input Text --> Tokenized Text   \n",
+        "Step 2 :- Tokenized Text --> Token IDs   \n",
+        "Step 3 :- Token IDs --> Embeddings Vectors  \n",
+        "\n",
+        "## Tokenization\n",
+        "The Tokenization process cover step 1 and step 2 mentioned above i.e. converting input text into individual words (Tokenized Text) then into tokens (Token IDs). \n",
+        "\n",
+        "Alright Let's first we develop a simple tokenizer which converts words into tokens, but later on we will use more sophisticated tokenizers like Byte-Pair Encoding (BPE) from tiktoken library.\n",
+        "\n",
+        "\n",
+        "#### Input Text to Tokenized Text\n",
+        "\n",
+        "Let's say we have some text like `Hi, I am new to the machine learning`. \n"
+      ],
+      "id": "a700f331"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "text = \"Hi, I am new to deep learning and machine learning.\"\n",
+        "print(text)"
+      ],
+      "id": "2afa40ff",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "now we create a simple tokenizer using regular expression. "
+      ],
+      "id": "55287e55"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import re\n",
+        "def simple_tokenizer(text):\n",
+        "    result = re.split(r'([,.:;?_!\"()\\']|--|\\s)', text)\n",
+        "    result = [item.strip() for item in result if item.strip()]\n",
+        "    return result"
+      ],
+      "id": "3e74e04c",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "> Remembering this expression is not required as in future we will going to use more sophisticated tokenizer \n",
+        "\n",
+        "lets see how it works on our text.\n"
+      ],
+      "id": "599ce74f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "preprocessed = simple_tokenizer(text)\n",
+        "print(preprocessed)"
+      ],
+      "id": "77906999",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "It works well. Next we can also check total tokenized texts using `len()` function. \n"
+      ],
+      "id": "3b82cfd1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(f\" The total number of characters are : {len(preprocessed)}\")"
+      ],
+      "id": "0699b4d5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "#### Tokenized Text to Token IDs\n",
+        "\n",
+        "In this step we will convert tokenized text into integer for that first we need to build a vocabulary by removing duplicate tokenized text and alphabetically sorting them.  These unique tokenized text are then aggregated in a vocabulary where they are mapped with unique integer value. \n"
+      ],
+      "id": "bfe293c5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "all_words = sorted(set(preprocessed))\n",
+        "vocab_size = len(all_words)\n",
+        "print(vocab_size)"
+      ],
+      "id": "a9139ed5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "After determine the vocab size we will create the vocabulary"
+      ],
+      "id": "5a89e6c5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "vocab = {token:integer for integer,token in enumerate(all_words)}\n",
+        "print(vocab)"
+      ],
+      "id": "79600a78",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Now our vocab is prepared what we need next is how can we use this vocab to convert text into token IDs and vice versa. \n",
+        "\n",
+        "> We need inverse version of token IDs as well when we convert output of LLM from token ID back to tokenized text and then concatenates the them to natural text.\n",
+        "\n",
+        "\n",
+        "In order to have these conversion functionalities lets create class `SimpleTokenizer` which has two methods `encode` for converting text to token IDs and `decode` to convert token IDs back to text.  \n"
+      ],
+      "id": "7984fc6d"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class SimpleTokenizer:\n",
+        "    def __init__(self,vocab) -> None:\n",
+        "        self.str_to_int = vocab\n",
+        "        self.int_to_str = {i:s for s,i in vocab.items()}\n",
+        "\n",
+        "    def encode(self,text):\n",
+        "        result = re.split(r'([,.:;?_!\"()\\']|--|\\s)', text)\n",
+        "        preprocessed = [item.strip() for item in result if item.strip()]\n",
+        "        ids = [self.str_to_int[s] for s in preprocessed]\n",
+        "        return ids\n",
+        "\n",
+        "    def decode(self,ids):\n",
+        "        text = \" \".join([self.int_to_str[i] for i in ids]) \n",
+        "        text = re.sub(r'\\s+([,.?!\"()\\'])', r'\\1', text)  \n",
+        "        return text"
+      ],
+      "id": "bba7a1b1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Let's use our new class for our next new example"
+      ],
+      "id": "7526acac"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tokenizer = SimpleTokenizer(vocab)\n",
+        "text = \"\"\"I am learning deep learning\"\"\"\n",
+        "ids = tokenizer.encode(text)\n",
+        "print(ids)"
+      ],
+      "id": "60cc23cf",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Let's decode as well"
+      ],
+      "id": "5fe3c1f3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(tokenizer.decode(ids))"
+      ],
+      "id": "75b7f430",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Now what if there is some text which is not part of our vocab. Then our `SimpleTokenizer` class may get in trouble. \n",
+        "For example"
+      ],
+      "id": "fbeac8b7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| error: true\n",
+        "\n",
+        "text = \"Hello, I am learning deep learning\"\n",
+        "print(tokenizer.encode(text))"
+      ],
+      "id": "14e7cbf5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "The word \"Hello\" is not contained in the vocabulary. So we need to have some mechanism to handle unknown words.\n",
+        "\n",
+        "Now we will implement a improved version of our previous SimpleTokenizer class which will consider unknown words or words not part of training data with |unk| token and using |endoftext| token we can separate two unrelated text sources.\n",
+        "\n",
+        "lets modify our vocab\n"
+      ],
+      "id": "ffd11cd4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# let's modify the vocab\n",
+        "all_words.extend([\"<|endoftext|>\",\"<|unk|>\"])\n",
+        "\n",
+        "vocab = {token:integer for integer,token in enumerate(all_words)}\n",
+        "print(len(vocab.items()))"
+      ],
+      "id": "340e7e9a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "lets create new class\n"
+      ],
+      "id": "5bf4b230"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class SimpleTokenizerV2:\n",
+        "    def __init__(self,vocab) -> None:\n",
+        "        self.str_to_int = vocab\n",
+        "        self.int_to_str = {i:s for s,i in vocab.items()}\n",
+        "\n",
+        "    def encode(self,text):\n",
+        "        result = re.split(r'([,.:;?_!\"()\\']|--|\\s)', text)\n",
+        "        preprocessed = [item.strip() for item in result if item.strip()]\n",
+        "        preprocessed = [item if item in self.str_to_int else \"<|unk|>\" for item in preprocessed]\n",
+        "\n",
+        "        ids = [self.str_to_int[s] for s in preprocessed]\n",
+        "        return ids\n",
+        "\n",
+        "    def decode(self,ids):\n",
+        "        text = \" \".join([self.int_to_str[i] for i in ids]) \n",
+        "        text = re.sub(r'\\s+([,.?!\"()\\'])', r'\\1', text)  \n",
+        "        return text"
+      ],
+      "id": "048ea1df",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "text1 = \"Hello, I am learning deep learning\"\n",
+        "text2 = \"I am learning machine learning\"\n",
+        "\n",
+        "text = \" <|endoftext|> \".join((text1, text2))\n",
+        "print(text)"
+      ],
+      "id": "7949ebd3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tokenizer = SimpleTokenizerV2(vocab)\n",
+        "print(tokenizer.encode(text))"
+      ],
+      "id": "92e56387",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "print(tokenizer.decode(tokenizer.encode(text)))"
+      ],
+      "id": "a6bbb5f7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Byte Pair Encoding\n",
+        "\n",
+        "BPE has 50256 vocab size\n",
+        "\n",
+        "- look for implementing BPE"
+      ],
+      "id": "3d4e6bdb"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import tiktoken\n",
+        "print(tiktoken.__version__)"
+      ],
+      "id": "8ac48721",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Initiate a tokenizer\n"
+      ],
+      "id": "006f846c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tokenizer = tiktoken.get_encoding(\"gpt2\")\n",
+        "tokenizer.encode(\"Hello World\")"
+      ],
+      "id": "af9c5a2f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "tokenizer.decode(tokenizer.encode(\"Hello World\"))"
+      ],
+      "id": "cddc0d97",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Data Sampling with Sliding Window\n",
+        "\n",
+        "Goal is how to provide token ID in efficient manner in chunks to llms\n"
+      ],
+      "id": "3ea0ec5f"
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Embeddings\n",
+        "Neural Networks are trained using mathematical operations so if we have text data we need to some how convert that text into numerical form. One such way is to represent text into some continuous-valued vectors.\n",
+        "\n",
+        "The concept of converting data into vector format is called embedding. Now there are ways to convert text to embedding.\n",
+        "\n",
+        "1. Using specific neural network layer\n",
+        "2. another pretrained model\n",
+        "\n",
+        "\n",
+        "\n",
+        "### Rotary Position Embedding "
+      ],
+      "id": "735f168e"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/vidyasagarbhargava/Documents/professional/web/vidyasagarbhargava.github.io/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

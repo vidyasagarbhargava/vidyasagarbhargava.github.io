@@ -1,0 +1,349 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Nearest Neighbour Classifier\"\n",
+        "description: \"Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\"\n",
+        "author: \"Vidyasagar Bhargava\"\n",
+        "date: \"03/06/2020\"\n",
+        "draft: true\n",
+        "categories:\n",
+        "  - machine learning\n",
+        "  - supervised learning\n",
+        "  - algorithm\n",
+        "  - classifier\n",
+        "title-block-banner: true\n",
+        "---\n",
+        "\n",
+        "![](https://i.imgur.com/bpU9JuI.gif)\n",
+        "\n",
+        "\n",
+        "# Introduction\n",
+        "Nearest neighbor classifiers are defined by their characteristic of classifying unlabeled examples by assigning them the class of similar labeled examples.\n",
+        "\n",
+        "Nearest Neighbors works well for classification task where the relationships among the features and target classes are numerous and extremely difficult to understand but the items of similar class tend to be homogeneous.\n",
+        "\n",
+        "Nearest Neighbor classifier struggles most when there is no clear distinction exists among the groups.\n",
+        "\n",
+        "\n",
+        "\n",
+        "# k-NN algorithm\n",
+        "k-Nearest Neighbor algorithm is an example of nearest neighbor classifier.\n",
+        "\n",
+        "## Strength\n",
+        "* Simple and effective\n",
+        "* Makes no assumption about data\n",
+        "* Fast Training Process\n",
+        "\n",
+        "\n",
+        "## Weakness\n",
+        "* Doesn’t produce model, limiting the ability to understand how features are related to class\n",
+        "* Requires selection of k\n",
+        "* Slow classification phase\n",
+        "* Categorical features and missing data require pre processing\n",
+        "\n",
+        "\n",
+        "The k-Nearest Neighbor algorithm uses nearest k number of neighbors for labeling of an unlabeled example. The unlabeled test example is assigned the class of majority of the k-Nearest Neighbors.\n",
+        "\n",
+        "For finding the distance k-NN algorithm uses **Euclidean distance**.\n",
+        "\n",
+        "\n",
+        "\n",
+        "# Choosing an appropriate k\n",
+        "Choosing the value of k determines how well the model will generalize to future data. Choosing a large k reduces the impact or variance caused by noisy data but can bias the learner so that it runs the risk of ignoring small, but important pattern.\n",
+        "\n",
+        "In Practice choosing k depends on the difficulty of the concept to be learned and the number of records in training data.\n",
+        "\n",
+        "* Start with k value equal to the square root of the number of training examples.\n",
+        "* Using cross validation to determine the best k value.\n",
+        "* Weighted voting is one of interesting way to solve this problem. By giving higher weight to close neighbors.\n",
+        "\n",
+        "\n",
+        "# k-NN from scratch\n",
+        "* Compute distances between x and all examples in the training set\n",
+        "* Sort by distance and return indexes of the first k neighbors\n",
+        "* Extract the labels of the k nearest neighbor training samples\n",
+        "* Return the most common class label\n"
+      ],
+      "id": "0d077677"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import numpy as np\n",
+        "from collections import Counter\n",
+        "def euclidean_distance(x1, x2):\n",
+        "        return np.sqrt(np.sum((x1 - x2)**2))"
+      ],
+      "id": "73a5e5f5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We used euclidean distance for calculating the nearest neighbors.\n",
+        "\n",
+        "Now we will define our KNN Class\n"
+      ],
+      "id": "6bec22c4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "class KNN:\n",
+        "    def __init__(self, k=3):\n",
+        "        self.k = k\n",
+        "\n",
+        "    def fit(self, X, y):\n",
+        "        self.X_train = X\n",
+        "        self.y_train = y\n",
+        "\n",
+        "    def predict(self, X):\n",
+        "        y_pred = [self._predict(x) for x in X]\n",
+        "        return np.array(y_pred)\n",
+        "\n",
+        "    def _predict(self, x):\n",
+        "        # Compute distances between x and all examples in the training set\n",
+        "        distances = [euclidean_distance(x, x_train) for x_train in self.X_train]\n",
+        "        # Sort by distance and return indexes of the first k neighbors\n",
+        "        k_idx = np.argsort(distances)[:self.k]\n",
+        "        # Extract the labels of the k nearest neighbor training samples\n",
+        "        k_neighbor_labels = [self.y_train[i] for i in k_idx]  \n",
+        "        # return the most common class label\n",
+        "        most_common = Counter(k_neighbor_labels).most_common(1)\n",
+        "        return most_common[0][0]"
+      ],
+      "id": "60b7fdf4",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We are going to use iris dataset to test our KNN model that we created !!!\n"
+      ],
+      "id": "b6bf3e7c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from sklearn import datasets\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "\n",
+        "iris = datasets.load_iris()\n",
+        "\n",
+        "X, y = iris.data, iris.target\n",
+        "\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1234)\n",
+        "\n",
+        "\n",
+        "clf = KNN()\n",
+        "clf.fit(X_train, y_train)\n",
+        "\n",
+        "\n",
+        "def accuracy(y_true, y_pred):\n",
+        "    accuracy = np.sum(y_true == y_pred) / len(y_true)\n",
+        "    return accuracy\n",
+        "\n",
+        "\n",
+        "predictions = clf.predict(X_test)\n",
+        "print(\"custom KNN classification accuracy\", accuracy(y_test, predictions))"
+      ],
+      "id": "fac46047",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# k-NN Classifier\n",
+        "\n",
+        "## Defining the dataset\n"
+      ],
+      "id": "472c8cdf"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# First Feature\n",
+        "weather=['Sunny','Sunny','Overcast','Rainy','Rainy','Rainy','Overcast','Sunny','Sunny',\n",
+        "'Rainy','Sunny','Overcast','Overcast','Rainy']\n",
+        "# Second Feature\n",
+        "temp=['Hot','Hot','Hot','Mild','Cool','Cool','Cool','Mild','Cool','Mild','Mild','Mild','Hot','Mild']\n",
+        "\n",
+        "# Label or target varible\n",
+        "play=['No','No','Yes','Yes','Yes','No','Yes','No','Yes','Yes','Yes','Yes','Yes','No']"
+      ],
+      "id": "391d5b87",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "We have two features weather and temperature and one label play.\n",
+        "\n",
+        "## Encoding data columns\n"
+      ],
+      "id": "7debb48a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from sklearn import preprocessing\n",
+        "\n",
+        "#creating labelEncoder\n",
+        "le = preprocessing.LabelEncoder()\n",
+        "\n",
+        "# Converting string labels into numbers.\n",
+        "weather_encoded=le.fit_transform(weather)"
+      ],
+      "id": "06c7c20b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Similarly, you can encode temperature and label into numeric columns.\n"
+      ],
+      "id": "56541542"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# converting string labels into numbers\n",
+        "temp_encoded=le.fit_transform(temp)\n",
+        "label=le.fit_transform(play)"
+      ],
+      "id": "bc46d06d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Combining Features\n"
+      ],
+      "id": "5b0f4749"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#combinig weather and temp into single listof tuples\n",
+        "features=list(zip(weather_encoded,temp_encoded))"
+      ],
+      "id": "a0ceb0a6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Generating Models\n"
+      ],
+      "id": "4466fed3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from sklearn.neighbors import KNeighborsClassifier\n",
+        "model = KNeighborsClassifier(n_neighbors=3)\n",
+        "\n",
+        "# Train the model using the training sets\n",
+        "model.fit(features,label)"
+      ],
+      "id": "1097fde0",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Predict Output\n"
+      ],
+      "id": "9390e46f"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "predicted= model.predict([[0,2]]) # 0:Overcast, 2:Mild\n",
+        "print(predicted)"
+      ],
+      "id": "fc362201",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# k-NN Regressor\n"
+      ],
+      "id": "bf91405a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# from sklearn.datasets import load_boston\n",
+        "# from sklearn.neighbors import KNeighborsRegressor\n",
+        "# X,y = load_boston(return_X_y=True)\n",
+        "# mod = KNeighborsRegressor()\n",
+        "# mod.fit(X,y)"
+      ],
+      "id": "0c698b7b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "making prediction"
+      ],
+      "id": "da7f5a46"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# mod.predict(X)"
+      ],
+      "id": "1425e85b",
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/Users/vidyasagarbhargava/Documents/professional/web/vidyasagarbhargava.github.io/.venv/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

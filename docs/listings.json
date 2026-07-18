@@ -9,7 +9,8 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/llm-part-1.html",
+      "/posts/youtube-search/index.html",
+      "/posts/llm-part-1/index.html",
       "/posts/ai-research-scientist/index.html",
       "/posts/introduction-to-graph-neural-networks/index.html",
       "/posts/seq-to-seq-and-attention-mechanism/index.html",
@@ -26,7 +27,8 @@
       "/posts/hypothesis-testing/index.html",
       "/posts/top-languages/index.html",
       "/posts/gradient-descent/index.html",
-      "/posts/Fbeta-Measure/index.html"
+      "/posts/Fbeta-Measure/index.html",
+      "/posts/Nearest-Neighbour-Classifier/index.html"
     ]
   }
 ]
